@@ -1,0 +1,23 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>images/settings.png</file>
+        <file>images/right-angle-arrow.png</file>
+        <file>images/return.png</file>
+        <file>images/reserve.png</file>
+        <file>images/rented.png</file>
+        <file>images/outlander.png</file>
+        <file>images/more.png</file>
+        <file>images/left-angle-arrow.png</file>
+        <file>images/lancer_silver.png</file>
+        <file>images/lancer_graphite.png</file>
+        <file>images/jumper_white.png</file>
+        <file>images/jumper.png</file>
+        <file>images/free.png</file>
+        <file>images/edit.png</file>
+        <file>images/corolla.png</file>
+        <file>images/charger.png</file>
+        <file>images/car.png</file>
+        <file>images/berlingo_silver.jpg</file>
+        <file>images/berlingo_gray.jpg</file>
+    </qresource>
+</RCC>

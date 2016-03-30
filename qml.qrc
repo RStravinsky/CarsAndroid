@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>MainForm.ui.qml</file>
+        <file>TopFrame.qml</file>
+        <file>MainButton.qml</file>
+        <file>SwipeArea.qml</file>
+        <file>CarView.qml</file>
+        <file>ActionButton.qml</file>
+        <file>MenuView.qml</file>
+        <file>BookingView.qml</file>
+        <file>SettingsView.qml</file>
+    </qresource>
+</RCC>

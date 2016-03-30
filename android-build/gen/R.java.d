@@ -1,0 +1,27 @@
+/home/bartek/Dokumenty/QtWorkspace/CarsAndroidNew/android-build/gen/org/qtproject/example/R.java \
+ : /home/bartek/Dokumenty/QtWorkspace/CarsAndroidNew/android-build/res/values-ms/strings.xml \
+/home/bartek/Dokumenty/QtWorkspace/CarsAndroidNew/android-build/res/values-fr/strings.xml \
+/home/bartek/Dokumenty/QtWorkspace/CarsAndroidNew/android-build/res/values-rs/strings.xml \
+/home/bartek/Dokumenty/QtWorkspace/CarsAndroidNew/android-build/res/values-es/strings.xml \
+/home/bartek/Dokumenty/QtWorkspace/CarsAndroidNew/android-build/res/drawable-hdpi/icon.png \
+/home/bartek/Dokumenty/QtWorkspace/CarsAndroidNew/android-build/res/values-nb/strings.xml \
+/home/bartek/Dokumenty/QtWorkspace/CarsAndroidNew/android-build/res/drawable-ldpi/icon.png \
+/home/bartek/Dokumenty/QtWorkspace/CarsAndroidNew/android-build/res/layout/splash.xml \
+/home/bartek/Dokumenty/QtWorkspace/CarsAndroidNew/android-build/res/values-et/strings.xml \
+/home/bartek/Dokumenty/QtWorkspace/CarsAndroidNew/android-build/res/drawable-mdpi/icon.png \
+/home/bartek/Dokumenty/QtWorkspace/CarsAndroidNew/android-build/res/values-fa/strings.xml \
+/home/bartek/Dokumenty/QtWorkspace/CarsAndroidNew/android-build/res/values/libs.xml \
+/home/bartek/Dokumenty/QtWorkspace/CarsAndroidNew/android-build/res/values/strings.xml \
+/home/bartek/Dokumenty/QtWorkspace/CarsAndroidNew/android-build/res/values-ru/strings.xml \
+/home/bartek/Dokumenty/QtWorkspace/CarsAndroidNew/android-build/res/values-ja/strings.xml \
+/home/bartek/Dokumenty/QtWorkspace/CarsAndroidNew/android-build/res/values-nl/strings.xml \
+/home/bartek/Dokumenty/QtWorkspace/CarsAndroidNew/android-build/res/values-zh-rCN/strings.xml \
+/home/bartek/Dokumenty/QtWorkspace/CarsAndroidNew/android-build/res/values-de/strings.xml \
+/home/bartek/Dokumenty/QtWorkspace/CarsAndroidNew/android-build/res/values-zh-rTW/strings.xml \
+/home/bartek/Dokumenty/QtWorkspace/CarsAndroidNew/android-build/res/values-pl/strings.xml \
+/home/bartek/Dokumenty/QtWorkspace/CarsAndroidNew/android-build/res/values-it/strings.xml \
+/home/bartek/Dokumenty/QtWorkspace/CarsAndroidNew/android-build/res/values-el/strings.xml \
+/home/bartek/Dokumenty/QtWorkspace/CarsAndroidNew/android-build/res/values-id/strings.xml \
+/home/bartek/Dokumenty/QtWorkspace/CarsAndroidNew/android-build/res/values-pt-rBR/strings.xml \
+/home/bartek/Dokumenty/QtWorkspace/CarsAndroidNew/android-build/res/values-ro/strings.xml \
+/home/bartek/Dokumenty/QtWorkspace/CarsAndroidNew/android-build/bin/AndroidManifest.xml \
