@@ -8,7 +8,13 @@
         <file>CarView.qml</file>
         <file>ActionButton.qml</file>
         <file>MenuView.qml</file>
-        <file>BookingView.qml</file>
+        <file>DateChooser.qml</file>
         <file>SettingsView.qml</file>
+        <file>HoursStackView.qml</file>
+        <file>HourContentItem.qml</file>
+        <file>HoursListItem.qml</file>
+        <file>StartTimePicker.qml</file>
+        <file>TimeTumbler.qml</file>
+        <file>EndTimePicker.qml</file>
     </qresource>
 </RCC>

@@ -2,7 +2,8 @@
 
 CarView::CarView(QObject *parent) : QObject(parent)
 {
-Database::setParameters("192.168.1.154", 3306, "sigmacars", "root", "PASSWORD");
+//Database::setParameters("192.168.1.154", 3306, "sigmacars", "root", "PASSWORD");
+Database::setParameters("94.230.27.222", 3306, "sigmacars", "root", "Serwis4q@");
 
 }
 

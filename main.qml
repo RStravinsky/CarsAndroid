@@ -3,6 +3,7 @@ import QtQuick.Controls 1.4
 import QtQuick.Dialogs 1.2
 import Qt.labs.controls 1.0
 import QtGraphicalEffects 1.0
+import QtQuick.Window 2.2
 
 ApplicationWindow {
     id: apps
@@ -12,9 +13,8 @@ ApplicationWindow {
     Keys.enabled: true
     Keys.priority: Keys.BeforeItem
 
-    property alias defaultFontPixelSize: hiddenText.font.pixelSize
-
-    Text {id: hiddenText}
+    property int screenH: Screen.height
+    property int screenW: Screen.width
 
     MainForm {
          id: mainForm
@@ -34,14 +34,14 @@ ApplicationWindow {
          }
 
          /* top frame of application */
-         TopFrame { id: topFrame; width: mainForm.width; height: 80; anchors.top: mainForm.top; z: 100 }
+         TopFrame { id: topFrame; width: mainForm.width; height: screenH * 0.1; anchors.top: mainForm.top; z: 100 }
 
          /* settings button of application */
          MainButton {
              id: mainButton; width: mainButton.height; height: topFrame.height
              anchors { left: topFrame.left; top: topFrame.top }
              z: topFrame.z + 1 // before top frame
-             onButtonClicked: { mainArea.menuChange() }
+             onButtonClicked: { mainArea.menuChange(); }
          }
 
          Rectangle {
@@ -71,8 +71,9 @@ ApplicationWindow {
                         break
                     case "SettingsView":
                         break
-                    case "BookingView":
-                        bookingView.calendar.enabled = menuView.currentIndex === 1 ? true : false
+                    case "DateChooser":
+                        dateChooser.calendar.enabled = menuView.currentIndex === 1 ? true : false
+                        //dateChooser.list.interactive = menuView.currentIndex === 1 ? true : false
                         break
                  }
             }
@@ -92,8 +93,8 @@ ApplicationWindow {
 
             Rectangle { id: normalView; anchors.fill: parent; visible: false
                  CarView { id:carView; anchors.fill: normalView; objectName: "CarView"; Component.onCompleted: carViewClass.setCarList()}
-                 SettingsView { id:settingsView; objectName: "SettingsView"; anchors.fill: normalView; }
-                 BookingView {id:bookingView; objectName: "BookingView"; anchors.fill: normalView}
+                 SettingsView { id:settingsView; objectName: "SettingsView";}
+                 DateChooser {id:dateChooser; objectName: "DateChooser";}
 
             } // Normal View
 

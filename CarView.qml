@@ -2,19 +2,20 @@ import QtQuick 2.5
 
 Item {
     id: carView
+    anchors.fill: parent
     property var list: carList
 
     Component {
         id: carDelegate
-        Item { id: carItem; height: 200; width: parent.width; property string sourceImage: (status === false)? "images/images/free.png" : "images/images/rented.png";
+        Item { id: carItem; height: screenH * .25; width: parent.width; property string sourceImage: (status === false)? "images/images/free.png" : "images/images/rented.png";
 
             Text { id: carName
                 anchors { left: parent.left; leftMargin: 10; top: parent.top;}
-                color: "gray"; font.pixelSize: 32;text: brand + " " + model
+                color: "gray"; font.pixelSize: screenH/30;text: brand + " " + model
             }
             Text { id: license
                 anchors { left: parent.left; leftMargin: 10; top: carName.bottom;}
-                color: "gray"; font.pixelSize: 22; text: licensePlate
+                color: "gray"; font.pixelSize: screenH/35; text: licensePlate
             }
             Image { id: carImage; height: carItem.height * .6;
                 fillMode: Image.PreserveAspectFit
@@ -33,7 +34,7 @@ Item {
                 anchors { bottom: carImage.bottom; right: statusImage.right }
                 enabled: menuView.currentIndex === 1 ? true : false
                 z: carView.z + 1 // before parent
-                onActivated: { bookingView.setListIndex(listIndex); stackView.push(bookingView) }
+                onActivated: { dateChooser.setListIndex(listIndex); stackView.push(dateChooser) }
             }
 
 
@@ -45,7 +46,7 @@ Item {
                 anchors { bottom: carImage.bottom; right: rsrvBtn.left; rightMargin: 5 }
                 enabled: menuView.currentIndex === 1 ? true : false
                 z: carView.z + 1 // before parent
-                //onActivated: { stackView.push(bookingView) }
+                //onActivated: { stackView.push(dateChooser) }
             }
 
 

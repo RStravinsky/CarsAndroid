@@ -1,6 +1,6 @@
 /*
  * This file is auto-generated.  DO NOT MODIFY.
- * Original file: /home/bartek/Dokumenty/QtWorkspace/CarsAndroidNew/android-build/src/org/kde/necessitas/ministro/IMinistro.aidl
+ * Original file: /home/bartek/Dokumenty/QtWorkspace/CarsAndroid/android-build/src/org/kde/necessitas/ministro/IMinistro.aidl
  */
 package org.kde.necessitas.ministro;
 public interface IMinistro extends android.os.IInterface

@@ -37,14 +37,14 @@ Item {
 
         Component {
             id: menuDelegate
-            Item { id:menuItem; height: 80; width: parent.width;
+            Item { id:menuItem; height: screenH * 0.1; width: parent.width;
                 Image { height: 25; width: 25
                     anchors { left: parent.left; leftMargin: 5; verticalCenter: parent.verticalCenter }
                     source: imagePath
                 }
                 Text { id: menuText;
                     anchors { left: parent.left; leftMargin: 40; verticalCenter: parent.verticalCenter }
-                    color: "white"; font.pixelSize: 32; text: name
+                    color: "white"; font.pixelSize: screenH/25; text: name
                 }
                 Rectangle { height: 2; width: parent.width * 0.70;
                     anchors { left: parent.left; leftMargin: 5; horizontalCenter: parent.horizontalCenter; bottom: parent.bottom }
