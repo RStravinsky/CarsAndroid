@@ -8,19 +8,25 @@
 #include <QQmlContext>
 #include <QQmlComponent>
 #include <QObject>
+#include <QFont>
 #include "carview.h"
 #include "carblock.h"
 
 int main(int argc, char *argv[])
 {
-    QApplication app(argc, argv);
 
+
+    QApplication app(argc, argv);
     QQmlApplicationEngine engine;
     auto root_context = engine.rootContext();
+
+    //QGuiApplication::setFont(QFont("Purisa"));
+
     qmlRegisterType<CarBlock>();
-    qmlRegisterType<BookingInfo>();
+    qmlRegisterType<BookingInfo>();;
     CarView cv;
     CarBlock cb;
+
     root_context->setContextProperty("carViewClass", &cv);
     root_context->setContextProperty("carBlockClass", &cb);
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));

@@ -10,5 +10,7 @@ Item
             GradientStop { position: 0; color: "#FF8C00" }
             GradientStop { position: 1; color: "#FF6900" }
             }
+
     } // Rectangle
+
 } // Item

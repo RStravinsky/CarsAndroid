@@ -4,7 +4,10 @@
 #include <QObject>
 #include <QtSql>
 #include <QQmlListProperty>
+#include <QMessageBox>
+#include <memory>
 #include "bookinginfo.h"
+#include "database.h"
 
 class BookingInfo;
 
@@ -18,6 +21,7 @@ class CarBlock : public QObject
     Q_PROPERTY(bool status READ getStatus CONSTANT)
     Q_PROPERTY(QString photoPath READ getPhotoPath CONSTANT)
     Q_PROPERTY(int listIndex READ getListIndex CONSTANT)
+    Q_PROPERTY(int mileage READ getMileage CONSTANT)
     Q_PROPERTY(QQmlListProperty<BookingInfo> bookingInfoList READ getBookingInfoList NOTIFY onBookingInfoListChanged)
 
 public:
@@ -32,6 +36,7 @@ public:
                       const QString & licensePlate = "-",
                       bool status = false,
                       const QString & photoPath = "images/car.png",
+                      const int mileage = 0,
                       const int listIndex = -1,
                       QObject *parent = 0);
 
@@ -42,11 +47,15 @@ public:
     Q_INVOKABLE const bool getStatus() {return m_status;}
     Q_INVOKABLE const QString getPhotoPath() {return m_photoPath;}
     Q_INVOKABLE const int getListIndex() {return m_listIndex;}
+    Q_INVOKABLE const int getMileage() {return m_mileage;}
 
     Q_INVOKABLE QQmlListProperty<BookingInfo> getBookingInfoList() {return QQmlListProperty<BookingInfo>(this, m_bookingInfoList);}
 
     Q_INVOKABLE bool isDateReserved(QDate date);
     Q_INVOKABLE void readBookingEntries(QDate date);
+    Q_INVOKABLE bool addToHistory(QVariant entryFields, QString code);
+    Q_INVOKABLE bool updateHistory(QVariant entryFields, int distance);
+    Q_INVOKABLE bool isCodeCorrect(int id, QString code);
 
 signals:
     void onBookingInfoListChanged(QQmlListProperty<BookingInfo>);
@@ -62,9 +71,8 @@ private:
     const bool m_status;
     const QString m_photoPath;
     const int m_listIndex;
-
+    const int m_mileage;
     QSqlQueryModel m_bookingModel;
-
     QList<BookingInfo*> m_bookingInfoList;
 };
 

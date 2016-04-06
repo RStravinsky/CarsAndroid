@@ -1,7 +1,7 @@
 import QtQuick 2.5
 
 Item {
-
+    anchors.fill: parent
     Rectangle {
         anchors.fill: parent
         Text { id: menuText;
@@ -28,8 +28,7 @@ Item {
                 normalViewMask.opacity = menuView.currentIndex === 1 ? 0 : 0.7
             }
         }
-    } // test area
 
+    } // Rectangle
 
-
-}
+} // Item

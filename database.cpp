@@ -17,17 +17,17 @@ bool Database::connectToDatabase()
 bool Database::isOpen()
 {
     if(isLocal){
-        //qDebug() << "LOCAL";
+        qDebug() << "LOCAL";
         return sqlDatabase.isOpen();
     }
     else {
-        //qDebug() << "REMOTE";
+        qDebug() << "REMOTE";
         if(isConnectedToNetwork()){
-            //qDebug() << "Network OK!";
+            qDebug() << "Network OK!";
             return sqlDatabase.isOpen();
         }
         else{
-            //qDebug() << "Network ERROR!";
+            qDebug() << "Network ERROR!";
             return false;
         }
     }

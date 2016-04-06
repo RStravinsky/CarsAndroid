@@ -5,6 +5,9 @@
 #include <QQmlListProperty>
 #include <QtSql>
 #include <memory>
+#include <string>
+#include <ctime>
+#include <QDebug>
 #include "carblock.h"
 #include "database.h"
 
@@ -27,6 +30,10 @@ public:
     Q_INVOKABLE void setCarList();
     static int carListCount(QQmlListProperty<CarBlock>*list);
     static CarBlock* carListAt(QQmlListProperty<CarBlock> *list, int i);
+
+
+    //Q_INVOKABLE const int getCode() {return m_code;}
+    Q_INVOKABLE QString generateCode();
 
 signals:
     void onCarListChanged(QQmlListProperty<CarBlock>);

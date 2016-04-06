@@ -8,7 +8,15 @@
         <file>CarView.qml</file>
         <file>ActionButton.qml</file>
         <file>MenuView.qml</file>
-        <file>BookingView.qml</file>
+        <file>DateChooser.qml</file>
         <file>SettingsView.qml</file>
+        <file>RentView.qml</file>
+        <file>CustomTextField.qml</file>
+        <file>BookingView.qml</file>
+        <file>RentFields.qml</file>
+        <file>ReturnFields.qml</file>
+        <file>CustomTextArea.qml</file>
+        <file>PinView.qml</file>
+        <file>BookingFields.qml</file>
     </qresource>
 </RCC>

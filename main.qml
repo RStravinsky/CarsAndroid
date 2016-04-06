@@ -3,6 +3,7 @@ import QtQuick.Controls 1.4
 import QtQuick.Dialogs 1.2
 import Qt.labs.controls 1.0
 import QtGraphicalEffects 1.0
+import QtQuick.Window 2.2
 
 ApplicationWindow {
     id: apps
@@ -12,19 +13,23 @@ ApplicationWindow {
     Keys.enabled: true
     Keys.priority: Keys.BeforeItem
 
-    property alias defaultFontPixelSize: hiddenText.font.pixelSize
+    property int screenHight: Screen.height
+    property int screenW: Screen.width
+    property int screenH
 
-    Text {id: hiddenText}
+    Component.onCompleted: { screenH = screenHight }
 
     MainForm {
          id: mainForm
          anchors.fill: parent
-
          focus: true // important - otherwise we'll get no key events
          Keys.onReleased: {
              if (event.key === Qt.Key_Back) {
                  if(menuView.currentIndex === 1) { // menu not visible
                      if(stackView.currentItem.objectName === "SettingsView") { menuView.list.currentIndex = 0 }
+                     if(stackView.currentItem.objectName === "RentView") { rentView.clearText() }
+                     if(stackView.currentItem.objectName === "BookingView") { bookingView.clearText() }
+                     if(stackView.currentItem.objectName === "PinView") { pinView.clearText() }
                      if(stackView.depth === 1) apps.close()
                      else stackView.pop()
                  }
@@ -33,12 +38,22 @@ ApplicationWindow {
              }
          }
 
-         /* top frame of application */
-         TopFrame { id: topFrame; width: mainForm.width; height: 80; anchors.top: mainForm.top; z: 100 }
+         MessageDialog { id: messageDialog
+             onAccepted: { messageDialog.close() }
+             function show(title,caption,icon) {
+                 messageDialog.title = title;
+                 messageDialog.text = caption;
+                 messageDialog.icon = icon;
+                 messageDialog.open();
+             }
+         }
 
-         /* settings button of application */
+         // top frame of application
+         TopFrame { id: topFrame; width: mainForm.width; height: screenH*.1; anchors.top: mainForm.top; z: 100 }
+
+         // settings button of application
          MainButton {
-             id: mainButton; width: mainButton.height; height: topFrame.height
+             id: mainButton; height: topFrame.height; width: mainButton.height
              anchors { left: topFrame.left; top: topFrame.top }
              z: topFrame.z + 1 // before top frame
              onButtonClicked: { mainArea.menuChange() }
@@ -67,12 +82,18 @@ ApplicationWindow {
                  switch(stackView.currentItem.objectName)
                  {
                     case "CarView":
-                        carView.list.interactive = menuView.currentIndex === 1 ? true : false
+                        carView.area.enabled = menuView.currentIndex === 1 ? true : false
                         break
                     case "SettingsView":
                         break
-                    case "BookingView":
-                        bookingView.calendar.enabled = menuView.currentIndex === 1 ? true : false
+                    case "DateChooser":
+                        dateChooser.calendar.enabled = menuView.currentIndex === 1 ? true : false
+                        break
+                    case "RentView":
+                        rentView.area.enabled = menuView.currentIndex === 1 ? true : false
+                        break
+                    case "RentView":
+                        bookingView.area.enabled = menuView.currentIndex === 1 ? true : false
                         break
                  }
             }
@@ -89,15 +110,16 @@ ApplicationWindow {
              } // Menu View
 
 
-
             Rectangle { id: normalView; anchors.fill: parent; visible: false
-                 CarView { id:carView; anchors.fill: normalView; objectName: "CarView"; Component.onCompleted: carViewClass.setCarList()}
-                 SettingsView { id:settingsView; objectName: "SettingsView"; anchors.fill: normalView; }
-                 BookingView {id:bookingView; objectName: "BookingView"; anchors.fill: normalView}
-
+                 CarView { id:carView; objectName: "CarView"; Component.onCompleted: carViewClass.setCarList()}
+                 SettingsView { id:settingsView; objectName: "SettingsView"; }
+                 DateChooser {id:dateChooser; objectName: "DateChooser"; }
+                 RentView { id:rentView; objectName: "RentView"; }
+                 PinView { id:pinView; objectName: "PinView" }
+                 BookingView { id:bookingView; objectName: "BookingView" }
             } // Normal View
 
-            /* view mask */
+            // view mask
             Rectangle { id: normalViewMask; anchors.fill: normalView
                 z: normalView.z + 1
                 color: "black"
@@ -110,10 +132,9 @@ ApplicationWindow {
                anchors.fill: parent
            }
 
+         } // MainArea
 
-         } // Main Area
+    } // MainForm
 
-    } // Main Form
-
-} // Application Window
+} // ApplicationWindow
 

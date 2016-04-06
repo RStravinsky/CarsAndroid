@@ -19,5 +19,12 @@
         <file>images/car.png</file>
         <file>images/berlingo_silver.jpg</file>
         <file>images/berlingo_gray.jpg</file>
+        <file>images/clear.png</file>
+        <file>images/destination.png</file>
+        <file>images/name.png</file>
+        <file>images/surname.png</file>
+        <file>images/target.png</file>
+        <file>images/speed.png</file>
+        <file>images/notes.png</file>
     </qresource>
 </RCC>

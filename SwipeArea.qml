@@ -79,4 +79,5 @@ MouseArea {
           }
           return false;
       }
-}
+
+} // MouseArea

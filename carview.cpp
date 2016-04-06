@@ -2,7 +2,7 @@
 
 CarView::CarView(QObject *parent) : QObject(parent)
 {
-Database::setParameters("192.168.1.154", 3306, "sigmacars", "root", "PASSWORD");
+Database::setParameters("94.230.27.222", 3306, "sigmacars", "root", "Serwis4q@");
 
 }
 
@@ -20,6 +20,7 @@ void CarView::setCarList()
                                                        m_carModel.index(i, 3).data().toString(),
                                                        static_cast<bool>(m_carModel.index(i, 7).data().toInt()),
                                                        m_carModel.index(i, 8).data().toString(),
+                                                       m_carModel.index(i, 6).data().toInt(),
                                                        i
                                                        )));
 
@@ -44,5 +45,22 @@ CarBlock* CarView::carListAt(QQmlListProperty<CarBlock> *list, int i)
     if (carView)
         return carView->m_carList.at(i);
     return 0;
-
 }
+
+QString CarView::generateCode()
+{
+    const int codeSize = 6;
+    std::srand(time(NULL));
+
+    std::string code("",codeSize);
+    static const char alphanum[] =
+        "0123456789"
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        "abcdefghijklmnopqrstuvwxyz";
+
+    for (int i = 0; i < codeSize; ++i)
+        code[i] = alphanum[rand() % (sizeof(alphanum) - 1)];
+
+    return QString::fromStdString(code);
+}
+
