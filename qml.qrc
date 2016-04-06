@@ -18,5 +18,11 @@
         <file>CustomTextArea.qml</file>
         <file>PinView.qml</file>
         <file>BookingFields.qml</file>
+        <file>HoursStackView.qml</file>
+        <file>HourContentItem.qml</file>
+        <file>HoursListItem.qml</file>
+        <file>StartTimePicker.qml</file>
+        <file>TimeTumbler.qml</file>
+        <file>EndTimePicker.qml</file>
     </qresource>
 </RCC>

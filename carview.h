@@ -31,8 +31,6 @@ public:
     static int carListCount(QQmlListProperty<CarBlock>*list);
     static CarBlock* carListAt(QQmlListProperty<CarBlock> *list, int i);
 
-
-    //Q_INVOKABLE const int getCode() {return m_code;}
     Q_INVOKABLE QString generateCode();
 
 signals:

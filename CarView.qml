@@ -2,9 +2,9 @@ import QtQuick 2.5
 
 Item {
     id: carView
+    anchors.fill: parent
     property var list: carList
     property var area: area
-    anchors.fill: parent
 
     SwipeArea {
         id: mouse

@@ -49,13 +49,16 @@ public:
     Q_INVOKABLE const int getListIndex() {return m_listIndex;}
     Q_INVOKABLE const int getMileage() {return m_mileage;}
 
-    Q_INVOKABLE QQmlListProperty<BookingInfo> getBookingInfoList() {return QQmlListProperty<BookingInfo>(this, m_bookingInfoList);}
+    Q_INVOKABLE QQmlListProperty<BookingInfo> getBookingInfoList() {return QQmlListProperty<BookingInfo>(this, nullptr, &bookingInfoListCount, &bookinginfoListAt);}
+    static int bookingInfoListCount(QQmlListProperty<BookingInfo>*list);
+    static BookingInfo* bookinginfoListAt(QQmlListProperty<BookingInfo> *list, int i);
 
     Q_INVOKABLE bool isDateReserved(QDate date);
-    Q_INVOKABLE void readBookingEntries(QDate date);
     Q_INVOKABLE bool addToHistory(QVariant entryFields, QString code);
     Q_INVOKABLE bool updateHistory(QVariant entryFields, int distance);
     Q_INVOKABLE bool isCodeCorrect(int id, QString code);
+    Q_INVOKABLE void readBookingEntries(QDate date, QString time);
+    Q_INVOKABLE int setHoursColor(QDate date, QString time);
 
 signals:
     void onBookingInfoListChanged(QQmlListProperty<BookingInfo>);
@@ -74,6 +77,8 @@ private:
     const int m_mileage;
     QSqlQueryModel m_bookingModel;
     QList<BookingInfo*> m_bookingInfoList;
+
+
 };
 
 #endif // CARBLOCK_H

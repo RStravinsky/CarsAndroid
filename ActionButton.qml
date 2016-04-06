@@ -25,9 +25,7 @@ Rectangle {
         text: actionButton.buttonText
         font.pointSize: actionButton.fontSize
         color: "white"
-        visible: !actionButton.codeVisible
     }
-
 
     MouseArea {
         id: mouseArea;

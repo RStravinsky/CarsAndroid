@@ -10,34 +10,69 @@ import QtGraphicalEffects 1.0
 Item {
     id: dateChooser
     anchors.fill: parent
+
+    property alias defaultFontPixelSize: hiddenText.font.pixelSize
+
     property int listIndex
     property var calendar: bookingCalendar
-    property alias defaultFontPixelSize: hiddenText.font.pixelSize
+    property var startDateTime: hoursStackView.startDateTime
+    property var endDateTime: hoursStackView.endDateTime
+
+    Text {id: hiddenText}
 
     function setListIndex(val) {
         listIndex = val
+        hoursStackView.setListIndex(val)
     }
-
-    Text {id: hiddenText}
 
     Rectangle {
         id: mainRectangle
         anchors.fill: parent
         color: "white"
 
+        SwipeArea {
+             id: mouseM
+             menu: menuView
+             anchors.fill: parent
+             onMove: {
+                 console.log("onMove...")
+                 bookingCalendar.enabled = false
+                 hoursStackView.enabled = false
+                 menuView.x = (-mainArea.width * menuView.currentIndex) + x // changing menu x
+                 normalViewMask.opacity = (1 -((Math.abs(menuView.x)/menuView.width)))/1.5 // changing normal view opacity
+             }
+             onSwipe: {
+                 console.log("onSwipe...")
+                 mainArea.menuChange()
+             }
+             onCanceled: {
+                 console.log("onCanceled...")
+                 menuView.currentIndexChanged()
+                 normalViewMask.opacity = menuView.currentIndex === 1 ? 0 : 0.7
+                 bookingCalendar.enabled = true
+                 hoursStackView.enabled = true
+             }
+         }
+
+
         Calendar {
            id: bookingCalendar
            anchors.top: parent.top
-           anchors.horizontalCenter: parent.horizontalCenter
+           anchors.left: parent.left
+           anchors.right: parent.right
+           anchors.leftMargin: 30
+           anchors.rightMargin: 30
+           anchors.topMargin: 30
            width: parent.width
            height: parent.height * 0.5
-           z: hoursList.z + 1
+           z: hoursStackView.z + 1
 
            style: CalendarStyle {
 
                gridVisible: false
                background: Rectangle {color: "white";}
                navigationBar: Rectangle {
+                          id: naviBar
                           color: "#FF6900"
                           height: dateText.height * 2
 
@@ -103,55 +138,24 @@ Item {
                }
 
            } // CalendarStyle
-           onClicked: carViewClass.carList[listIndex].readBookingEntries(date)
-        }
 
-        ListView {
-            id: hoursList
+        } // Calendar
+
+        HoursStackView {
+            id: hoursStackView
+            anchors.top: calendar.bottom
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.bottom: parent.bottom
+            anchors.leftMargin: 30
+            anchors.rightMargin: 30
+            anchors.topMargin: 30
+            anchors.bottomMargin: 30
             width: parent.width
             height: parent.height * 0.5
-            anchors.top: calendar.bottom
-            topMargin: 5
-            anchors.horizontalCenter: parent.horizontalCenter
-            model: carViewClass.carList[listIndex].bookingInfoList
-            delegate: hoursListDelegate
-            //boundsBehavior: Flickable.StopAtBounds
         }
-
-        Component {
-            id: hoursListDelegate
-            Item { id: hlDItem; height: 125; width: parent.width;
-
-                Rectangle { id: rec
-                    anchors { left: parent.left; leftMargin: 10; top: parent.top; topMargin: 5; verticalCenter: personName.verticalCenter}
-                    height: 20
-                    width: 20
-                    color: "#FF6900"
-                    radius: 10
-                }
-
-                Text { id: personName
-                    anchors { left: rec.right; leftMargin: 10; top: parent.top; topMargin: 5}
-                    color: "gray"; font.pointSize: 18;text: name + " " + surname
-                }
-
-                Text { id: reservedHours
-                    anchors { left: personName.left; top: personName.bottom; topMargin: 5}
-                    color: "gray"; font.pointSize: 16; text: from + " - " + to
-                }
-
-                Rectangle { id: line
-                    anchors { left: parent.left; leftMargin: 10; top: reservedHours.bottom; topMargin: 5; horizontalCenter: parent.horizontalCenter}
-                    height: 2
-                    width: parent.width * 0.7
-                    color: "lightgray"
-                }
-
-
-           } // Item
-
-        } // Component
 
     } // Rectangle
 
 } // Item
+

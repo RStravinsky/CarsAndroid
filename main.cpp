@@ -19,9 +19,6 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
     QQmlApplicationEngine engine;
     auto root_context = engine.rootContext();
-
-    //QGuiApplication::setFont(QFont("Purisa"));
-
     qmlRegisterType<CarBlock>();
     qmlRegisterType<BookingInfo>();;
     CarView cv;

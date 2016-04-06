@@ -3,7 +3,6 @@
 CarView::CarView(QObject *parent) : QObject(parent)
 {
 Database::setParameters("94.230.27.222", 3306, "sigmacars", "root", "Serwis4q@");
-
 }
 
 void CarView::setCarList()

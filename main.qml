@@ -56,7 +56,7 @@ ApplicationWindow {
              id: mainButton; height: topFrame.height; width: mainButton.height
              anchors { left: topFrame.left; top: topFrame.top }
              z: topFrame.z + 1 // before top frame
-             onButtonClicked: { mainArea.menuChange() }
+             onButtonClicked: { mainArea.menuChange(); }
          }
 
          Rectangle {
@@ -94,6 +94,7 @@ ApplicationWindow {
                         break
                     case "RentView":
                         bookingView.area.enabled = menuView.currentIndex === 1 ? true : false
+                        //dateChooser.list.interactive = menuView.currentIndex === 1 ? true : false
                         break
                  }
             }
