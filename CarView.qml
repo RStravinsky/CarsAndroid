@@ -51,11 +51,11 @@ Item {
                     source: "images/"+photoPath
                     anchors { left: parent.left; top: license.bottom; topMargin: 5 }
                 }
-                Image { id: statusImage; height: parent.height * .3; width: statusImage.height
-                    fillMode: Image.PreserveAspectFit
-                    source: sourceImage
-                    anchors { right: parent.right; top: parent.top; topMargin: 5}
-                }
+//                Image { id: statusImage; height: parent.height * .3; width: statusImage.height
+//                    fillMode: Image.PreserveAspectFit
+//                    source: sourceImage
+//                    anchors { right: parent.right; top: parent.top; topMargin: 5}
+//                }
 
                 ActionButton {
                     id: rsrvBtn; height: carItem.height * .3; width: rsrvBtn.height * 1.7

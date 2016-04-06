@@ -9,6 +9,7 @@ Item {
     property int horizontalAlignment: Text.AlignLeft
     property int maximumLength: 32767
     property bool customReturnKey: false
+    property bool activeButton: false
     property alias field: field
     property alias text: field.text
 
@@ -21,6 +22,7 @@ Item {
         font.pixelSize: screenH/30
         placeholderText: customTextField.placeholderText
         maximumLength: customTextField.maximumLength
+        readOnly: customTextField.activeButton
         style: TextFieldStyle {
                 textColor: "gray"
                 placeholderTextColor: "lightgray"
@@ -70,6 +72,29 @@ Item {
         }
 
     } // TextField
+
+    Rectangle {
+         id: imageRectangle
+         anchors.fill: parent
+         color: "transparent"
+         visible: customTextField.activeButton
+
+         Image {
+             id: narrowButton
+             anchors { right: parent.right; rightMargin: 10; verticalCenter: parent.verticalCenter }
+             source: "/images/images/right-angle-arrow.png"
+         }
+
+         MouseArea {
+             id: narrowButtonMouseArea
+             anchors.fill: parent
+             z: mouseM.z - 1
+             enabled: menuView.currentIndex === 1 ? true : false
+             onClicked: {
+                 dateChooser.setListIndex(bookingView.listIndex); stackView.push(dateChooser)
+             }
+         }
+   }
 
     Rectangle
     {

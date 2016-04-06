@@ -25,7 +25,6 @@ Item {
     Component {
         id: hoursListDelegate
 
-
         Item { id: hlDItem; height: screenH * .1; width: parent.width;
 
             Rectangle { id: rec
@@ -61,9 +60,9 @@ Item {
            Rectangle {
                 id: imageRectangle
                 height: parent.height
-                color: "transparent"
-                width: narrowButton.width * 3
+                width: parent.width
                 anchors { right: parent.right; verticalCenter: parent.verticalCenter }
+                color: "transparent"
 
                 Image {
                     id: narrowButton

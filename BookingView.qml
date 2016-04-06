@@ -30,7 +30,7 @@ Item {
             console.log("onCanceled...")
             menuView.currentIndexChanged()
             normalViewMask.opacity = menuView.currentIndex === 1 ? 0 : 0.7
-            area.enabled = false
+            area.enabled = menuView.currentIndex === 1 ? true : false
         }
     }
 

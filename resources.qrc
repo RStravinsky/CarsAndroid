@@ -26,5 +26,7 @@
         <file>images/target.png</file>
         <file>images/speed.png</file>
         <file>images/notes.png</file>
+        <file>images/date_begin.png</file>
+        <file>images/date_end.png</file>
     </qresource>
 </RCC>

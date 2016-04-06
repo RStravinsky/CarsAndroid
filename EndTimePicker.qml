@@ -29,7 +29,6 @@ Item {
                 text: "Wybierz godzinę końcową:"
                 color: "white"
                 font.family: "Calibri"
-                //font.bold: true
                 opacity: 1
                 anchors {verticalCenter: parent.verticalCenter; horizontalCenter: parent.horizontalCenter}
                 horizontalAlignment: Text.AlignHCenter

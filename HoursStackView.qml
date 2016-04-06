@@ -21,13 +21,10 @@ Item {
         id: stackView
         anchors.fill: parent
         initialItem: hoursListItem
-
     }
 
     HoursListItem { id: hoursListItem; nextView: hourContentItem; selectedDate: dateChooser.calendar.selectedDate }
     HourContentItem { id: hourContentItem; nextView: startTimePicker }
     StartTimePicker { id: startTimePicker; nextView: endTimePicker }
     EndTimePicker { id: endTimePicker; nextView: hoursListItem }
-
-
 }

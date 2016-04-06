@@ -12,7 +12,7 @@ Item {
     anchors.fill: parent
 
     property alias defaultFontPixelSize: hiddenText.font.pixelSize
-
+    property var area: area
     property int listIndex
     property var calendar: bookingCalendar
     property var startDateTime: hoursStackView.startDateTime
@@ -25,44 +25,42 @@ Item {
         hoursStackView.setListIndex(val)
     }
 
-    Rectangle {
-        id: mainRectangle
-        anchors.fill: parent
-        color: "white"
-
-        SwipeArea {
-             id: mouseM
-             menu: menuView
-             anchors.fill: parent
-             onMove: {
-                 console.log("onMove...")
-                 bookingCalendar.enabled = false
-                 hoursStackView.enabled = false
-                 menuView.x = (-mainArea.width * menuView.currentIndex) + x // changing menu x
-                 normalViewMask.opacity = (1 -((Math.abs(menuView.x)/menuView.width)))/1.5 // changing normal view opacity
-             }
-             onSwipe: {
-                 console.log("onSwipe...")
-                 mainArea.menuChange()
-             }
-             onCanceled: {
-                 console.log("onCanceled...")
-                 menuView.currentIndexChanged()
-                 normalViewMask.opacity = menuView.currentIndex === 1 ? 0 : 0.7
-                 bookingCalendar.enabled = true
-                 hoursStackView.enabled = true
-             }
+    SwipeArea {
+         id: mouseM
+         menu: menuView
+         anchors.fill: parent
+         onMove: {
+             console.log("onMove...")
+             area.enabled = false
+             menuView.x = (-mainArea.width * menuView.currentIndex) + x // changing menu x
+             normalViewMask.opacity = (1 -((Math.abs(menuView.x)/menuView.width)))/1.5 // changing normal view opacity
          }
+         onSwipe: {
+             console.log("onSwipe...")
+             mainArea.menuChange()
+         }
+         onCanceled: {
+             console.log("onCanceled...")
+             menuView.currentIndexChanged()
+             normalViewMask.opacity = menuView.currentIndex === 1 ? 0 : 0.7
+             area.enabled = menuView.currentIndex === 1 ? true : false
+         }
+     }
 
+    Rectangle {
+        id: area
+        property int offset: 20
+        width: parent.width - 2*offset
+        height: parent.height - 2*offset
+        anchors.centerIn: parent
+        //anchors { bottom: parent.bottom; left: parent.left; right: parent.right; top: parent.top; margins: offset }
+        property int areaHeight: (screenH - topFrame.height - (2*offset))
 
         Calendar {
            id: bookingCalendar
            anchors.top: parent.top
            anchors.left: parent.left
            anchors.right: parent.right
-           anchors.leftMargin: 30
-           anchors.rightMargin: 30
-           anchors.topMargin: 30
            width: parent.width
            height: parent.height * 0.5
            z: hoursStackView.z + 1
@@ -147,10 +145,7 @@ Item {
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.bottom: parent.bottom
-            anchors.leftMargin: 30
-            anchors.rightMargin: 30
-            anchors.topMargin: 30
-            anchors.bottomMargin: 30
+            anchors.topMargin: 10
             width: parent.width
             height: parent.height * 0.5
         }

@@ -87,14 +87,13 @@ ApplicationWindow {
                     case "SettingsView":
                         break
                     case "DateChooser":
-                        dateChooser.calendar.enabled = menuView.currentIndex === 1 ? true : false
+                        dateChooser.area.enabled = menuView.currentIndex === 1 ? true : false
                         break
                     case "RentView":
                         rentView.area.enabled = menuView.currentIndex === 1 ? true : false
                         break
-                    case "RentView":
+                    case "BookingView":
                         bookingView.area.enabled = menuView.currentIndex === 1 ? true : false
-                        //dateChooser.list.interactive = menuView.currentIndex === 1 ? true : false
                         break
                  }
             }
