@@ -30,8 +30,12 @@ ApplicationWindow {
                      if(stackView.currentItem.objectName === "RentView") { rentView.clearText() }
                      if(stackView.currentItem.objectName === "BookingView") { bookingView.clearText() }
                      if(stackView.currentItem.objectName === "PinView") { pinView.clearText() }
+
                      if(stackView.depth === 1) apps.close()
-                     else stackView.pop()
+                     else  {
+                         if(dateChooser.stack.depth === 1) stackView.pop()
+                         else dateChooser.stack.pop()
+                     }
                  }
                  else { mainArea.menuChange() }
                  event.accepted = true
@@ -113,7 +117,7 @@ ApplicationWindow {
             Rectangle { id: normalView; anchors.fill: parent; visible: false
                  CarView { id:carView; objectName: "CarView"; Component.onCompleted: carViewClass.setCarList()}
                  SettingsView { id:settingsView; objectName: "SettingsView"; }
-                 DateChooser {id:dateChooser; objectName: "DateChooser"; }
+                 DateChooser {id:dateChooser; objectName: "DateChooser";}
                  RentView { id:rentView; objectName: "RentView"; }
                  PinView { id:pinView; objectName: "PinView" }
                  BookingView { id:bookingView; objectName: "BookingView" }

@@ -11,7 +11,7 @@ import Qt.labs.controls 1.0
 
 Item {
     id: hourContentItem
-    visible: stackView.currentItem === hourContentItem ? true : false
+    visible: dateChooserStack.currentItem === hourContentItem ? true : false
     property var nextView
 
     Rectangle {
@@ -92,7 +92,7 @@ Item {
             }
 
             onClicked: {
-                stackView.pop()
+                dateChooserStack.pop()
             }
         }
 
@@ -126,7 +126,7 @@ Item {
             }
 
             onClicked: {
-                stackView.push(nextView)
+                dateChooserStack.push(nextView)
             }
         }
 

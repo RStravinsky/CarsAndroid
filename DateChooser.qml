@@ -12,6 +12,7 @@ Item {
     anchors.fill: parent
 
     property alias defaultFontPixelSize: hiddenText.font.pixelSize
+    property alias stack: hoursStackView.stack
     property var area: area
     property int listIndex
     property var calendar: bookingCalendar
@@ -50,10 +51,7 @@ Item {
     Rectangle {
         id: area
         property int offset: 20
-        width: parent.width - 2*offset
-        height: parent.height - 2*offset
-        anchors.centerIn: parent
-        //anchors { bottom: parent.bottom; left: parent.left; right: parent.right; top: parent.top; margins: offset }
+        anchors { bottom: parent.bottom; left: parent.left; right: parent.right; top: parent.top; margins: offset }
         property int areaHeight: (screenH - topFrame.height - (2*offset))
 
         Calendar {

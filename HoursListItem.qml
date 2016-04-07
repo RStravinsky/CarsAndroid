@@ -11,7 +11,7 @@ import Qt.labs.controls 1.0
 Item {
     id: hoursListItem
     anchors.fill: parent
-    visible: stackView.currentItem === hoursListItem ? true : false
+    visible: hoursStackView.currentItem === hoursListItem ? true : false
     property date selectedDate
     property var nextView
 
@@ -91,7 +91,7 @@ Item {
                         if (delay.running) {}
                         else {
                             carViewClass.carList[listIndex].readBookingEntries(selectedDate, modelData)
-                            stackView.push(nextView)
+                            dateChooserStack.push(nextView)
                         }
                     }
                 }
