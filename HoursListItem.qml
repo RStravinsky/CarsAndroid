@@ -20,6 +20,9 @@ Item {
         anchors.fill: parent
         model: ["00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00"]
         delegate: hoursListDelegate
+        highlightMoveDuration: 0
+        highlight: Rectangle {color: "lightgray" }
+        currentIndex: -1
     }
 
     Component {
@@ -76,14 +79,26 @@ Item {
                     z: mouseM.z - 1
                     enabled: menuView.currentIndex === 1 ? true : false
                     onClicked: {
-                        carViewClass.carList[listIndex].readBookingEntries(selectedDate, modelData)
-                        stackView.push(nextView)
-
+                        hoursList.currentIndex = index
+                        delay.running = true
                     }
                 }
-          }
 
-       } // Item
+                PauseAnimation {
+                    id: delay
+                    duration: 100
+                    onRunningChanged: {
+                        if (delay.running) {}
+                        else {
+                            carViewClass.carList[listIndex].readBookingEntries(selectedDate, modelData)
+                            stackView.push(nextView)
+                        }
+                    }
+                }
+
+            } // Rectangle
+
+        } // Item
 
     } // Component
 
