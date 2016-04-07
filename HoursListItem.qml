@@ -24,6 +24,8 @@ Item {
         highlightMoveDuration: 0
         highlight: Rectangle {color: "lightgray" }
         currentIndex: -1
+        snapMode: ListView.SnapToItem
+        clip: true
     }
 
     Component {
@@ -38,11 +40,11 @@ Item {
                 color: {
                     switch(carViewClass.carList[listIndex].setHoursColor(dateChooser.calendar.selectedDate, modelData))
                     {
-                    case 0: "green"
+                    case 0: "#32b678"
                             break
-                    case 1: "blue"
+                    case 1: "#3988e5"
                             break
-                    case 2: "red"
+                    case 2: "#db4437"
                             break
                     }
                 }

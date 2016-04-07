@@ -18,7 +18,7 @@ Item {
 
         Rectangle {
                 id: orangeBar
-                color: "#FF6900"
+                color: "#FF8C00"
                 width: parent.width
                 height: parent.height * .2
                 anchors {left: parent.left; top: parent.top; topMargin: 10; horizontalCenter: parent.horizontalCenter}
