@@ -13,6 +13,7 @@ Item {
     id: hourContentItem
     visible: stackView.currentItem === hourContentItem ? true : false
     property var nextView
+    property bool isReserveButtonVisible
 
     Rectangle {
         id: hourContent
@@ -98,6 +99,7 @@ Item {
 
         Button {
             id: nextBtn
+            visible: isReserveButtonVisible
             width: nextBtn.height * 2.5
             height: parent.height * .15
             anchors { right: parent.right; rightMargin: 10; bottom: parent.bottom; }

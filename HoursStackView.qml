@@ -23,8 +23,8 @@ Item {
         initialItem: hoursListItem
     }
 
-    HoursListItem { id: hoursListItem; nextView: hourContentItem; selectedDate: dateChooser.calendar.selectedDate }
-    HourContentItem { id: hourContentItem; nextView: startTimePicker }
+    HoursListItem { id: hoursListItem; nextView: (hourState === 0) ? startTimePicker : hourContentItem; selectedDate: dateChooser.calendar.selectedDate }
+    HourContentItem { id: hourContentItem; nextView: startTimePicker; isReserveButtonVisible: (hoursListItem.hourState === 2) ? false : true; }
     StartTimePicker { id: startTimePicker; nextView: endTimePicker }
     EndTimePicker { id: endTimePicker; nextView: hoursListItem }
 }

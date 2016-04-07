@@ -70,7 +70,7 @@ Item {
                     id: rentBtn; height: parent.height * .3; width: rsrvBtn.height * 1.7;
                     gradcolorStart: status === false ? "#00BE00" : "red"
                     gradcolorEnd: status === false ? "#009600" : "red"
-                    buttonText: status === false ? qsTr("Wypożyczyć") : qsTr("Oddaj")
+                    buttonText: status === false ? qsTr("Wypożycz") : qsTr("Oddaj")
                     anchors { bottom: parent.bottom; bottomMargin: 10; right: rsrvBtn.left; rightMargin: 5 }
                     enabled: menuView.currentIndex === 1 ? true : false
                     z: carView.z + 1 // before parent
