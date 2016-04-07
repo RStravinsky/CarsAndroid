@@ -13,6 +13,7 @@ Item {
     id: hourContentItem
     visible: dateChooserStack.currentItem === hourContentItem ? true : false
     property var nextView
+    property bool isReserveButtonVisible
 
     Rectangle {
         id: hourContent
@@ -35,7 +36,6 @@ Item {
                     height: 20
                     width: 20
                     color: "#FF6900"
-                    //radius: 10
                 }
 
                 Text { id: personName
@@ -60,76 +60,13 @@ Item {
 
         } // Component
 
-        Button {
-            id: backBtn
-            width: backBtn.height * 2.5
-            height: parent.height * .15
-            anchors { left: parent.left; leftMargin: 10; bottom: parent.bottom; }
-
-            background: Rectangle {
-                id: btnRec
-                property color gradcolorStart: "#FF8C00"
-                property color gradcolorEnd: "#FF6900"
-                anchors.fill: parent
-
-                gradient: Gradient {
-                    GradientStop { position: 0; color: btnRec.gradcolorStart }
-                    GradientStop { position: 1; color: btnRec.gradcolorEnd }
-                    }
-                radius: 5
-                opacity: backBtn.pressed ? 0 : 1
-            }
-
-            label: Label {
-                id: btnLab
-                text: "Cofnij"
-                color: "white"
-                font.family: "Calibri"
-                font.pointSize: 11
-                anchors.horizontalCenter: backBtn.horizontalCenter
-                anchors.verticalCenter: backBtn.verticalCenter
-
-            }
-
-            onClicked: {
-                dateChooserStack.pop()
-            }
-        }
-
-        Button {
-            id: nextBtn
-            width: nextBtn.height * 2.5
-            height: parent.height * .15
+        ActionButton { id: nextBtn; width: nextBtn.height * 2.5; height: parent.height * .15
             anchors { right: parent.right; rightMargin: 10; bottom: parent.bottom; }
-
-            background: Rectangle {
-                id: btnNextRec
-                anchors.fill: parent
-
-                gradient: Gradient {
-                    GradientStop { position: 0; color: btnRec.gradcolorStart }
-                    GradientStop { position: 1; color: btnRec.gradcolorEnd }
-                    }
-                radius: 5
-                opacity: nextBtn.pressed ? 0 : 1
-            }
-
-            label: Label {
-                id: btnNextLab
-                text: "Rezerwuj"
-                color: "white"
-                font.family: "Calibri"
-                font.pointSize: 11
-                anchors.horizontalCenter: nextBtn.horizontalCenter
-                anchors.verticalCenter: nextBtn.verticalCenter
-
-            }
-
-            onClicked: {
-                dateChooserStack.push(nextView)
-            }
+            visible: isReserveButtonVisible
+            buttonText: qsTr("Rezerwuj")
+            onActivated: dateChooserStack.push(nextView)
         }
 
-    }
+    } // Rectangle
 
-}
+} // Item

@@ -19,7 +19,7 @@ Item {
     function updateTimeString()
     {
         timeString = hours[hoursTumbler.currentIndex] + ":" + minutesH[minutesHTumbler.currentIndex] + minutesL[minutesLTumbler.currentIndex]
-        console.log(timeString)
+        //console.log(timeString)
     }
 
     Rectangle {

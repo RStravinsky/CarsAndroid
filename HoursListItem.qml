@@ -14,6 +14,7 @@ Item {
     visible: hoursStackView.currentItem === hoursListItem ? true : false
     property date selectedDate
     property var nextView
+    property int hourState
 
     ListView {
         id: hoursList
@@ -91,6 +92,7 @@ Item {
                         if (delay.running) {}
                         else {
                             carViewClass.carList[listIndex].readBookingEntries(selectedDate, modelData)
+                            hourState = carViewClass.carList[listIndex].setHoursColor(dateChooser.calendar.selectedDate, modelData)
                             dateChooserStack.push(nextView)
                         }
                     }
@@ -102,7 +104,7 @@ Item {
 
     } // Component
 
-}
+} // Item
 
 
 
