@@ -88,7 +88,6 @@ Item {
          MouseArea {
              id: narrowButtonMouseArea
              anchors.fill: parent
-             z: mouseM.z - 1
              enabled: menuView.currentIndex === 1 ? true : false
              onClicked: {
                  dateChooser.setListIndex(bookingView.listIndex); stackView.push(dateChooser)

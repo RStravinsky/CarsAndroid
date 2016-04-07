@@ -28,8 +28,6 @@ Item {
                 height: Text.height
                 text: "Wybierz godzinę końcową:"
                 color: "white"
-                font.family: "Calibri"
-                opacity: 1
                 anchors {verticalCenter: parent.verticalCenter; horizontalCenter: parent.horizontalCenter}
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
@@ -43,80 +41,16 @@ Item {
             height: parent.height * .5
         }
 
-        Button {
-            id: backBtn
-            width: backBtn.height * 2.5
-            height: parent.height * .15
-            anchors { left: parent.left; leftMargin: 10; bottom: parent.bottom; }
-
-            background: Rectangle {
-                id: btnRec
-                property color gradcolorStart: "#FF8C00"
-                property color gradcolorEnd: "#FF6900"
-                anchors.fill: parent
-
-                gradient: Gradient {
-                    GradientStop { position: 0; color: btnRec.gradcolorStart }
-                    GradientStop { position: 1; color: btnRec.gradcolorEnd }
-                    }
-                radius: 5
-                opacity: backBtn.pressed ? 0 : 1
-            }
-
-            label: Label {
-                id: btnLab
-                text: "Cofnij"
-                color: "white"
-                font.family: "Calibri"
-                font.pointSize: 12
-                anchors.horizontalCenter: backBtn.horizontalCenter
-                anchors.verticalCenter: backBtn.verticalCenter
-
-            }
-
-            onClicked: {
-                dateChooserStack.pop()
-            }
-        }
-
-        Button {
-            id: nextBtn
-            width: nextBtn.height * 2.5
-            height: parent.height * .15
+        ActionButton { id: nextBtn; width: nextBtn.height * 2.5; height: parent.height * .15
             anchors { right: parent.right; rightMargin: 10; bottom: parent.bottom; }
-
-            background: Rectangle {
-                id: btnNextRec
-                anchors.fill: parent
-
-                gradient: Gradient {
-                    GradientStop { position: 0; color: btnRec.gradcolorStart }
-                    GradientStop { position: 1; color: btnRec.gradcolorEnd }
-                    }
-                radius: 5
-                opacity: nextBtn.pressed ? 0 : 1
-            }
-
-            label: Label {
-                id: btnNextLab
-                text: "Kontynuuj"
-                color: "white"
-                font.family: "Calibri"
-                font.pointSize: 12
-                anchors.horizontalCenter: nextBtn.horizontalCenter
-                anchors.verticalCenter: nextBtn.verticalCenter
-
-            }
-
-            onClicked: {
-                //dateChooserStack.pop(null)
-                stackView.pop(rentView)
+            buttonText: qsTr("Dalej")
+            onActivated: {
+                stackView.pop(bookingView)
+                dateChooserStack.pop(hoursListItem)
                 dateTimeString = bookingCalendar.selectedDate.toLocaleString(Qt.locale("pl_PL"), "yyyy-MM-dd") + " " + timeTumbler.timeString
-                //console.log(dateTimeString)
                 dateTime = Date.fromLocaleString(Qt.locale(), dateTimeString, "yyyy-MM-dd hh:mm")
-                //console.log(dateTime)
             }
         }
 
-}
+} // Item
 
