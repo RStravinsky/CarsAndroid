@@ -19,6 +19,14 @@ ApplicationWindow {
 
     Component.onCompleted: { screenH = screenHight }
 
+    CustomBusyIndicator {
+       id: busyIndication
+       height: parent.height/2
+       width: busyIndication.height
+       anchors.centerIn: parent
+       z: topFrame.z + 100
+    }
+
     MainForm {
          id: mainForm
          anchors.fill: parent
@@ -138,6 +146,7 @@ ApplicationWindow {
 
          } // MainArea
 
+         //Component.onCompleted: busyIndication.running = false
     } // MainForm
 
 } // ApplicationWindow

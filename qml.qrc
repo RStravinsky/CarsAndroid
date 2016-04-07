@@ -24,5 +24,7 @@
         <file>StartTimePicker.qml</file>
         <file>TimeTumbler.qml</file>
         <file>EndTimePicker.qml</file>
+        <file>CustomBusyIndicatorStyle.qml</file>
+        <file>CustomBusyIndicator.qml</file>
     </qresource>
 </RCC>

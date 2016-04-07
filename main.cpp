@@ -14,10 +14,9 @@
 
 int main(int argc, char *argv[])
 {
-
-
     QApplication app(argc, argv);
     QQmlApplicationEngine engine;
+
     auto root_context = engine.rootContext();
     qmlRegisterType<CarBlock>();
     qmlRegisterType<BookingInfo>();;
@@ -27,6 +26,7 @@ int main(int argc, char *argv[])
     root_context->setContextProperty("carViewClass", &cv);
     root_context->setContextProperty("carBlockClass", &cb);
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
+
 
     return app.exec();
 }
