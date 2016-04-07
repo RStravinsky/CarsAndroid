@@ -75,8 +75,7 @@ Item {
             property string code
             property int distance
             anchors { bottom: parent.bottom; left: parent.left; right: parent.right; }
-            gradcolorStart: rentView.isRented === false ? "#00BE00" : "red"
-            gradcolorEnd: rentView.isRented === false ? "#009600" : "red"
+            buttonColor: rentView.isRented === false ? "#32b678" : "#db4437"
             buttonText: rentView.isRented === false ? qsTr("Wypożycz") : qsTr("Oddaj")
             enabled: menuView.currentIndex === 1 ? true : false
             fontSize: screenH/35

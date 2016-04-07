@@ -5,17 +5,12 @@ import QtQuick.Controls.Styles 1.3
 
 Rectangle {
     id: actionButton
-    property color gradcolorStart: "#FF8C00"
-    property color gradcolorEnd: "#FF6900"
+    property color buttonColor: "#FF8C00"
     property string buttonText
     property int fontSize: screenH/70
     property int buttonRadius: 5
     signal activated()
-
-    gradient: Gradient {
-        GradientStop { position: 0; color: actionButton.gradcolorStart }
-        GradientStop { position: 1; color: actionButton.gradcolorEnd }
-        }
+    color : buttonColor
     radius: buttonRadius
 
     Text {

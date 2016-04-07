@@ -18,14 +18,20 @@ Item {
         listIndex = val
     }
 
-    StackView {
-        id: dateChooserStack
-        anchors.fill: parent
-        initialItem: hoursListItem
+    Rectangle {
+        anchors.fill:parent
+
+        StackView {
+            id: dateChooserStack
+            anchors.fill: parent
+            initialItem: hoursListItem
+        }
+
+        HoursListItem { id: hoursListItem; anchors.fill: parent; nextView: (hourState === 0) ? startTimePicker : hourContentItem; selectedDate: dateChooser.calendar.selectedDate }
+        HourContentItem { id: hourContentItem; nextView: startTimePicker; isReserveButtonVisible: (hoursListItem.hourState === 2) ? false : true; }
+        StartTimePicker { id: startTimePicker; nextView: endTimePicker }
+        EndTimePicker { id: endTimePicker; nextView: hoursListItem }
+
     }
 
-    HoursListItem { id: hoursListItem; nextView: (hourState === 0) ? startTimePicker : hourContentItem; selectedDate: dateChooser.calendar.selectedDate }
-    HourContentItem { id: hourContentItem; nextView: startTimePicker; isReserveButtonVisible: (hoursListItem.hourState === 2) ? false : true; }
-    StartTimePicker { id: startTimePicker; nextView: endTimePicker }
-    EndTimePicker { id: endTimePicker; nextView: hoursListItem }
 }
