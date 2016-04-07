@@ -85,6 +85,7 @@ Item {
                               id: dateText
                               text: styleData.title
                               font.pixelSize: defaultFontPixelSize * 1.2
+                              color: "white"
                               horizontalAlignment: Text.AlignHCenter
                               verticalAlignment: Text.AlignVCenter
                               fontSizeMode: Text.Fit

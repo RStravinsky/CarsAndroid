@@ -109,12 +109,10 @@ Item {
             }
 
             onClicked: {
-                //dateChooserStack.pop(null)
-                stackView.pop(rentView)
+                stackView.pop(bookingView)
+                dateChooserStack.pop(hoursListItem)
                 dateTimeString = bookingCalendar.selectedDate.toLocaleString(Qt.locale("pl_PL"), "yyyy-MM-dd") + " " + timeTumbler.timeString
-                //console.log(dateTimeString)
                 dateTime = Date.fromLocaleString(Qt.locale(), dateTimeString, "yyyy-MM-dd hh:mm")
-                //console.log(dateTime)
             }
         }
 
