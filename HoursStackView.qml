@@ -12,13 +12,14 @@ Item {
     id: hoursStackView
     property var list: hoursListItem
     property var listIndex
+    property alias stack: dateChooserStack
 
     function setListIndex(val) {
         listIndex = val
     }
 
     StackView {
-        id: stackView
+        id: dateChooserStack
         anchors.fill: parent
         initialItem: hoursListItem
     }

@@ -11,7 +11,7 @@ import Qt.labs.controls 1.0
 Item {
     id: endTimePicker
     anchors.fill: parent
-    visible: stackView.currentItem === endTimePicker ? true : false
+    visible: hoursStackView.currentItem === endTimePicker ? true : false
     property var nextView
     property date dateTime
     property string dateTimeString
@@ -75,7 +75,7 @@ Item {
             }
 
             onClicked: {
-                stackView.pop()
+                dateChooserStack.pop()
             }
         }
 
@@ -109,7 +109,8 @@ Item {
             }
 
             onClicked: {
-                stackView.push(nextView)
+                //dateChooserStack.pop(null)
+                stackView.pop(rentView)
                 dateTimeString = bookingCalendar.selectedDate.toLocaleString(Qt.locale("pl_PL"), "yyyy-MM-dd") + " " + timeTumbler.timeString
                 //console.log(dateTimeString)
                 dateTime = Date.fromLocaleString(Qt.locale(), dateTimeString, "yyyy-MM-dd hh:mm")

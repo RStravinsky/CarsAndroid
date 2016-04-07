@@ -11,7 +11,7 @@ import Qt.labs.controls 1.0
 Item {
     id: hoursListItem
     anchors.fill: parent
-    visible: stackView.currentItem === hoursListItem ? true : false
+    visible: hoursStackView.currentItem === hoursListItem ? true : false
     property date selectedDate
     property var nextView
     property int hourState
@@ -93,7 +93,7 @@ Item {
                         else {
                             carViewClass.carList[listIndex].readBookingEntries(selectedDate, modelData)
                             hourState = carViewClass.carList[listIndex].setHoursColor(dateChooser.calendar.selectedDate, modelData)
-                            stackView.push(nextView)
+                            dateChooserStack.push(nextView)
                         }
                     }
                 }
