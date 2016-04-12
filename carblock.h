@@ -7,7 +7,6 @@
 #include <QMessageBox>
 #include <memory>
 #include "bookinginfo.h"
-#include "database.h"
 
 class BookingInfo;
 
@@ -78,8 +77,6 @@ private:
     const int m_mileage;
     QSqlQueryModel m_bookingModel;
     QList<BookingInfo*> m_bookingInfoList;
-
-
 };
 
 #endif // CARBLOCK_H

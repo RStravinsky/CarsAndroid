@@ -36,6 +36,15 @@ Item {
     }
 
     Rectangle {
+        id: loadingRect
+        anchors.fill: parent
+        z: bookingView.z + 1
+        visible: bookingBtn.isActivated
+        color:"black"
+        opacity: 0.5
+    }
+
+    Rectangle {
         id: area
         property int offset: 20
         anchors { bottom: parent.bottom; left: parent.left; right: parent.right; top: parent.top; margins: offset }
@@ -82,6 +91,7 @@ Item {
                     else { messageDialog.show("Uwaga!", "Polecenie nie powiodło się.", StandardIcon.Warning) }
                 }
 
+                bookingBtn.isActivated = false
             } // OnActivated
 
         } // ActiveButton

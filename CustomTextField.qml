@@ -78,6 +78,7 @@ Item {
                 id: clear
                 anchors { horizontalCenter: parent.horizontalCenter; verticalCenter: parent.verticalCenter }
                 height: field.height; width: field.height
+                propagateComposedEvents: true
                 onClicked: {
                     field.text = ""
                     field.forceActiveFocus()
@@ -103,6 +104,7 @@ Item {
              id: narrowButtonMouseArea
              anchors.fill: parent
              enabled: menuView.currentIndex === 1 ? true : false
+             propagateComposedEvents: true
              onClicked: {
                  dateChooser.setDateTimeType(dateTimeType); dateChooser.setListIndex(bookingView.listIndex); stackView.push(dateChooser)
                  if(field.text === "") dateChooser.clearDateChooser()

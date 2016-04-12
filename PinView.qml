@@ -24,4 +24,14 @@ Item {
         customReturnKey: true
     }
 
+    ActionButton {
+        id: getCode; height: code.height; width: code.width
+        buttonText: qsTr("Wklej ze schowka")
+        buttonColor: "#8c8c8c"
+        anchors { top: code.bottom; topMargin: 10; horizontalCenter: parent.horizontalCenter }
+        enabled: menuView.currentIndex === 1 ? true : false
+        z: parent.z + 1 // before parent
+        onActivated: { code.field.text = ""; code.field.paste() }
+    }
+
 } // Item

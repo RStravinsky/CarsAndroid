@@ -10,6 +10,7 @@ Rectangle {
     property int fontSize: screenH/70
     property int buttonRadius: 5
     signal activated()
+    property bool isActivated: false;
     color : buttonColor
     radius: buttonRadius
 
@@ -25,7 +26,10 @@ Rectangle {
     MouseArea {
         id: mouseArea;
         anchors.fill: actionButton
-        onClicked: btnClickAnimation.running = true
+        onClicked: {
+            isActivated = true;
+            btnClickAnimation.running = true
+        }
     }
 
     SequentialAnimation {
@@ -34,7 +38,7 @@ Rectangle {
         PropertyAnimation { target: actionButton; property: "opacity"; easing.type: Easing.Linear; to: 1; duration: 30 }
         onRunningChanged: {
             if (btnClickAnimation.running) {}
-            else {actionButton.activated()}
+            else { actionButton.activated()}
         }
     }
 

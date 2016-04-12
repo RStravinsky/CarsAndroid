@@ -5,7 +5,7 @@
  * should not be modified by hand.
  */
 
-package org.qtproject.example;
+package pl.sigmasa.rezerwacja;
 
 public final class R {
     public static final class array {

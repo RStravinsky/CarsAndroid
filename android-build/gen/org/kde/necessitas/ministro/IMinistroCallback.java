@@ -1,6 +1,6 @@
 /*
  * This file is auto-generated.  DO NOT MODIFY.
- * Original file: /home/bartek/Dokumenty/QtWorkspace/CarsAndroid/android-build/src/org/kde/necessitas/ministro/IMinistroCallback.aidl
+ * Original file: /home/rafal/Dokumenty/QtWorkspace/CarsAndroid/android-build/src/org/kde/necessitas/ministro/IMinistroCallback.aidl
  */
 package org.kde.necessitas.ministro;
 public interface IMinistroCallback extends android.os.IInterface

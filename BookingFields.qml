@@ -28,6 +28,7 @@ Item {
                   bookingFieldsRepeater.itemAt(3).customTextField.text,
                   bookingFieldsRepeater.itemAt(4).customTextField.text,
                   ]
+
         return fields
     }
 
