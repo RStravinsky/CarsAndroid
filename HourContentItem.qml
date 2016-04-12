@@ -64,7 +64,7 @@ Item {
             anchors { right: parent.right; rightMargin: 10; bottom: parent.bottom; }
             visible: isReserveButtonVisible
             buttonText: qsTr("Rezerwuj")
-            onActivated: dateChooserStack.push(nextView)
+            onActivated: {timePicker.setHourIndex(hoursListItem.listofHours.currentIndex); dateChooserStack.push(nextView)}
         }
 
     } // Rectangle

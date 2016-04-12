@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/">
-        <file>main.qml</file>
+        <file>MainWindow.qml</file>
         <file>MainForm.ui.qml</file>
         <file>TopFrame.qml</file>
         <file>MainButton.qml</file>
@@ -21,8 +21,8 @@
         <file>HoursStackView.qml</file>
         <file>HourContentItem.qml</file>
         <file>HoursListItem.qml</file>
-        <file>StartTimePicker.qml</file>
         <file>TimeTumbler.qml</file>
-        <file>EndTimePicker.qml</file>
+        <file>TimePicker.qml</file>
+        <file>main.qml</file>
     </qresource>
 </RCC>

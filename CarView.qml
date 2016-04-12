@@ -58,7 +58,7 @@ Item {
                     anchors { bottom: parent.bottom; bottomMargin: 10; right: parent.right }
                     enabled: menuView.currentIndex === 1 ? true : false
                     z: carView.z + 1 // before parent
-                    onActivated: { bookingView.setListIndex(listIndex); stackView.push(bookingView) }
+                    onActivated: { bookingView.setListIndex(listIndex); stackView.push(bookingView); dateChooser.clearDateChooser() }
                 }
 
                 ActionButton {

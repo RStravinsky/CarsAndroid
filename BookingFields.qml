@@ -3,6 +3,7 @@ import QtQuick.Controls 1.4
 
 Item {
     property var fields
+    property alias bookingFieldsRepeater: bookingFieldsRepeater
     function clearText() {
         for(var i=0;i<5;i++) {
             bookingFieldsRepeater.itemAt(i).customTextField.clear()
@@ -53,8 +54,23 @@ Item {
                     }
                 }
 
-                CustomTextField { id: customTextField; placeholderText: bookingFieldsRepeater.nameList[index]; height: row.height; width: row.width - rect.width;
-                    Component.onCompleted: { if(index === 0 || index === 1) customTextField.activeButton = true }
+                CustomTextField { id: customTextField; placeholderText: bookingFieldsRepeater.nameList[index]; height: row.height; width: row.width - rect.width; property string choosenTime;
+                    Component.onCompleted: { if(index === 0 || index === 1) customTextField.activeButton = true; dateTimeType = index; }
+                    onTextChanged: {
+                        if(bookingFieldsRepeater.itemAt(index).customTextField.text.length !== 0) {
+                            choosenTime = bookingFieldsRepeater.itemAt(index).customTextField.text
+                            choosenTime = choosenTime.split(" ")[1]
+                            choosenTime = choosenTime.split(":")[0] + ":00"
+                        }
+                        if(index === 0 || index === 1) { // TO DO
+                            if(carViewClass.carList[listIndex].setHoursColor(Date.fromLocaleString(Qt.locale(), bookingFieldsRepeater.itemAt(index).customTextField.text, "yyyy-MM-dd hh:mm"), choosenTime) === 1 ) {
+                                warningVisible = true
+                            }
+                            else {
+                                warningVisible = false
+                            }
+                        }
+                    }
                 }
 
             } // Row
