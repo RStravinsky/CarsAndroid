@@ -1,14 +1,6 @@
 #include <QApplication>
 #include <QQmlApplicationEngine>
 #include <QtQml>
-//#include <QQuickWindow>
-//#include <QQuickView>
-//#include <QGuiApplication>
-//#include <QQmlEngine>
-//#include <QQmlContext>
-//#include <QQmlComponent>
-//#include <QObject>
-//#include <QFont>
 #include "carview.h"
 #include "carblock.h"
 
