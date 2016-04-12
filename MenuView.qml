@@ -33,6 +33,7 @@ Item {
         ListModel {id: menuModel
             ListElement { name: "Lista samochodów";imagePath: "/images/images/reserve.png"}
             ListElement { name: "Ustawienia"; imagePath:"/images/images/settings.png"}
+            ListElement { name: "Moje kody"; imagePath:"/images/images/code.png"}
         }
 
         Component {

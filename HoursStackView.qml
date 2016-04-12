@@ -11,7 +11,7 @@ import Qt.labs.controls 1.0
 Item {
     id: hoursStackView
     property var list: hoursListItem
-    property var listIndex
+    property int listIndex : 0
     property alias stack: dateChooserStack
 
     function setListIndex(val) {

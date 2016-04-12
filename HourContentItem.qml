@@ -13,7 +13,7 @@ Item {
     id: hourContentItem
     visible: dateChooserStack.currentItem === hourContentItem ? true : false
     property var nextView
-    property bool isReserveButtonVisible
+    property bool isReserveButtonVisible : true
 
     Rectangle {
         id: hourContent
@@ -22,14 +22,14 @@ Item {
 
         ListView {
             id: entriesList
-            anchors {left: parent.left; right: parent.right; top: parent.top; bottom: backBtn.top; bottomMargin: 10}
-            model: { if(carViewClass.carList[listIndex].bookingInfoList.length) carViewClass.carList[listIndex].bookingInfoList }
+            anchors {left: parent.left; right: parent.right; top: parent.top; bottom: nextBtn.top; bottomMargin: 10}
+            model: { if(carViewClass.carList.length) carViewClass.carList[listIndex].bookingInfoList; }
             delegate: entriesListDelegate
         }
 
         Component {
             id: entriesListDelegate
-            Item { id: elDItem; height: backBtn.height * 1.5; width: parent.width;
+            Item { id: elDItem; height: nextBtn.height * 1.5; width: parent.width;
 
                 Rectangle { id: orangeRectangle
                     anchors { left: parent.left; leftMargin: 10; top: parent.top; topMargin: 5; verticalCenter: personName.verticalCenter}

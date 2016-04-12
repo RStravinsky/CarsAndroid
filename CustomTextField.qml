@@ -64,6 +64,7 @@ Item {
                 id: clear
                 anchors { horizontalCenter: parent.horizontalCenter; verticalCenter: parent.verticalCenter }
                 height: field.height; width: field.height
+                propagateComposedEvents: true
                 onClicked: {
                     field.text = ""
                     field.forceActiveFocus()
@@ -88,8 +89,8 @@ Item {
          MouseArea {
              id: narrowButtonMouseArea
              anchors.fill: parent
-             z: mouseM.z - 1
              enabled: menuView.currentIndex === 1 ? true : false
+             propagateComposedEvents: true
              onClicked: {
                  dateChooser.setListIndex(bookingView.listIndex); stackView.push(dateChooser)
              }

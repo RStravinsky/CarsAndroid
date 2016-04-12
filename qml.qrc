@@ -26,5 +26,6 @@
         <file>EndTimePicker.qml</file>
         <file>CustomBusyIndicatorStyle.qml</file>
         <file>CustomBusyIndicator.qml</file>
+        <file>CodesView.qml</file>
     </qresource>
 </RCC>

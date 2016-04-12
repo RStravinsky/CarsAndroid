@@ -1,32 +1,32 @@
-#include <QApplication>
+#include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QtQml>
-#include <QQuickWindow>
-#include <QQuickView>
-#include <QGuiApplication>
-#include <QQmlEngine>
-#include <QQmlContext>
-#include <QQmlComponent>
-#include <QObject>
-#include <QFont>
 #include "carview.h"
 #include "carblock.h"
+#include "sqldatabase.h"
+#include "fileio.h"
 
 int main(int argc, char *argv[])
 {
-    QApplication app(argc, argv);
+    QGuiApplication app(argc, argv);
     QQmlApplicationEngine engine;
 
-    auto root_context = engine.rootContext();
     qmlRegisterType<CarBlock>();
-    qmlRegisterType<BookingInfo>();;
+    qmlRegisterType<BookingInfo>();
+    qmlRegisterType<FileIO>();
+    qmlRegisterType<SingleCode>();
+    qmlRegisterType<SqlDatabase>("sigma.sql", 1, 0, "SqlDatabase");
+
     CarView cv;
     CarBlock cb;
-
+    FileIO fileIO;
+    auto root_context = engine.rootContext();
     root_context->setContextProperty("carViewClass", &cv);
     root_context->setContextProperty("carBlockClass", &cb);
-    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
+    root_context->setContextProperty("fileio", &fileIO);
 
+    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
     return app.exec();
 }
+

@@ -43,7 +43,6 @@ Item {
 
         ActionButton { id: nextBtn; width: nextBtn.height * 2.5; height: parent.height * .15
             anchors { right: parent.right; rightMargin: 10; bottom: parent.bottom; }
-            visible: isReserveButtonVisible
             buttonText: qsTr("Dalej")
             onActivated: {
                 stackView.pop(bookingView)

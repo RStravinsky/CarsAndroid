@@ -86,7 +86,7 @@ Item {
 
         Tumbler {
             id: minutesHTumbler
-            anchors { left: colonText.right; leftMargin: parent.width * .05; verticalCenter: hoursTumbler.verticalCenter; horizontalCenter: titleText.horizontalCenter }
+            anchors { left: colonText.right; leftMargin: timeTumblerRectangle.width * .05; verticalCenter: hoursTumbler.verticalCenter; }//horizontalCenter: titleText.horizontalCenter }
             width: parent.width * .266
             height: hoursTumbler.height
 

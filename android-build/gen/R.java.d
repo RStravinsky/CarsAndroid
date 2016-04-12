@@ -1,4 +1,4 @@
-/home/rafal/Dokumenty/QtWorkspace/CarsAndroid/android-build/gen/org/qtproject/example/R.java \
+/home/rafal/Dokumenty/QtWorkspace/CarsAndroid/android-build/gen/pl/sigmasa/rezerwacja/R.java \
  : /home/rafal/Dokumenty/QtWorkspace/CarsAndroid/android-build/res/values-et/strings.xml \
 /home/rafal/Dokumenty/QtWorkspace/CarsAndroid/android-build/res/values-fa/strings.xml \
 /home/rafal/Dokumenty/QtWorkspace/CarsAndroid/android-build/res/values-fr/strings.xml \

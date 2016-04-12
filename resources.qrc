@@ -28,5 +28,7 @@
         <file>images/notes.png</file>
         <file>images/date_begin.png</file>
         <file>images/date_end.png</file>
+        <file>images/wait.png</file>
+        <file>images/code.png</file>
     </qresource>
 </RCC>

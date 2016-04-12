@@ -35,6 +35,15 @@ Item {
     }
 
     Rectangle {
+        id: loadingRect
+        anchors.fill: parent
+        z: bookingView.z + 1
+        visible: bookingBtn.isActivated
+        color:"black"
+        opacity: 0.5
+    }
+
+    Rectangle {
         id: area
         property int offset: 20
         anchors { bottom: parent.bottom; left: parent.left; right: parent.right; top: parent.top; margins: offset }
@@ -79,6 +88,7 @@ Item {
                     // TODO - book a car
                 }
 
+                bookingBtn.isActivated = false
             } // OnActivated
 
         } // ActiveButton

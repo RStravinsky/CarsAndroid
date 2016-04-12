@@ -30,9 +30,6 @@ private:
     const QString m_surname;
     const QString m_from;
     const QString m_to;
-
-
-
 };
 
 #endif // BOOKINGINFO_H

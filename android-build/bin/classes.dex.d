@@ -1,11 +1,11 @@
 /home/rafal/Dokumenty/QtWorkspace/CarsAndroid/android-build/bin/classes.dex : \
-/home/rafal/Dokumenty/QtWorkspace/CarsAndroid/android-build/bin/classes/org/qtproject/example/BuildConfig.class \
-/home/rafal/Dokumenty/QtWorkspace/CarsAndroid/android-build/bin/classes/org/qtproject/example/R$drawable.class \
-/home/rafal/Dokumenty/QtWorkspace/CarsAndroid/android-build/bin/classes/org/qtproject/example/R$array.class \
-/home/rafal/Dokumenty/QtWorkspace/CarsAndroid/android-build/bin/classes/org/qtproject/example/R$layout.class \
-/home/rafal/Dokumenty/QtWorkspace/CarsAndroid/android-build/bin/classes/org/qtproject/example/R$attr.class \
-/home/rafal/Dokumenty/QtWorkspace/CarsAndroid/android-build/bin/classes/org/qtproject/example/R$string.class \
-/home/rafal/Dokumenty/QtWorkspace/CarsAndroid/android-build/bin/classes/org/qtproject/example/R.class \
+/home/rafal/Dokumenty/QtWorkspace/CarsAndroid/android-build/bin/classes/pl/sigmasa/rezerwacja/BuildConfig.class \
+/home/rafal/Dokumenty/QtWorkspace/CarsAndroid/android-build/bin/classes/pl/sigmasa/rezerwacja/R$drawable.class \
+/home/rafal/Dokumenty/QtWorkspace/CarsAndroid/android-build/bin/classes/pl/sigmasa/rezerwacja/R$array.class \
+/home/rafal/Dokumenty/QtWorkspace/CarsAndroid/android-build/bin/classes/pl/sigmasa/rezerwacja/R$layout.class \
+/home/rafal/Dokumenty/QtWorkspace/CarsAndroid/android-build/bin/classes/pl/sigmasa/rezerwacja/R$attr.class \
+/home/rafal/Dokumenty/QtWorkspace/CarsAndroid/android-build/bin/classes/pl/sigmasa/rezerwacja/R$string.class \
+/home/rafal/Dokumenty/QtWorkspace/CarsAndroid/android-build/bin/classes/pl/sigmasa/rezerwacja/R.class \
 /home/rafal/Dokumenty/QtWorkspace/CarsAndroid/android-build/bin/classes/org/qtproject/qt5/android/bindings/QtActivity$3$1$1.class \
 /home/rafal/Dokumenty/QtWorkspace/CarsAndroid/android-build/bin/classes/org/qtproject/qt5/android/bindings/QtActivity$3$1.class \
 /home/rafal/Dokumenty/QtWorkspace/CarsAndroid/android-build/bin/classes/org/qtproject/qt5/android/bindings/QtActivity$6.class \
