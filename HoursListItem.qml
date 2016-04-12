@@ -15,6 +15,12 @@ Item {
     property date selectedDate
     property var nextView
     property int hourState
+    property var listofHours: hoursList
+
+    function clearHoursListItem()
+    {
+        hoursList.currentIndex = -1
+    }
 
     ListView {
         id: hoursList
@@ -93,6 +99,7 @@ Item {
                     onRunningChanged: {
                         if (delay.running) {}
                         else {
+                            timePicker.setHourIndex(hoursList.currentIndex)
                             carViewClass.carList[listIndex].readBookingEntries(selectedDate, modelData)
                             hourState = carViewClass.carList[listIndex].setHoursColor(dateChooser.calendar.selectedDate, modelData)
                             dateChooserStack.push(nextView)

@@ -12,6 +12,9 @@ Item {
     property bool activeButton: false
     property alias field: field
     property alias text: field.text
+    property alias underlineColor: customBorder.color
+    property int dateTimeType
+    property bool warningVisible: false
 
     function clear() { field.text = "" }
 
@@ -47,9 +50,20 @@ Item {
                     }
                     else { messageDialog.show("Uwaga!", "Polecenie nie powiodło się.", StandardIcon.Warning) }
                 }
-                else { messageDialog.show("Nie poprawy kod!", "Spróbuj ponownie.", StandardIcon.Warning) }
+                else { messageDialog.show("Niepoprawny kod!", "Spróbuj ponownie.", StandardIcon.Warning) }
              }
         } // Keys.onReturnPressed
+
+        Image {
+            id: invalid
+            anchors { top: parent.top; right: clearText.left; rightMargin: 5; verticalCenter: parent.verticalCenter }
+            height: field.font.pointSize * 2.5
+            width: field.font.pointSize * 2.5
+            source: "/images/images/warning.png"
+            fillMode: Image.PreserveAspectFit
+            smooth: true;
+            visible: warningVisible
+        }
 
         Image {
             id: clearText
@@ -92,7 +106,8 @@ Item {
              enabled: menuView.currentIndex === 1 ? true : false
              propagateComposedEvents: true
              onClicked: {
-                 dateChooser.setListIndex(bookingView.listIndex); stackView.push(dateChooser)
+                 dateChooser.setDateTimeType(dateTimeType); dateChooser.setListIndex(bookingView.listIndex); stackView.push(dateChooser)
+                 if(field.text === "") dateChooser.clearDateChooser()
              }
          }
    }

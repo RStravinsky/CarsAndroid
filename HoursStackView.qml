@@ -13,9 +13,21 @@ Item {
     property var list: hoursListItem
     property int listIndex : 0
     property alias stack: dateChooserStack
+    property string choosenDateTime: timePicker.whichDateTime === 0 ? timePicker.startDateTimeString : timePicker.endDateTimeString
 
     function setListIndex(val) {
         listIndex = val
+    }
+
+    function setDateTimeType(val)
+    {
+        timePicker.setDateTimeType(val)
+    }
+
+    function clearHoursStackView()
+    {
+        hoursListItem.clearHoursListItem()
+        timePicker.clearTimePicker()
     }
 
     Rectangle {
@@ -27,10 +39,9 @@ Item {
             initialItem: hoursListItem
         }
 
-        HoursListItem { id: hoursListItem; anchors.fill: parent; nextView: (hourState === 0) ? startTimePicker : hourContentItem; selectedDate: dateChooser.calendar.selectedDate }
-        HourContentItem { id: hourContentItem; nextView: startTimePicker; isReserveButtonVisible: (hoursListItem.hourState === 2) ? false : true; }
-        StartTimePicker { id: startTimePicker; nextView: endTimePicker }
-        EndTimePicker { id: endTimePicker; nextView: hoursListItem }
+        HoursListItem { id: hoursListItem; anchors.fill: parent; nextView: (hourState === 0) ? timePicker : hourContentItem; selectedDate: dateChooser.calendar.selectedDate; }
+        HourContentItem { id: hourContentItem; nextView: timePicker; isReserveButtonVisible: (hoursListItem.hourState === 2) ? false : true; }
+        TimePicker { id: timePicker; nextView: hoursListItem }
 
     }
 

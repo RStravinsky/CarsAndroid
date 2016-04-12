@@ -55,6 +55,7 @@ public:
     Q_INVOKABLE bool isDateReserved(QDate date);
     Q_INVOKABLE bool addToHistory(QVariant entryFields, QString code);
     Q_INVOKABLE bool updateHistory(QVariant entryFields, int distance);
+    Q_INVOKABLE bool addToBooking(QVariant entryFields);
     Q_INVOKABLE bool isCodeCorrect(int id, QString code);
     Q_INVOKABLE void readBookingEntries(QDate date, QString time);
     Q_INVOKABLE int setHoursColor(QDate date, QString time);

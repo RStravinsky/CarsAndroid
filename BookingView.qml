@@ -8,6 +8,7 @@ Item {
     id: bookingView
     property alias area: area
     property int listIndex
+    property alias bookingFields: bookingFields
 
     function clearText() { bookingFields.clearText() }
     function setListIndex(val) { listIndex = val }
@@ -61,7 +62,7 @@ Item {
         // car image
         Image { id: carImage; width: parent.width; height: area.areaHeight* .25
             anchors { top: carName.bottom; left: parent.left; right: parent.right; topMargin: 5; rightMargin: 60; leftMargin: 60 }
-            source: "images/" + carViewClass.carList[listIndex].photoPath
+            source: carViewClass.carList[listIndex].photoPath !== "" ? "images/" + carViewClass.carList[listIndex].photoPath : ""
             fillMode: Image.PreserveAspectFit
         }
 
@@ -85,7 +86,9 @@ Item {
                     messageDialog.show("Uwaga!", "Pole tekstowe nie zostało wypełnione.", StandardIcon.Warning);
                 }
                 else {
-                    // TODO - book a car
+                    if(carViewClass.carList[listIndex].addToBooking(bookingFields.getFields()))
+                    { messageDialog.show("Informacja!", "Samochód został zarezerwowany.", StandardIcon.Information); bookingFields.clearText(); apps.reloadWindow();  stackView.pop() }
+                    else { messageDialog.show("Uwaga!", "Polecenie nie powiodło się.", StandardIcon.Warning) }
                 }
 
                 bookingBtn.isActivated = false

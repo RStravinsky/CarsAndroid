@@ -48,7 +48,7 @@ Item {
                 }
                 Image { id: carImage; height: parent.height * .7
                     fillMode: Image.PreserveAspectFit
-                    source: "images/"+photoPath
+                    source: photoPath !== "" ? "images/"+photoPath : ""
                     anchors { left: parent.left; top: license.bottom; topMargin: 5 }
                 }
 
@@ -58,7 +58,7 @@ Item {
                     anchors { bottom: parent.bottom; bottomMargin: 10; right: parent.right }
                     enabled: menuView.currentIndex === 1 ? true : false
                     z: carView.z + 1 // before parent
-                    onActivated: { bookingView.setListIndex(listIndex); stackView.push(bookingView) }
+                    onActivated: { bookingView.setListIndex(listIndex); stackView.push(bookingView); dateChooser.clearDateChooser() }
                 }
 
                 ActionButton {

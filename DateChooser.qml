@@ -16,14 +16,25 @@ Item {
     property var area: area
     property int listIndex
     property var calendar: bookingCalendar
-    property var startDateTime: hoursStackView.startDateTime
-    property var endDateTime: hoursStackView.endDateTime
+    property string choosenDateTime: hoursStackView.choosenDateTime
 
     Text {id: hiddenText}
 
     function setListIndex(val) {
         listIndex = val
         hoursStackView.setListIndex(val)
+    }
+
+    function setDateTimeType(val)
+    {
+        hoursStackView.setDateTimeType(val)
+    }
+
+    function clearDateChooser()
+    {
+        var currentDate = new Date()
+        calendar.selectedDate = currentDate
+        hoursStackView.clearHoursStackView()
     }
 
     SwipeArea {
