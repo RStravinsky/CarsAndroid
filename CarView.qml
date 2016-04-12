@@ -48,7 +48,7 @@ Item {
                 }
                 Image { id: carImage; height: parent.height * .7
                     fillMode: Image.PreserveAspectFit
-                    source: "images/"+photoPath
+                    source: photoPath !== "" ? "images/"+photoPath : ""
                     anchors { left: parent.left; top: license.bottom; topMargin: 5 }
                 }
 
