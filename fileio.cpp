@@ -27,7 +27,40 @@ bool FileIO::readCodes()
     return true;
 }
 
-void FileIO::saveTo(QString code)
+bool FileIO::removeCode(const QString &code)
+{
+    QFile file("/data/data/pl.sigmasa.rezerwacja/files/RENT_CODES.txt");
+    if(file.open(QIODevice::ReadWrite | QIODevice::Text))
+    {
+        QString s;
+        QTextStream t(&file);
+        while(!t.atEnd())
+        {
+            QString line = t.readLine();
+            if(!line.contains(code))
+                s.append(line + "\n");
+        }
+        file.resize(0);
+        t << s;
+        file.close();
+    }
+    else {
+        emit error("Nie można otworzyć pliku RENT_CODES.txt");
+        return false;
+    }
+
+    for(auto it = m_codeList.begin(); it != m_codeList.end(); ++it)
+    {
+        SingleCode * temp = *it;
+        if(temp->getCode() == code)
+            m_codeList.erase(it);
+    }
+
+    emit onCodeListChanged(getCodeList());
+    return true;
+}
+
+void FileIO::saveTo(const QString& code)
 {
     QClipboard *clipboard = QApplication::clipboard();
     clipboard->setText(code);

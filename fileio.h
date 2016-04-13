@@ -21,7 +21,8 @@ class FileIO : public QObject
 public slots:
     bool writeCode(const QString& data,const QString& carName);
     bool readCodes();
-    void saveTo(QString code);
+    void saveTo(const QString& code);
+    bool removeCode(const QString& code);
 
 signals:
     void error(const QString& msg);

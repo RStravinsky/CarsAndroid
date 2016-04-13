@@ -31,5 +31,7 @@
         <file>images/wait.png</file>
         <file>images/code.png</file>
         <file>images/warning.png</file>
+        <file>images/help.png</file>
+        <file>images/update.png</file>
     </qresource>
 </RCC>

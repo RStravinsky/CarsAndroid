@@ -28,5 +28,7 @@
         <file>CodesView.qml</file>
         <file>TimePicker.qml</file>
         <file>main.qml</file>
+        <file>UpdateButton.qml</file>
+        <file>LoadingScreen.qml</file>
     </qresource>
 </RCC>

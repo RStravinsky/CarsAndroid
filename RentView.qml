@@ -41,9 +41,15 @@ Item {
         id: loadingRect
         anchors.fill: parent
         z: rentBtn.z + 1
-        color:"black"
+        color: "black"
         opacity: 0.5
         visible: rentBtn.isActivated
+        Text {
+            anchors.centerIn: parent
+            font.pixelSize: screenH/25;
+            text: "Proszę czekać ..."
+            color: "white"
+        }
     }
 
     Rectangle {
@@ -51,8 +57,7 @@ Item {
         property int offset: 20
         anchors { bottom: parent.bottom; left: parent.left; right: parent.right; top: parent.top; margins: offset }
         property int areaHeight: (screenH - topFrame.height - (2*offset))
-        opacity: carViewClass.carList[listIndex].busy ? 0.5 : 1
-        enabled: carViewClass.carList[listIndex].busy ? false : true
+        enabled: loadingRect.visible === true ? false : true
 
         // car name
         Text { id: carName; width: parent.width; height: area.areaHeight* .07
@@ -107,7 +112,9 @@ Item {
                         if(carViewClass.carList[listIndex].addToHistory(rentFields.getFields(),code)) {
                             if(fileio.writeCode(code,carViewClass.carList[listIndex].brand + " " + carViewClass.carList[listIndex].model)) {
                                 messageDialog.show("Wypożyczono!", "Twój kod dostępu: " + code, StandardIcon.Information);
+                                rentFields.clearText()
                                 stackView.pop()
+                                apps.reloadWindow();
                             }
                         }
                         else { messageDialog.show("Uwaga!", "Polecenie nie powiodło się.", StandardIcon.Warning) }

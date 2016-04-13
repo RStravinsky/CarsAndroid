@@ -42,6 +42,12 @@ Item {
         visible: bookingBtn.isActivated
         color:"black"
         opacity: 0.5
+        Text {
+            anchors.centerIn: parent
+            font.pixelSize: screenH/25;
+            text: "Proszę czekać ..."
+            color: "white"
+        }
     }
 
     Rectangle {
@@ -49,6 +55,7 @@ Item {
         property int offset: 20
         anchors { bottom: parent.bottom; left: parent.left; right: parent.right; top: parent.top; margins: offset }
         property int areaHeight: (screenH - topFrame.height - (2*offset))
+        enabled: loadingRect.visible === true ? false : true
 
         // car name
         Text { id: carName; width: parent.width; height: area.areaHeight* .07
@@ -87,7 +94,7 @@ Item {
                 }
                 else {
                     if(carViewClass.carList[listIndex].addToBooking(bookingFields.getFields()))
-                    { messageDialog.show("Informacja!", "Samochód został zarezerwowany.", StandardIcon.Information); bookingFields.clearText(); apps.reloadWindow();  stackView.pop() }
+                    { messageDialog.show("Informacja!", "Samochód został zarezerwowany.", StandardIcon.Information); bookingFields.clearText(); stackView.pop(); apps.reloadWindow(); }
                     else { messageDialog.show("Uwaga!", "Polecenie nie powiodło się.", StandardIcon.Warning) }
                 }
 

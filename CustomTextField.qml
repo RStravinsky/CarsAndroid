@@ -41,12 +41,14 @@ Item {
                     if(carViewClass.carList[listIndex].updateHistory(rentView.returnFields.getFields(),rentView.distance))
                     {
                         messageDialog.show("Oddano!", "Samochód został oddany.", StandardIcon.Information);
+                        fileio.removeCode(field.text)
                         Qt.inputMethod.hide()
                         field.text = ""
                         field.focus = false
                         rentView.returnFields.clearText()
                         stackView.pop(carView)
-                        return;
+                        apps.reloadWindow();
+                        //return;
                     }
                     else { messageDialog.show("Uwaga!", "Polecenie nie powiodło się.", StandardIcon.Warning) }
                 }

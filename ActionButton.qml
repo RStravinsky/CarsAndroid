@@ -38,7 +38,7 @@ Rectangle {
         PropertyAnimation { target: actionButton; property: "opacity"; easing.type: Easing.Linear; to: 1; duration: 30 }
         onRunningChanged: {
             if (btnClickAnimation.running) {}
-            else { actionButton.activated()}
+            else { actionButton.activated() }
         }
     }
 

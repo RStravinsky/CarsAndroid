@@ -14,54 +14,56 @@ ApplicationWindow {
     Keys.enabled: true
     Keys.priority: Keys.BeforeItem
 
-    property int screenHight: Screen.height
+    property int screenH: Screen.height
     property int screenW: Screen.width
-    property int screenH
 
-    Component.onCompleted: { screenH = screenHight }
+    function reloadWindow() { mainLoader.reload() }
 
-    function reloadWindow()
-    {
-        mainLoader.reload()
-    }
+//    Rectangle {
+//        id: loadingRect
+//        //height: screenH
+//        //width: screenW
+//        anchors.top: parent.top
+//        anchors.left: parent.left
+//        anchors.right: parent.right
+//        anchors.topMargin: Screen.height*.1
+//        anchors.bottom: parent.bottom
+//        z: topFrame.z - 1
 
-    Rectangle {
-        id: loadingRect
-        anchors.fill: parent
-        z: topFrame.z + 100
-        Image {
-            id: waitImage
-            height: parent.height/5
-            width: parent.height/5
-            anchors.centerIn: parent
-            fillMode: Image.PreserveAspectFit
-            source: "images/images/wait.png"
-        }
+//        Image {
+//            id: waitImage
+//            height: parent.height/5
+//            width: parent.height/5
+//            anchors.centerIn: parent
+//            fillMode: Image.PreserveAspectFit
+//            source: "images/images/wait.png"
+//        }
 
-        Text {
-            id: initText
-            width: parent.width
-            height: font.pointSize * 2
-            anchors.top: waitImage.bottom
-            font.pointSize: screenHight/40
-            horizontalAlignment: Text.AlignHCenter
-            text: "Łączenie ..."
-            color: "gray"
-        }
-    }
+//        Text {
+//            id: initText
+//            width: parent.width
+//            height: font.pointSize * 2
+//            anchors.top: waitImage.bottom
+//            font.pointSize: screenH/40
+//            horizontalAlignment: Text.AlignHCenter
+//            text: "Łączenie ..."
+//            color: "gray"
+//        }
+//    }
 
     MainForm {
         id: mainForm
         anchors.fill: parent
         focus: true // important - otherwise we'll get no key events
-        visible: false;
+        //visible: false
         Keys.onReleased: {
             if (event.key === Qt.Key_Back) {
                 if(menuView.currentIndex === 1) { // menu not visible
-                    if(stackView.currentItem.objectName === "SettingsView") { menuView.list.currentIndex = 0 }
-                    if(stackView.currentItem.objectName === "RentView") { rentView.clearText() }
-                    if(stackView.currentItem.objectName === "BookingView") { bookingView.clearText() }
-                    if(stackView.currentItem.objectName === "PinView") { pinView.clearText() }
+                    if(stackView.currentItem.objectName === "Ustawienia") { console.log("Settings"); menuView.list.currentIndex = 0 }
+                    if(stackView.currentItem.objectName === "Kody") { console.log("Codes"); menuView.list.currentIndex = 0 }
+                    if(stackView.currentItem.objectName === "Wypożyczanie") { rentView.clearText() }
+                    if(stackView.currentItem.objectName === "Rezerwacja") { bookingView.clearText() }
+                    if(stackView.currentItem.objectName === "Wprowadź kod") { pinView.clearText() }
 
                     if(stackView.depth === 1) apps.close()
                     else  {
@@ -85,9 +87,7 @@ ApplicationWindow {
         }
 
         // top frame of application
-        TopFrame { id: topFrame; width: mainForm.width; height: screenH*.1; anchors.top: mainForm.top; z: 100
-            Component.onCompleted: { mainForm.visible = true; loadingRect.visible = false; }
-        }
+        TopFrame { id: topFrame; width: mainForm.width; height: screenH*.1; anchors.top: mainForm.top; z: 100 }
 
         // settings button of application
         MainButton {
@@ -95,6 +95,41 @@ ApplicationWindow {
             anchors { left: topFrame.left; top: topFrame.top }
             z: topFrame.z + 1 // before top frame
             onButtonClicked: { mainArea.menuChange(); }
+        }
+
+        // update button
+        UpdateButton {
+            id: updateButton; height: topFrame.height; width: updateButton.height
+            anchors { right: topFrame.right; top: topFrame.top }
+            z: topFrame.z + 1 // before top frame
+            visible: stackView.currentItem.objectName === "Samochody" ? true : false
+            onActivated: { apps.reloadWindow(); loadingScreen.visible = false; }
+        }
+
+        // header
+        Rectangle {
+            width: topFrame.width - mainButton.width - updateButton.width
+            height: topFrame.height
+            anchors { left:mainButton.right; right: updateButton.left; top: topFrame.top; bottom: topFrame.bottom }
+            z: topFrame.z + 1 // before top frame
+            color: "transparent"
+            Text {
+                id: frameText
+                anchors.fill: parent
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                font.pointSize: screenH/35
+                text: "Samochody"
+                color: "white"
+            }
+        }
+
+        // loading screen
+        LoadingScreen {
+            id: loadingScreen
+            anchors { top: topFrame.bottom; left: mainForm.left; right: mainForm.right; bottom: mainForm.bottom }
+            width: mainForm.width
+            z: mainArea.z + 1
         }
 
         SqlDatabase { id: sqlDatabase }
@@ -121,24 +156,23 @@ ApplicationWindow {
             function setState() {
                 switch(stackView.currentItem.objectName)
                 {
-                   case "CarView":
+                   case "Samochody":
                        carView.area.enabled = menuView.currentIndex === 1 ? true : false
                        break
-                   case "SettingsView":
+                   case "Ustawienia":
                        break
-                   case "DateChooser":
+                   case "Data/czas":
                        dateChooser.area.enabled = menuView.currentIndex === 1 ? true : false
                        break
-                   case "RentView":
+                   case "Wypożyczanie":
                        rentView.area.enabled = menuView.currentIndex === 1 ? true : false
                        break
-                   case "BookingView":
+                   case "Rezerwacja":
                        bookingView.area.enabled = menuView.currentIndex === 1 ? true : false
                        break
-                   case "CodesView":
+                   case "Kody":
                        codesView.area.enabled = menuView.currentIndex === 1 ? true : false
                        break
-
                 }
            }
 
@@ -147,26 +181,42 @@ ApplicationWindow {
                 z: normalViewMask.z + 1 // before normalView
                 mainArea: mainArea
                 onItemClicked: {
+                       if(stackView.currentItem.objectName === "Wypożyczanie") { rentView.clearText() }
+                       if(stackView.currentItem.objectName === "Rezerwacja") { bookingView.clearText() }
+                       if(stackView.currentItem.objectName === "Wprowadź kod") { pinView.clearText() }
+                       mainArea.menuChange()
                        if(idx === 0) { stackView.pop(null, StackView.Immediate) }
                        else if(idx === 1) { stackView.clear(); stackView.push(carView, StackView.Immediate, settingsView, StackView.Immediate) }
-                       else { fileio.readCodes(); stackView.clear(); stackView.push(carView, StackView.Immediate, codesView, StackView.Immediate) }
-                       mainArea.menuChange()
+                       else if(idx === 2) {
+                           fileio.readCodes();
+                           if(stackView.currentItem.objectName === "Wprowadź kod") {
+                               stackView.push(codesView)
+                           }
+                           else {
+                               stackView.clear();
+                               stackView.push(carView, StackView.Immediate, codesView, StackView.Immediate)
+                           }
                        }
+                       else { // HELP TODO}
+                       }
+                }
            } // Menu View
 
            Rectangle { id: normalView; anchors.fill: parent; visible: false
-                CarView { id:carView; objectName: "CarView"; Component.onCompleted: {
-                        if(sqlDatabase.connectToDatabase("94.230.27.222", "sigmacars", "root", "Serwis4q@"))
+                CarView { id:carView; objectName: "Samochody"; Component.onCompleted: {
+                        if(sqlDatabase.connectToDatabase("94.230.27.222", "sigmacars", "root", "Serwis4q@")) {
                             carViewClass.setCarList()
-                        else messageDialog.show("Błąd!", "Nie można połaczyć z serwerm.", StandardIcon.Critical);
+                            loadingScreen.visible = false;
+                        }
+                        else messageDialog.show("Błąd!", "Nie można połaczyć z serwerem.", StandardIcon.Critical);
                     }
                 }
-                SettingsView { id:settingsView; objectName: "SettingsView"; }
-                CodesView { id:codesView; objectName: "CodesView"; }
-                DateChooser {id:dateChooser; objectName: "DateChooser";}
-                RentView { id:rentView; objectName: "RentView"; }
-                PinView { id:pinView; objectName: "PinView" }
-                BookingView { id:bookingView; objectName: "BookingView" }
+                SettingsView { id:settingsView; objectName: "Ustawienia"; }
+                CodesView { id:codesView; objectName: "Kody"; }
+                DateChooser {id:dateChooser; objectName: "Data/czas";}
+                RentView { id:rentView; objectName: "Wypożyczanie"; }
+                PinView { id:pinView; objectName: "Wprowadź kod" }
+                BookingView { id:bookingView; objectName: "Rezerwacja" }
            } // Normal View
 
            // view mask
@@ -180,6 +230,7 @@ ApplicationWindow {
               id: stackView
               initialItem: carView
               anchors.fill: parent
+              onCurrentItemChanged: { frameText.text = stackView.currentItem.objectName }
           }
 
         } // MainArea

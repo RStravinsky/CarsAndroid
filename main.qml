@@ -7,7 +7,6 @@ import QtQuick.Window 2.2
 
 Loader {
     id: mainLoader
-
     active: true
     source: "MainWindow.qml"
 
