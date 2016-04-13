@@ -44,7 +44,7 @@ Item {
                 height: parent.height
                 width: 20
                 color: {
-                    switch(carViewClass.carList[listIndex].setHoursColor(dateChooser.calendar.selectedDate, modelData))
+                    switch(carViewClass.carList[listIndex].setHoursColor(dateChooser.calendar.selectedDate, modelData)) // TypeError
                     {
                     case 0: "#32b678"
                             break
@@ -101,6 +101,7 @@ Item {
                         else {
                             timePicker.setHourIndex(hoursList.currentIndex)
                             carViewClass.carList[listIndex].readBookingEntries(selectedDate, modelData)
+                            console.log("bil size: "+carViewClass.carList[listIndex].getBookingInfoListSize())
                             hourState = carViewClass.carList[listIndex].setHoursColor(dateChooser.calendar.selectedDate, modelData)
                             dateChooserStack.push(nextView)
                         }

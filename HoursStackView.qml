@@ -11,12 +11,13 @@ import Qt.labs.controls 1.0
 Item {
     id: hoursStackView
     property var list: hoursListItem
-    property int listIndex : 0
+    property int listIndex
     property alias stack: dateChooserStack
     property string choosenDateTime: timePicker.whichDateTime === 0 ? timePicker.startDateTimeString : timePicker.endDateTimeString
 
     function setListIndex(val) {
         listIndex = val
+        timePicker.setListIndex(val)
     }
 
     function setDateTimeType(val)

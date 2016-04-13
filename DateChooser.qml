@@ -14,7 +14,7 @@ Item {
     property alias defaultFontPixelSize: hiddenText.font.pixelSize
     property alias stack: hoursStackView.stack
     property var area: area
-    property int listIndex
+    property int listIndex: 0
     property var calendar: bookingCalendar
     property string choosenDateTime: hoursStackView.choosenDateTime
 

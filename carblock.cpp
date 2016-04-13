@@ -119,6 +119,34 @@ void CarBlock::readBookingEntries(QDate date, QString time)
     emit onBookingInfoListChanged(getBookingInfoList());
 }
 
+bool CarBlock::isDateCorrect(QDateTime dateTime)
+{
+    QDateTime modelBegin;
+    QDateTime modelEnd;
+
+    for(auto & elem : m_bookingInfoList) {
+
+        if(elem->getFrom() != "...") {
+            modelBegin = QDateTime::fromString(QString(dateTime.date().toString("yyyy-MM-dd") + " " + elem->getFrom()), "yyyy-MM-dd hh:mm");
+        }
+        else
+            modelBegin = QDateTime::fromString(QString("1970-01-01 00:00:00"), QString("yyyy-MM-dd hh:mm:ss"));
+
+        if(elem->getTo() != "...") {
+            modelEnd = QDateTime::fromString(QString(dateTime.date().toString("yyyy-MM-dd") + " " + elem->getTo()), "yyyy-MM-dd hh:mm");
+        }
+        else
+            modelEnd = QDateTime::fromString(QString("2070-01-01 00:00:00"), QString("yyyy-MM-dd hh:mm:ss"));
+
+        if(dateTime >= modelBegin && dateTime <= modelEnd)
+            return false;
+
+    }
+
+    return true;
+
+}
+
 bool CarBlock::addToHistory(QVariant entryFields, QString code)
 {
     QVariantList entryFieldsList = entryFields.toList();

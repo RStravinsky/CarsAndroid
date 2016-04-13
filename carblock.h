@@ -58,7 +58,9 @@ public:
     Q_INVOKABLE bool addToBooking(QVariant entryFields);
     Q_INVOKABLE bool isCodeCorrect(int id, QString code);
     Q_INVOKABLE void readBookingEntries(QDate date, QString time);
+    Q_INVOKABLE bool isDateCorrect(QDateTime dateTime);
     Q_INVOKABLE int setHoursColor(QDate date, QString time);
+    Q_INVOKABLE int getBookingInfoListSize() {return m_bookingInfoList.size();}
 
 signals:
     void onBookingInfoListChanged(QQmlListProperty<BookingInfo>);
