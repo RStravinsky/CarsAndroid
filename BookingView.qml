@@ -7,7 +7,7 @@ import QtQuick.Controls.Styles 1.3
 Item {
     id: bookingView
     property alias area: area
-    property int listIndex
+    property int listIndex: 0
     property alias bookingFields: bookingFields
 
     function clearText() { bookingFields.clearText() }

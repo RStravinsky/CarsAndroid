@@ -19,43 +19,10 @@ ApplicationWindow {
 
     function reloadWindow() { mainLoader.reload() }
 
-//    Rectangle {
-//        id: loadingRect
-//        //height: screenH
-//        //width: screenW
-//        anchors.top: parent.top
-//        anchors.left: parent.left
-//        anchors.right: parent.right
-//        anchors.topMargin: Screen.height*.1
-//        anchors.bottom: parent.bottom
-//        z: topFrame.z - 1
-
-//        Image {
-//            id: waitImage
-//            height: parent.height/5
-//            width: parent.height/5
-//            anchors.centerIn: parent
-//            fillMode: Image.PreserveAspectFit
-//            source: "images/images/wait.png"
-//        }
-
-//        Text {
-//            id: initText
-//            width: parent.width
-//            height: font.pointSize * 2
-//            anchors.top: waitImage.bottom
-//            font.pointSize: screenH/40
-//            horizontalAlignment: Text.AlignHCenter
-//            text: "Łączenie ..."
-//            color: "gray"
-//        }
-//    }
-
     MainForm {
         id: mainForm
         anchors.fill: parent
         focus: true // important - otherwise we'll get no key events
-        //visible: false
         Keys.onReleased: {
             if (event.key === Qt.Key_Back) {
                 if(menuView.currentIndex === 1) { // menu not visible

@@ -64,7 +64,6 @@ Item {
                                 choosenTime = bookingFieldsRepeater.itemAt(index).customTextField.text
                                 choosenTime = choosenTime.split(" ")[1]
                                 choosenTime = choosenTime.split(":")[0] + ":00"
-                                console.log("choosenTime: " + choosenTime)
                             }
 
                             if(carViewClass.carList[listIndex].setHoursColor(Date.fromLocaleString(Qt.locale(), bookingFieldsRepeater.itemAt(index).customTextField.text, "yyyy-MM-dd hh:mm"), choosenTime) === 1 ) {

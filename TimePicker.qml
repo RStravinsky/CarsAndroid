@@ -19,6 +19,12 @@ Item {
     property string endDateTimeString
     property int hourIndex: 0
     property int whichDateTime // 1-start datetime, 2-end datetime
+    property int listIndex
+
+    function setListIndex(val)
+    {
+        listIndex = val
+    }
 
     function setHourIndex(val)
     {
@@ -65,36 +71,50 @@ Item {
             anchors { right: parent.right; rightMargin: 10; bottom: parent.bottom; }
             buttonText: qsTr("Dalej")
             onActivated: {
+
+                carViewClass.carList[listIndex].readBookingEntries(bookingCalendar.selectedDate, timeTumbler.timeString)
+
                 if(whichDateTime === 0) {
                     startDateTimeString = bookingCalendar.selectedDate.toLocaleString(Qt.locale("pl_PL"), "yyyy-MM-dd") + " " + timeTumbler.timeString
                     startDateTime = Date.fromLocaleString(Qt.locale(), startDateTimeString, "yyyy-MM-dd hh:mm")
+                    console.log("byde: " + listIndex)
 
-                    if((endDateTimeString.length !== 0) && (startDateTime < endDateTime)) {
-                        bookingView.bookingFields.bookingFieldsRepeater.itemAt(whichDateTime).customTextField.text = startDateTimeString
-                        stackView.pop(bookingView)
-                        dateChooserStack.pop(hoursListItem)
+                    if(carViewClass.carList[listIndex].isDateCorrect(startDateTime)) {
 
+                        if((endDateTimeString.length !== 0) && (startDateTime < endDateTime)) {
+                            bookingView.bookingFields.bookingFieldsRepeater.itemAt(whichDateTime).customTextField.text = startDateTimeString
+                            stackView.pop(bookingView)
+                            dateChooserStack.pop(hoursListItem)
+
+                        }
+                        else if(endDateTimeString.length === 0){
+                            bookingView.bookingFields.bookingFieldsRepeater.itemAt(whichDateTime).customTextField.text = startDateTimeString
+                            stackView.pop(bookingView)
+                            dateChooserStack.pop(hoursListItem)
+                        }
+                        else
+                            messageDialog.show("Uwaga!", "Niepoprawna godzina.", StandardIcon.Warning)
                     }
-                    else if(endDateTimeString.length === 0){
-                        bookingView.bookingFields.bookingFieldsRepeater.itemAt(whichDateTime).customTextField.text = startDateTimeString
-                        stackView.pop(bookingView)
-                        dateChooserStack.pop(hoursListItem)
-                    }
-                    else {
-                        messageDialog.show("Uwaga!", "Niepoprawna godzina.", StandardIcon.Warning)
-                    }
+                    else
+                        messageDialog.show("Uwaga!", "Wydaje mi się, że musisz skleić.", StandardIcon.Warning)
                 }
                 else if(whichDateTime === 1) {
                     endDateTimeString = bookingCalendar.selectedDate.toLocaleString(Qt.locale("pl_PL"), "yyyy-MM-dd") + " " + timeTumbler.timeString
                     endDateTime = Date.fromLocaleString(Qt.locale(), endDateTimeString, "yyyy-MM-dd hh:mm")
-                    if(endDateTime > startDateTime) {
-                        bookingView.bookingFields.bookingFieldsRepeater.itemAt(whichDateTime).customTextField.text = endDateTimeString
-                        stackView.pop(bookingView)
-                        dateChooserStack.pop(hoursListItem)
-                    }
-                    else {
-                        messageDialog.show("Uwaga!", "Niepoprawna godzina.", StandardIcon.Warning)
-                    }
+
+                    if(carViewClass.carList[listIndex].isDateCorrect(startDateTime)) {
+                        if(carViewClass.carList[listIndex].isDateCorrect(startDateTime)) {
+                            if(endDateTime > startDateTime) {
+                                bookingView.bookingFields.bookingFieldsRepeater.itemAt(whichDateTime).customTextField.text = endDateTimeString
+                                stackView.pop(bookingView)
+                                dateChooserStack.pop(hoursListItem)
+                            }
+                            else
+                                messageDialog.show("Uwaga!", "Niepoprawna godzina.", StandardIcon.Warning)
+                        }
+                   }
+                   else
+                       messageDialog.show("Uwaga!", "Wydaje mi się, że musisz skleić.", StandardIcon.Warning)
                 }
 
             }
