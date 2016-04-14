@@ -10,6 +10,7 @@
 #include <QDebug>
 #include <QThread>
 #include "carblock.h"
+#include "sqldatabase.h"
 
 class CarBlock;
 

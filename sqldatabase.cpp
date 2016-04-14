@@ -4,20 +4,29 @@ SqlDatabase :: SqlDatabase ( QObject * parent ) : QObject ( parent ) {
     m_connected = false;
 }
 
-bool SqlDatabase::connectToDatabase ( QString host, QString database, QString username, QString password) {
+QSqlDatabase SqlDatabase::m_sqlDatabase = QSqlDatabase();
+bool SqlDatabase::m_isLocal = false;
 
-    qDebug() << "connect!" << endl;
-    m_sqlDatabase = QSqlDatabase :: addDatabase ( "QMYSQL" );
+bool SqlDatabase::connectToDatabase ( QString host, int port, QString username, QString password) {
+
+    m_sqlDatabase = QSqlDatabase::addDatabase ( "QMYSQL" );
     m_sqlDatabase.setHostName ( host );
-    m_sqlDatabase.setDatabaseName ( database );
+    m_sqlDatabase.setPort( port );
     m_sqlDatabase.setUserName ( username );
     m_sqlDatabase.setPassword ( password );
-    m_sqlDatabase.setPort( 3306 );
+    m_sqlDatabase.setDatabaseName ("sigmacars");
+
+    qDebug() << "host=" << host << endl;
+    qDebug() << "pass=" << password << endl;
+    qDebug() << "user=" << username << endl;
+    qDebug() << "port=" << port << endl;
 
     if(host == "127.0.0.1") setConnectionType(true);
     else setConnectionType(false);
 
     if (isOpen()) m_connected = true;
+
+    qDebug() << "m_connected=" << m_connected << endl;
 
     emit connectedChanged();
     return m_connected;

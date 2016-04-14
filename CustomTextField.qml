@@ -37,24 +37,22 @@ Item {
             event.accepted = customReturnKey // Dont accept the event (active focus kept).
 
             if(customReturnKey === true) {
+                loadingRect.isLoading = true
                 if(carViewClass.carList[pinView.listIndex].isCodeCorrect(carViewClass.carList[pinView.listIndex].id,field.text)) {
                     if(carViewClass.carList[listIndex].updateHistory(rentView.returnFields.getFields(),rentView.distance))
                     {
                         messageDialog.show("Oddano!", "Samochód został oddany.", StandardIcon.Information);
                         fileio.removeCode(field.text)
-                        Qt.inputMethod.hide()
-                        field.text = ""
-                        field.focus = false
-                        rentView.returnFields.clearText()
-                        stackView.pop(carView)
+                        Qt.inputMethod.hide() // show virtual keyboard
                         apps.reloadWindow();
-                        //return;
                     }
-                    else { messageDialog.show("Uwaga!", "Polecenie nie powiodło się.", StandardIcon.Warning) }
+                    else { loadingRect.isLoading  = false; messageDialog.show("Uwaga!", "Polecenie nie powiodło się.", StandardIcon.Warning) }
                 }
-                else { messageDialog.show("Niepoprawny kod!", "Spróbuj ponownie.", StandardIcon.Warning) }
+                else { loadingRect.isLoading  = false; messageDialog.show("Niepoprawny kod!", "Spróbuj ponownie.", StandardIcon.Warning) }
              }
-        } // Keys.onReturnPressed
+
+           loadingRect.isLoading = false
+        }
 
         Image {
             id: invalid
@@ -105,7 +103,6 @@ Item {
          MouseArea {
              id: narrowButtonMouseArea
              anchors.fill: parent
-             enabled: menuView.currentIndex === 1 ? true : false
              propagateComposedEvents: true
              onClicked: {
                  dateChooser.setDateTimeType(dateTimeType); dateChooser.setListIndex(bookingView.listIndex); stackView.push(dateChooser)

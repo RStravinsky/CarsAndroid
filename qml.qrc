@@ -29,5 +29,6 @@
         <file>main.qml</file>
         <file>UpdateButton.qml</file>
         <file>LoadingScreen.qml</file>
+        <file>SettingsFields.qml</file>
     </qresource>
 </RCC>

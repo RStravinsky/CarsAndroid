@@ -33,5 +33,7 @@
         <file>images/warning.png</file>
         <file>images/help.png</file>
         <file>images/update.png</file>
+        <file>images/ip.png</file>
+        <file>images/port.png</file>
     </qresource>
 </RCC>

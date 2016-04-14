@@ -36,26 +36,11 @@ Item {
     }
 
     Rectangle {
-        id: loadingRect
-        anchors.fill: parent
-        z: bookingView.z + 1
-        visible: bookingBtn.isActivated
-        color:"black"
-        opacity: 0.5
-        Text {
-            anchors.centerIn: parent
-            font.pixelSize: screenH/25;
-            text: "Proszę czekać ..."
-            color: "white"
-        }
-    }
-
-    Rectangle {
         id: area
         property int offset: 20
         anchors { bottom: parent.bottom; left: parent.left; right: parent.right; top: parent.top; margins: offset }
         property int areaHeight: (screenH - topFrame.height - (2*offset))
-        enabled: loadingRect.visible === true ? false : true
+        enabled: (loadingRect.isLoading === true) ? false : true
 
         // car name
         Text { id: carName; width: parent.width; height: area.areaHeight* .07
@@ -84,21 +69,23 @@ Item {
             property int distance
             anchors { bottom: parent.bottom; left: parent.left; right: parent.right; }
             buttonText: qsTr("Rezerwuj")
-            enabled: menuView.currentIndex === 1 ? true : false
             fontSize: screenH/35
             z: bookingView.z + 1 // before parent
 
             onActivated: {
+                area.forceActiveFocus() // disable focus from fields
                 if(bookingFields.dataIsEmpty()) {
                     messageDialog.show("Uwaga!", "Pole tekstowe nie zostało wypełnione.", StandardIcon.Warning);
+                    return;
                 }
                 else {
+                    loadingRect.isLoading = true
                     if(carViewClass.carList[listIndex].addToBooking(bookingFields.getFields()))
-                    { messageDialog.show("Informacja!", "Samochód został zarezerwowany.", StandardIcon.Information); bookingFields.clearText(); stackView.pop(); apps.reloadWindow(); }
-                    else { messageDialog.show("Uwaga!", "Polecenie nie powiodło się.", StandardIcon.Warning) }
+                    { messageDialog.show("Informacja!", "Samochód został zarezerwowany.", StandardIcon.Information); apps.reloadWindow(); }
+                    else { loadingRect.isLoading = false; messageDialog.show("Uwaga!", "Polecenie nie powiodło się.", StandardIcon.Warning) }
                 }
 
-                bookingBtn.isActivated = false
+                loadingRect.isLoading = false
             } // OnActivated
 
         } // ActiveButton

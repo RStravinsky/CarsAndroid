@@ -16,16 +16,15 @@ class SqlDatabase : public QObject {
 public:
     SqlDatabase ( QObject * parent = 0 );
     bool connected() { return m_connected; }
-    QSqlDatabase getDatabase() {return m_sqlDatabase;}
-    Q_INVOKABLE bool connectToDatabase ( QString host, QString database, QString username, QString password);
+    static bool isOpen();
+    Q_INVOKABLE bool connectToDatabase ( QString host, int port, QString username, QString password);
 
 private:
-    QSqlDatabase m_sqlDatabase;
+    static QSqlDatabase m_sqlDatabase;
     bool m_connected;
-    bool m_isLocal;
+    static bool m_isLocal;
 
-    bool isConnectedToNetwork();
-    Q_INVOKABLE bool isOpen();
+    static bool isConnectedToNetwork();
     void setConnectionType(bool type);
     void purgeDatabase();
 

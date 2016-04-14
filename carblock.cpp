@@ -149,85 +149,87 @@ bool CarBlock::isDateCorrect(QDateTime dateTime)
 
 bool CarBlock::addToHistory(QVariant entryFields, QString code)
 {
-    QVariantList entryFieldsList = entryFields.toList();
-    enum ENTRY_FIELDS{
-        Name,
-        Surename,
-        Destination,
-        Target
-    };
+    if(SqlDatabase::isOpen()) {
+        QVariantList entryFieldsList = entryFields.toList();
+        enum ENTRY_FIELDS{
+            Name,
+            Surename,
+            Destination,
+            Target
+        };
 
-    QSqlQuery qry;
-    qry.prepare("INSERT INTO history (Name, Surname, Begin, idCar, Destination, Target, Code) "
-                "VALUES (:_Name, :_Surname, :_Begin, :_idCar, :_Destination, :_Target, :_Code);"
-                "UPDATE car SET Status=:_Status WHERE idCar=:_idCar");
+        QSqlQuery qry;
+        qry.prepare("INSERT INTO history (Name, Surname, Begin, idCar, Destination, Target, Code) "
+                    "VALUES (:_Name, :_Surname, :_Begin, :_idCar, :_Destination, :_Target, :_Code);"
+                    "UPDATE car SET Status=:_Status WHERE idCar=:_idCar");
 
+        qry.bindValue(":_Name", entryFieldsList.at(ENTRY_FIELDS::Name));
+        qry.bindValue(":_Surname", entryFieldsList.at(ENTRY_FIELDS::Surename));
+        qry.bindValue(":_Begin", QDateTime::currentDateTime());
+        qry.bindValue(":_Status", 1);
+        qry.bindValue(":_idCar", m_id);
+        qry.bindValue(":_Destination", entryFieldsList.at(ENTRY_FIELDS::Destination));
+        qry.bindValue(":_Target", entryFieldsList.at(ENTRY_FIELDS::Target));
+        qry.bindValue(":_Code", code);
 
-    qDebug() << "addToHistory4" << endl;
-    qry.bindValue(":_Name", entryFieldsList.at(ENTRY_FIELDS::Name));
-    qry.bindValue(":_Surname", entryFieldsList.at(ENTRY_FIELDS::Surename));
-    qry.bindValue(":_Begin", QDateTime::currentDateTime());
-    qry.bindValue(":_Status", 1);
-    qry.bindValue(":_idCar", m_id);
-    qry.bindValue(":_Destination", entryFieldsList.at(ENTRY_FIELDS::Destination));
-    qry.bindValue(":_Target", entryFieldsList.at(ENTRY_FIELDS::Target));
-    qry.bindValue(":_Code", code);
-
-    if(!qry.exec()) return false;
-    else return true;
+        if(!qry.exec()) return false;
+        else return true;
+    }
 
     return false;
 }
 
 bool CarBlock::updateHistory(QVariant entryFields, int distance)
 {   
-    QVariantList entryFieldsList = entryFields.toList();
-    enum ENTRY_FIELDS{
-        Mileage,
-        Notes,
-    };
+    if(SqlDatabase::isOpen()) {
+        QVariantList entryFieldsList = entryFields.toList();
+        enum ENTRY_FIELDS{
+            Mileage,
+            Notes,
+        };
 
-    QSqlQuery qry;
-    QString name, surname;
-    QSqlQueryModel * historyTable = new QSqlQueryModel(this);
-    historyTable->setQuery("SELECT * FROM history;");
-    for(int i=0; i<historyTable->rowCount(); ++i){
-        if(historyTable->data(historyTable->index(i,5)).toInt() == m_id &&
-           historyTable->data(historyTable->index(i,4)).toDate().toString("yyyy-MM-dd") == ""){
+        QSqlQuery qry;
+        QString name, surname;
+        QSqlQueryModel * historyTable = new QSqlQueryModel(this);
+        historyTable->setQuery("SELECT * FROM history;");
+        for(int i=0; i<historyTable->rowCount(); ++i){
+            if(historyTable->data(historyTable->index(i,5)).toInt() == m_id &&
+               historyTable->data(historyTable->index(i,4)).toDate().toString("yyyy-MM-dd") == ""){
 
-            name = historyTable->data(historyTable->index(i,1)).toString();
-            surname = historyTable->data(historyTable->index(i,2)).toString();
+                name = historyTable->data(historyTable->index(i,1)).toString();
+                surname = historyTable->data(historyTable->index(i,2)).toString();
 
-            if(entryFieldsList.at(ENTRY_FIELDS::Notes).toString().isEmpty()) {
-                qry.prepare("UPDATE history SET End=:_End, Distance=:_Distance WHERE idCar=:_idCar AND End IS NULL;"
-                            "UPDATE car SET Mileage=:_Mileage WHERE idCar=:_idCar;"
-                            "UPDATE car SET Status=:_Status WHERE idCar=:_idCar");
+                if(entryFieldsList.at(ENTRY_FIELDS::Notes).toString().isEmpty()) {
+                    qry.prepare("UPDATE history SET End=:_End, Distance=:_Distance WHERE idCar=:_idCar AND End IS NULL;"
+                                "UPDATE car SET Mileage=:_Mileage WHERE idCar=:_idCar;"
+                                "UPDATE car SET Status=:_Status WHERE idCar=:_idCar");
+                    qry.bindValue(":_idCar", m_id);
+                    qry.bindValue(":_End", QDateTime::currentDateTime());
+                    qry.bindValue(":_Distance",distance);
+                    qry.bindValue(":_Mileage", entryFieldsList.at(ENTRY_FIELDS::Mileage));
+                    qry.bindValue(":_Status", 0);
+                }
+
+                else {
+                qry.prepare("INSERT INTO notes (Contents, Name, Surname, Datetime, isRead, idCar) "
+                            "VALUES (:_Contents, :_Name, :_Surname, :_Datetime, :_isRead, :_idCar);"
+                            "UPDATE history SET End=:_End, Distance=:_Distance WHERE idCar=:_idCar AND End IS NULL;"
+                            "UPDATE car SET Status=:_Status WHERE idCar=:_idCar;"
+                            "UPDATE car SET Mileage=:_Mileage WHERE idCar=:_idCar;");
+                qry.bindValue(":_Contents", entryFieldsList.at(ENTRY_FIELDS::Notes));
+                qry.bindValue(":_Name", name);
+                qry.bindValue(":_Surname", surname);
+                qry.bindValue(":_Datetime", QDateTime::currentDateTime());
+                qry.bindValue(":_isRead", 0);
                 qry.bindValue(":_idCar", m_id);
                 qry.bindValue(":_End", QDateTime::currentDateTime());
                 qry.bindValue(":_Distance",distance);
                 qry.bindValue(":_Mileage", entryFieldsList.at(ENTRY_FIELDS::Mileage));
                 qry.bindValue(":_Status", 0);
+                }
+                if(!qry.exec()) return false;
+                else return true;
             }
-
-            else {
-            qry.prepare("INSERT INTO notes (Contents, Name, Surname, Datetime, isRead, idCar) "
-                        "VALUES (:_Contents, :_Name, :_Surname, :_Datetime, :_isRead, :_idCar);"
-                        "UPDATE history SET End=:_End, Distance=:_Distance WHERE idCar=:_idCar AND End IS NULL;"
-                        "UPDATE car SET Status=:_Status WHERE idCar=:_idCar;"
-                        "UPDATE car SET Mileage=:_Mileage WHERE idCar=:_idCar;");
-            qry.bindValue(":_Contents", entryFieldsList.at(ENTRY_FIELDS::Notes));
-            qry.bindValue(":_Name", name);
-            qry.bindValue(":_Surname", surname);
-            qry.bindValue(":_Datetime", QDateTime::currentDateTime());
-            qry.bindValue(":_isRead", 0);
-            qry.bindValue(":_idCar", m_id);
-            qry.bindValue(":_End", QDateTime::currentDateTime());
-            qry.bindValue(":_Distance",distance);
-            qry.bindValue(":_Mileage", entryFieldsList.at(ENTRY_FIELDS::Mileage));
-            qry.bindValue(":_Status", 0);
-            }
-            if(!qry.exec()) return false;
-            else return true;
         }
     }
 
@@ -236,35 +238,37 @@ bool CarBlock::updateHistory(QVariant entryFields, int distance)
 
 bool CarBlock::addToBooking(QVariant entryFields)
 {
-    QVariantList entryFieldsList = entryFields.toList();
-    enum ENTRY_FIELDS{
-        Begin,
-        End,
-        Name,
-        Surname,
-        Destination
-    };
+    if(SqlDatabase::isOpen()) {
+        QVariantList entryFieldsList = entryFields.toList();
+        enum ENTRY_FIELDS{
+            Begin,
+            End,
+            Name,
+            Surname,
+            Destination
+        };
 
-    QSqlQuery qry;
-    qry.prepare("INSERT INTO booking (Name, Surname, Begin, End, idCar, Destination) "
-                "VALUES (:_Name, :_Surname, :_Begin, :_End, :_idCar, :_Destination);");
+        QSqlQuery qry;
+        qry.prepare("INSERT INTO booking (Name, Surname, Begin, End, idCar, Destination) "
+                    "VALUES (:_Name, :_Surname, :_Begin, :_End, :_idCar, :_Destination);");
 
-    qDebug() << "addToBooking" << endl;
-    qry.bindValue(":_Name", entryFieldsList.at(ENTRY_FIELDS::Name));
-    qry.bindValue(":_Surname", entryFieldsList.at(ENTRY_FIELDS::Surname));
-    qry.bindValue(":_Begin", entryFieldsList.at(ENTRY_FIELDS::Begin));
-    qry.bindValue(":_End", entryFieldsList.at(ENTRY_FIELDS::End));
-    qry.bindValue(":_idCar", m_id);
-    qry.bindValue(":_Destination", entryFieldsList.at(ENTRY_FIELDS::Destination));
+        qDebug() << "addToBooking" << endl;
+        qry.bindValue(":_Name", entryFieldsList.at(ENTRY_FIELDS::Name));
+        qry.bindValue(":_Surname", entryFieldsList.at(ENTRY_FIELDS::Surname));
+        qry.bindValue(":_Begin", entryFieldsList.at(ENTRY_FIELDS::Begin));
+        qry.bindValue(":_End", entryFieldsList.at(ENTRY_FIELDS::End));
+        qry.bindValue(":_idCar", m_id);
+        qry.bindValue(":_Destination", entryFieldsList.at(ENTRY_FIELDS::Destination));
 
-    qDebug() << "before qry.exec()" << endl;
-    if(!qry.exec()) {
-        qDebug() << "return false" << endl;
-        return false;
-    }
-    else {
-        qDebug() << "return true" << endl;
-        return true;
+        qDebug() << "before qry.exec()" << endl;
+        if(!qry.exec()) {
+            qDebug() << "return false" << endl;
+            return false;
+        }
+        else {
+            qDebug() << "return true" << endl;
+            return true;
+        }
     }
 
    return false;
@@ -272,13 +276,14 @@ bool CarBlock::addToBooking(QVariant entryFields)
 
 bool CarBlock::isCodeCorrect(int id, QString code)
 {
-    std::unique_ptr<QSqlQueryModel> historyTable(new QSqlQueryModel(this));
-    historyTable->setQuery(QString("SELECT Code FROM history WHERE idCar = %1 AND End IS NULL").arg(id));
-    if(code == historyTable->data(historyTable->index(0,0)).toString()) {
-        qDebug() << "Return isCodeCorrect" << endl;
-        return true;
+    if(SqlDatabase::isOpen()) {
+        std::unique_ptr<QSqlQueryModel> historyTable(new QSqlQueryModel(this));
+        historyTable->setQuery(QString("SELECT Code FROM history WHERE idCar = %1 AND End IS NULL").arg(id));
+        if(code == historyTable->data(historyTable->index(0,0)).toString()) {
+            qDebug() << "Return isCodeCorrect" << endl;
+            return true;
+        }
     }
-
     return false;
 }
 

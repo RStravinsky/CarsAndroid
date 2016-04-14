@@ -60,7 +60,7 @@ bool FileIO::removeCode(const QString &code)
     return true;
 }
 
-void FileIO::saveTo(const QString& code)
+void FileIO::saveToClipboard(const QString& code)
 {
     QClipboard *clipboard = QApplication::clipboard();
     clipboard->setText(code);

@@ -8,11 +8,10 @@ Rectangle {
     property color buttonColor: "#FF8C00"
     property string buttonText
     property int fontSize: screenH/70
-    property int buttonRadius: 5
     signal activated()
     property bool isActivated: false;
-    color : buttonColor
-    radius: buttonRadius
+    color : actionButton.buttonColor
+    radius: 5
 
     Text {
         id: btnText
@@ -27,7 +26,6 @@ Rectangle {
         id: mouseArea;
         anchors.fill: actionButton
         onClicked: {
-            isActivated = true;
             btnClickAnimation.running = true
         }
     }

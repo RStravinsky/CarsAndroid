@@ -3,7 +3,6 @@ import QtQuick 2.5
 Item {
     id: carView
     anchors.fill: parent
-    property var list: carList
     property var area: area
 
     SwipeArea {
@@ -11,17 +10,14 @@ Item {
         menu: menuView
         anchors.fill: parent
         onMove: {
-            console.log("onMove...")
             area.enabled = false
             menuView.x = (-mainArea.width * menuView.currentIndex) + x // changing menu x
             normalViewMask.opacity = (1 -((Math.abs(menuView.x)/menuView.width)))/1.5 // changing normal view opacity
         }
         onSwipe: {
-            console.log("onSwipe...")
             mainArea.menuChange()
         }
         onCanceled: {
-            console.log("onCanceled...")
             menuView.currentIndexChanged()
             normalViewMask.opacity = menuView.currentIndex === 1 ? 0 : 0.7
             area.enabled = menuView.currentIndex === 1 ? true : false
@@ -56,7 +52,6 @@ Item {
                     id: rsrvBtn; height: carItem.height * .3; width: rsrvBtn.height * 1.7
                     buttonText: qsTr("Rezerwuj")
                     anchors { bottom: parent.bottom; bottomMargin: 10; right: parent.right }
-                    enabled: menuView.currentIndex === 1 ? true : false
                     z: carView.z + 1 // before parent
                     onActivated: { bookingView.setListIndex(listIndex); stackView.push(bookingView); dateChooser.clearDateChooser() }
                 }
@@ -66,7 +61,6 @@ Item {
                     buttonColor: status === false ? "#32b678" : "#db4437"
                     buttonText: status === false ? qsTr("Wypożycz") : qsTr("Oddaj")
                     anchors { bottom: parent.bottom; bottomMargin: 10; right: rsrvBtn.left; rightMargin: 5 }
-                    enabled: menuView.currentIndex === 1 ? true : false
                     z: carView.z + 1 // before parent
                     onActivated: { rentView.setListIndex(listIndex); stackView.push(rentView) }
                 }

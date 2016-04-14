@@ -7,6 +7,7 @@
 #include <QMessageBox>
 #include <memory>
 #include "bookinginfo.h"
+#include "sqldatabase.h"
 
 class BookingInfo;
 

@@ -38,26 +38,11 @@ Item {
     }
 
     Rectangle {
-        id: loadingRect
-        anchors.fill: parent
-        z: rentBtn.z + 1
-        color: "black"
-        opacity: 0.5
-        visible: rentBtn.isActivated
-        Text {
-            anchors.centerIn: parent
-            font.pixelSize: screenH/25;
-            text: "Proszę czekać ..."
-            color: "white"
-        }
-    }
-
-    Rectangle {
         id: area
         property int offset: 20
         anchors { bottom: parent.bottom; left: parent.left; right: parent.right; top: parent.top; margins: offset }
         property int areaHeight: (screenH - topFrame.height - (2*offset))
-        enabled: loadingRect.visible === true ? false : true
+        enabled: (loadingRect.isLoading === true) ? false : true
 
         // car name
         Text { id: carName; width: parent.width; height: area.areaHeight* .07
@@ -93,7 +78,6 @@ Item {
             anchors { bottom: parent.bottom; left: parent.left; right: parent.right; }
             buttonColor: rentView.isRented === false ? "#32b678" : "#db4437"
             buttonText: rentView.isRented === false ? qsTr("Wypożycz") : qsTr("Oddaj")
-            enabled: menuView.currentIndex === 1 ? true : false
             fontSize: screenH/35
             z: rentView.z + 1 // before parent
 
@@ -103,21 +87,22 @@ Item {
             }
 
             onActivated: {
+                area.forceActiveFocus() // disable focus from fields
                 if((rentFields.dataIsEmpty() && rentView.isRented === false) || (returnFields.dataIsEmpty() && rentView.isRented === true)) {
                     messageDialog.show("Uwaga!", "Pole tekstowe nie zostało wypełnione.", StandardIcon.Warning);
+                    return;
                 }
                 else {
+                    loadingRect.isLoading = true
                     if(rentView.isRented === false) { // rent car
                         code = carViewClass.generateCode()
                         if(carViewClass.carList[listIndex].addToHistory(rentFields.getFields(),code)) {
                             if(fileio.writeCode(code,carViewClass.carList[listIndex].brand + " " + carViewClass.carList[listIndex].model)) {
                                 messageDialog.show("Wypożyczono!", "Twój kod dostępu: " + code, StandardIcon.Information);
-                                rentFields.clearText()
-                                stackView.pop()
                                 apps.reloadWindow();
                             }
                         }
-                        else { messageDialog.show("Uwaga!", "Polecenie nie powiodło się.", StandardIcon.Warning) }
+                        else { loadingRect.isLoading  = false; messageDialog.show("Uwaga!", "Polecenie nie powiodło się.", StandardIcon.Warning); return; }
                     }
                     else // return car
                     {
@@ -133,7 +118,7 @@ Item {
                     }
                 }
 
-                rentBtn.isActivated = false;
+                loadingRect.isLoading  = false;
             } // OnActivated
 
         } // ActiveButton

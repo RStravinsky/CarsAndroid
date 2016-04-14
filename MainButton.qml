@@ -2,7 +2,7 @@ import QtQuick 2.5
 
 Item {
     id: mainButton
-    property color hoverColor: "lightgray"
+    property color hoverColor: "#FF6900"
     property color itemColor: "transparent"
     property alias animation: mainButtonAnimation
     property int type: 0

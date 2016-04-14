@@ -44,7 +44,7 @@ ApplicationWindow {
         }
 
         MessageDialog { id: messageDialog
-            onAccepted: { messageDialog.close() }
+            onAccepted: { messageDialog.close(); }
             function show(title,caption,icon) {
                 messageDialog.title = title;
                 messageDialog.text = caption;
@@ -85,18 +85,35 @@ ApplicationWindow {
                 anchors.fill: parent
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
-                font.pointSize: screenH/35
+                font.pointSize: screenH/40
                 text: "Samochody"
                 color: "white"
             }
         }
 
-        // loading screen
+        // reload screen
         LoadingScreen {
             id: loadingScreen
             anchors { top: topFrame.bottom; left: mainForm.left; right: mainForm.right; bottom: mainForm.bottom }
             width: mainForm.width
             z: mainArea.z + 1
+        }
+
+        // waiting for operation screen
+        Rectangle {
+            property bool isLoading: false
+            id: loadingRect
+            anchors.fill: parent
+            z: topFrame.z + 1
+            color: "black"
+            opacity: 0.7
+            visible: loadingRect.isLoading
+            Text {
+                anchors.centerIn: parent
+                font.pixelSize: screenH/25;
+                text: "Proszę czekać ..."
+                color: "white"
+            }
         }
 
         SqlDatabase { id: sqlDatabase }
@@ -171,11 +188,15 @@ ApplicationWindow {
 
            Rectangle { id: normalView; anchors.fill: parent; visible: false
                 CarView { id:carView; objectName: "Samochody"; Component.onCompleted: {
-                        if(sqlDatabase.connectToDatabase("94.230.27.222", "sigmacars", "root", "Serwis4q@")) {
+                        if(sqlDatabase.connectToDatabase("94.230.27.222", 3306, "root", "Serwis4q@")) {
                             carViewClass.setCarList()
                             loadingScreen.visible = false;
                         }
-                        else messageDialog.show("Błąd!", "Nie można połaczyć z serwerem.", StandardIcon.Critical);
+                        else {
+                            messageDialog.show("Błąd!", "Nie można połaczyć z serwerem.", StandardIcon.Critical);
+                            loadingScreen.text = "Serwer niedostępny"
+                            loadingScreen.source = "images/images/warning.png"
+                        }
                     }
                 }
                 SettingsView { id:settingsView; objectName: "Ustawienia"; }
