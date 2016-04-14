@@ -37,6 +37,19 @@ Item {
         hoursStackView.clearHoursStackView()
     }
 
+    function clearDateTimeStrings()
+    {
+        hoursStackView.clearDateTimeStrings()
+    }
+
+    function setDateChooser(date, time)
+    {
+        console.log("setDateChooser date: "+date)
+        calendar.selectedDate = new Date(date)
+        hoursStackView.setHoursStackView(date, time)
+
+    }
+
     SwipeArea {
          id: mouseM
          menu: menuView
@@ -121,6 +134,7 @@ Item {
                    border.width: styleData.selected ? 3 : 1;
                    border.color: styleData.selected ? "#69C0D9" : "lightgray"
                    color:  (carViewClass.carList[listIndex].isDateReserved(styleData.date)) ? "#FF8C00" : "white";
+                   enabled: false
                    Label {
                        text: styleData.date.getDate()
                        anchors.centerIn: parent

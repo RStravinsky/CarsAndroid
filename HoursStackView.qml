@@ -31,6 +31,18 @@ Item {
         timePicker.clearTimePicker()
     }
 
+    function setHoursStackView(date, time)
+    {
+        hoursListItem.setHoursListItem(date, time)
+        timePicker.setTimePicker(date, time)
+        console.log("setHoursStackView")
+    }
+
+    function clearDateTimeStrings()
+    {
+        timePicker.clearDateTimeStrings()
+    }
+
     Rectangle {
         anchors.fill:parent
 
@@ -38,6 +50,12 @@ Item {
             id: dateChooserStack
             anchors.fill: parent
             initialItem: hoursListItem
+            onCurrentItemChanged: {
+                if(currentItem === hoursListItem)
+                    calendar.enabled = true
+                else
+                    calendar.enabled = false
+            }
         }
 
         HoursListItem { id: hoursListItem; anchors.fill: parent; nextView: (hourState === 0) ? timePicker : hourContentItem; selectedDate: dateChooser.calendar.selectedDate; }

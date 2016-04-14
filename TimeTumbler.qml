@@ -35,6 +35,17 @@ Item {
         minutesLTumbler.currentIndex = 0
     }
 
+    function setTimeTumbler(date, time)
+    {
+        console.log("hour: "+time.substr(0,2))
+        console.log("minuteH: "+(time.substr(3,1))*1)
+        console.log("minuteL: "+(time.substr(4,1))*1)
+
+        hoursTumbler.currentIndex = (time.substr(0,2))*1
+        minutesHTumbler.currentIndex = (time.substr(3,1))*1
+        minutesLTumbler.currentIndex = (time.substr(4,1))*1
+    }
+
     Rectangle {
         id: timeTumblerRectangle
         color: "white"

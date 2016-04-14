@@ -55,10 +55,10 @@ Item {
                     }
                 }
 
-                CustomTextField { id: customTextField; placeholderText: bookingFieldsRepeater.nameList[index]; height: row.height; width: row.width - rect.width; property string choosenTime;
+                CustomTextField { id: customTextField; placeholderText: bookingFieldsRepeater.nameList[index]; height: row.height; width: row.width - rect.width; property string choosenTime; property string startDateTimeText;
                     Component.onCompleted: { if(index === 0 || index === 1) customTextField.activeButton = true; dateTimeType = index; }
                     onTextChanged: {
-                        if(index === 0 || index === 1) { // TO DO
+                        if(index === 0 || index === 1) {
 
                             if(bookingFieldsRepeater.itemAt(index).customTextField.text !== "") {
                                 choosenTime = bookingFieldsRepeater.itemAt(index).customTextField.text
@@ -72,6 +72,13 @@ Item {
                             else {
                                 warningVisible = false
                             }
+                        }
+                    }
+                    onMouseAreaClicked: {
+                        dateChooser.clearDateTimeStrings()
+                        if((field.text !== "")) {
+                            console.log(field.text)
+                            dateChooser.setDateChooser(field.text.split(" ")[0], field.text.split(" ")[1])
                         }
                     }
                 }
