@@ -22,6 +22,12 @@ Item {
         hoursList.currentIndex = -1
     }
 
+    function setHoursListItem(date, time)
+    {
+        hoursList.currentIndex = (time.substr(0,2))*1
+        console.log("setHoursListItem")
+    }
+
     ListView {
         id: hoursList
         anchors.fill: parent
@@ -99,9 +105,9 @@ Item {
                     onRunningChanged: {
                         if (delay.running) {}
                         else {
+                            timePicker.clearTimePicker()
                             timePicker.setHourIndex(hoursList.currentIndex)
                             carViewClass.carList[listIndex].readBookingEntries(selectedDate, modelData)
-                            console.log("bil size: "+carViewClass.carList[listIndex].getBookingInfoListSize())
                             hourState = carViewClass.carList[listIndex].setHoursColor(dateChooser.calendar.selectedDate, modelData)
                             dateChooserStack.push(nextView)
                         }

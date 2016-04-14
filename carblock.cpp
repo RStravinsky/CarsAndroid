@@ -60,7 +60,7 @@ void CarBlock::readBookingEntries(QDate date, QString time)
 
     QTime modelTimeBegin = QTime::fromString(time, "hh:mm");
     QDateTime clickedDateTimeBegin(date, modelTimeBegin);
-    QDateTime clickedDateTimeEnd(clickedDateTimeBegin.addSecs(3600));
+    QDateTime clickedDateTimeEnd(clickedDateTimeBegin.addSecs(3599));
     QDateTime modelDateTimeBegin = QDateTime::currentDateTime(), modelDateTimeEnd = QDateTime::currentDateTime();
 
     m_bookingInfoList.clear();
@@ -145,6 +145,38 @@ bool CarBlock::isDateCorrect(QDateTime dateTime)
 
     return true;
 
+}
+
+
+bool CarBlock::checkDates(QDateTime begin, QDateTime end)
+{
+    QDateTime modelDateTimeBegin = QDateTime::currentDateTime(), modelDateTimeEnd = QDateTime::currentDateTime();
+
+    for(int i = 0; i < m_bookingModel.rowCount(); ++i) {
+
+        modelDateTimeBegin = m_bookingModel.data(m_bookingModel.index(i,3)).toDateTime();
+        modelDateTimeEnd = m_bookingModel.data(m_bookingModel.index(i,4)).toDateTime();
+
+
+            if((begin >= modelDateTimeBegin) && (end <= modelDateTimeEnd)) {
+                qDebug() << "Następiło sklejenie 1. typu";
+                return false;
+            }
+            else if((begin <= modelDateTimeBegin) && (end >= modelDateTimeEnd)) {
+                qDebug() << "Następiło sklejenie 2. typu";
+                return false;
+            }
+            else if((begin <= modelDateTimeBegin) && (end >= modelDateTimeEnd) && (end <= modelDateTimeEnd)) {
+                qDebug() << "Następiło sklejenie 3. typu";
+                return false;
+            }
+            else if((begin >= modelDateTimeBegin) && (begin <= modelDateTimeEnd) && (end >= modelDateTimeEnd)) {
+                qDebug() << "Następiło sklejenie 4. typu";
+                return false;
+            }
+    }
+
+    return true;
 }
 
 bool CarBlock::addToHistory(QVariant entryFields, QString code)
@@ -291,7 +323,7 @@ int CarBlock::setHoursColor(QDate date, QString time)
 {
     QTime modelTimeBegin = QTime::fromString(time, "hh:mm");
     QDateTime clickedDateTimeBegin(date, modelTimeBegin);
-    QDateTime clickedDateTimeEnd(clickedDateTimeBegin.addSecs(3600));
+    QDateTime clickedDateTimeEnd(clickedDateTimeBegin.addSecs(3599));
 
     QDateTime modelDateTimeBegin = QDateTime::currentDateTime(), modelDateTimeEnd = QDateTime::currentDateTime();
     m_bookingInfoList.clear();
@@ -300,6 +332,7 @@ int CarBlock::setHoursColor(QDate date, QString time)
 
         modelDateTimeBegin = m_bookingModel.data(m_bookingModel.index(i,3)).toDateTime();
         modelDateTimeEnd = m_bookingModel.data(m_bookingModel.index(i,4)).toDateTime();
+
 
         if(clickedDateTimeBegin.date() >= modelDateTimeBegin.date() && clickedDateTimeBegin.date() <= modelDateTimeEnd.date()) {
 

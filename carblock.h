@@ -60,6 +60,7 @@ public:
     Q_INVOKABLE bool isCodeCorrect(int id, QString code);
     Q_INVOKABLE void readBookingEntries(QDate date, QString time);
     Q_INVOKABLE bool isDateCorrect(QDateTime dateTime);
+    Q_INVOKABLE bool checkDates(QDateTime begin, QDateTime end);
     Q_INVOKABLE int setHoursColor(QDate date, QString time);
     Q_INVOKABLE int getBookingInfoListSize() {return m_bookingInfoList.size();}
 

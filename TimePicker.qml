@@ -42,6 +42,17 @@ Item {
         timeTumbler.clearTimeTumbler()
     }
 
+    function setTimePicker(date, time)
+    {
+        timeTumbler.setTimeTumbler(date, time)
+    }
+
+    function clearDateTimeStrings()
+    {
+        startDateTimeString = ""
+        endDateTimeString = ""
+    }
+
         Rectangle {
                 id: orangeBar
                 color: "#FF8C00"
@@ -77,17 +88,18 @@ Item {
                 if(whichDateTime === 0) {
                     startDateTimeString = bookingCalendar.selectedDate.toLocaleString(Qt.locale("pl_PL"), "yyyy-MM-dd") + " " + timeTumbler.timeString
                     startDateTime = Date.fromLocaleString(Qt.locale(), startDateTimeString, "yyyy-MM-dd hh:mm")
-                    console.log("byde: " + listIndex)
 
                     if(carViewClass.carList[listIndex].isDateCorrect(startDateTime)) {
 
-                        if((endDateTimeString.length !== 0) && (startDateTime < endDateTime)) {
+                        //console.log(startDateTimeString + " # " + endDateTimeString)
+
+                        if((endDateTimeString !== "") && (startDateTime < endDateTime)) {
                             bookingView.bookingFields.bookingFieldsRepeater.itemAt(whichDateTime).customTextField.text = startDateTimeString
                             stackView.pop(bookingView)
                             dateChooserStack.pop(hoursListItem)
 
                         }
-                        else if(endDateTimeString.length === 0){
+                        else if(endDateTimeString === ""){
                             bookingView.bookingFields.bookingFieldsRepeater.itemAt(whichDateTime).customTextField.text = startDateTimeString
                             stackView.pop(bookingView)
                             dateChooserStack.pop(hoursListItem)
@@ -96,14 +108,14 @@ Item {
                             messageDialog.show("Uwaga!", "Niepoprawna godzina.", StandardIcon.Warning)
                     }
                     else
-                        messageDialog.show("Uwaga!", "Wydaje mi się, że musisz skleić.", StandardIcon.Warning)
+                        messageDialog.show("Uwaga!", "Wybrana godzina jest już zarezerwowana.", StandardIcon.Warning)
                 }
                 else if(whichDateTime === 1) {
                     endDateTimeString = bookingCalendar.selectedDate.toLocaleString(Qt.locale("pl_PL"), "yyyy-MM-dd") + " " + timeTumbler.timeString
                     endDateTime = Date.fromLocaleString(Qt.locale(), endDateTimeString, "yyyy-MM-dd hh:mm")
 
-                    if(carViewClass.carList[listIndex].isDateCorrect(startDateTime)) {
-                        if(carViewClass.carList[listIndex].isDateCorrect(startDateTime)) {
+                    if(carViewClass.carList[listIndex].isDateCorrect(endDateTime)) {
+                        if(carViewClass.carList[listIndex].checkDates(startDateTime, endDateTime)) {
                             if(endDateTime > startDateTime) {
                                 bookingView.bookingFields.bookingFieldsRepeater.itemAt(whichDateTime).customTextField.text = endDateTimeString
                                 stackView.pop(bookingView)
@@ -112,9 +124,11 @@ Item {
                             else
                                 messageDialog.show("Uwaga!", "Niepoprawna godzina.", StandardIcon.Warning)
                         }
-                   }
-                   else
-                       messageDialog.show("Uwaga!", "Wydaje mi się, że musisz skleić.", StandardIcon.Warning)
+                        else
+                            messageDialog.show("Uwaga!", "Godziny, które wybrałeś są już zarezerwowane.", StandardIcon.Warning)
+                    }
+                    else
+                       messageDialog.show("Uwaga!", "Wybrana godzina jest już zarezerwowana.", StandardIcon.Warning)
                 }
 
             }

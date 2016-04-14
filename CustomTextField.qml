@@ -16,6 +16,8 @@ Item {
     property int dateTimeType
     property bool warningVisible: false
 
+    signal mouseAreaClicked();
+
     function clear() { field.text = "" }
 
     TextField {
@@ -105,8 +107,7 @@ Item {
              anchors.fill: parent
              propagateComposedEvents: true
              onClicked: {
-                 dateChooser.setDateTimeType(dateTimeType); dateChooser.setListIndex(bookingView.listIndex); stackView.push(dateChooser)
-                 if(field.text === "") dateChooser.clearDateChooser()
+                dateChooser.setDateTimeType(dateTimeType); dateChooser.setListIndex(bookingView.listIndex); stackView.push(dateChooser)
              }
          }
    }
@@ -137,6 +138,7 @@ Item {
         }
     }
 
+    Component.onCompleted: { narrowButtonMouseArea.clicked.connect(mouseAreaClicked) }
 } // Item
 
 
