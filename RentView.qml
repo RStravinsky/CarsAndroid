@@ -56,7 +56,7 @@ Item {
         // car image
         Image { id: carImage; width: parent.width; height: area.areaHeight* .25
             anchors { top: carName.bottom; left: parent.left; right: parent.right; topMargin: 5; rightMargin: 60; leftMargin: 60 }
-            source: carViewClass.carList[listIndex].photoPath !== "" ? "images/" + carViewClass.carList[listIndex].photoPath : ""
+            source: "image://cImages/"+carViewClass.carList[listIndex].id //carViewClass.carList[listIndex].photoPath !== "" ? "images/" + carViewClass.carList[listIndex].photoPath : ""
             fillMode: Image.PreserveAspectFit
         }
 

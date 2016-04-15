@@ -11,6 +11,7 @@
 #include <QThread>
 #include "carblock.h"
 #include "sqldatabase.h"
+#include "imageprovider.h"
 
 class CarBlock;
 

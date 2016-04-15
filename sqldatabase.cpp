@@ -9,6 +9,8 @@ bool SqlDatabase::m_isLocal = false;
 
 bool SqlDatabase::connectToDatabase ( QString host, int port, QString username, QString password) {
 
+    purgeDatabase();
+    m_connected = false;
     m_sqlDatabase = QSqlDatabase::addDatabase ( "QMYSQL" );
     m_sqlDatabase.setHostName ( host );
     m_sqlDatabase.setPort( port );

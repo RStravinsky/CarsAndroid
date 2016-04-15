@@ -8,6 +8,7 @@ CarBlock::CarBlock(const int id,
                    const QString & photoPath,
                    const int mileage,
                    const int listIndex,
+                   const QByteArray imageByteArray,
                    QObject *parent)
                    : m_id(id),
                      m_brand(brand),
@@ -16,7 +17,8 @@ CarBlock::CarBlock(const int id,
                      m_status(status),
                      m_photoPath(photoPath),
                      m_mileage(mileage),
-                     m_listIndex(listIndex)
+                     m_listIndex(listIndex),
+                     m_imageByteArray(imageByteArray)
 {
     m_bookingModel.setQuery(QString("SELECT * FROM booking WHERE idCar = %1").arg(id));
 }
