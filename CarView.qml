@@ -43,11 +43,11 @@ Item {
                     color: "gray"; font.pixelSize: screenH/35; text: licensePlate
                 }
                 Image { id: carImage; height: parent.height * .7
+                    cache: true
                     fillMode: Image.PreserveAspectFit
-                    source: photoPath !== "" ? "images/"+photoPath : ""
+                    source: { "image://cImages/"+id }
                     anchors { left: parent.left; top: license.bottom; topMargin: 5 }
                 }
-
                 ActionButton {
                     id: rsrvBtn; height: carItem.height * .3; width: rsrvBtn.height * 1.7
                     buttonText: qsTr("Rezerwuj")

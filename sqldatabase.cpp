@@ -9,12 +9,13 @@ bool SqlDatabase::m_isLocal = false;
 
 bool SqlDatabase::connectToDatabase ( QString host, int port, QString username, QString password) {
 
+    qDebug() << "PURGETE" << endl;
     purgeDatabase();
 
-//    qDebug() << "host=" << host << endl;
-//    qDebug() << "pass=" << password << endl;
-//    qDebug() << "user=" << username << endl;
-//    qDebug() << "port=" << port << endl;
+    qDebug() << "host=" << host << endl;
+    qDebug() << "pass=" << password << endl;
+    qDebug() << "user=" << username << endl;
+    qDebug() << "port=" << port << endl;
 
     m_sqlDatabase = QSqlDatabase::addDatabase ( "QMYSQL" );
     m_sqlDatabase.setHostName ( host );
@@ -30,7 +31,7 @@ bool SqlDatabase::connectToDatabase ( QString host, int port, QString username, 
 
     emit connectedChanged();
 
-//    qDebug() << "m_connected = " << m_connected << endl;
+    qDebug() << "m_connected = " << m_connected << endl;
 
     return m_connected;
 }

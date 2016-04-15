@@ -11,7 +11,8 @@ SOURCES += main.cpp \
     bookinginfo.cpp \
     sqldatabase.cpp \
     fileio.cpp \
-    singlecode.cpp
+    singlecode.cpp \
+    imageprovider.cpp
 
 RESOURCES += qml.qrc \
     resources.qrc
@@ -40,7 +41,8 @@ HEADERS += \
     bookinginfo.h \
     sqldatabase.h \
     fileio.h \
-    singlecode.h
+    singlecode.h \
+    imageprovider.h
 
 contains(ANDROID_TARGET_ARCH,armeabi-v7a) {
         ANDROID_EXTRA_LIBS = \

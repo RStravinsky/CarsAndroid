@@ -6,7 +6,9 @@ void CarView::setCarList()
 {
     m_carModel.setQuery("SELECT * FROM car;");
     if(m_carList.size() != 0) m_carList.clear();
+
     for(int i = 0; i < m_carModel.rowCount(); ++i) {
+
         m_carList.push_back(std::move(new CarBlock(m_carModel.index(i, 0).data().toInt(),
                                                    m_carModel.index(i, 1).data().toString(),
                                                    m_carModel.index(i, 2).data().toString(),
@@ -16,8 +18,6 @@ void CarView::setCarList()
                                                    m_carModel.index(i, 6).data().toInt(),
                                                    i
                                                    )));
-
-       QCoreApplication::processEvents();
     }
 
     emit onCarListChanged(getCarList());

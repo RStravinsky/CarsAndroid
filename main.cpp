@@ -5,6 +5,7 @@
 #include "carblock.h"
 #include "sqldatabase.h"
 #include "fileio.h"
+#include "imageprovider.h"
 
 int main(int argc, char *argv[])
 {
@@ -20,10 +21,13 @@ int main(int argc, char *argv[])
     CarView cv;
     CarBlock cb;
     FileIO fileIO;
+
     auto root_context = engine.rootContext();
     root_context->setContextProperty("carViewClass", &cv);
     root_context->setContextProperty("carBlockClass", &cb);
     root_context->setContextProperty("fileio", &fileIO);
+
+    engine.addImageProvider(QLatin1String("cImages"), new ImageProvider);
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
