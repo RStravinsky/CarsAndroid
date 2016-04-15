@@ -43,7 +43,7 @@ Item {
                     color: "gray"; font.pixelSize: screenH/35; text: licensePlate
                 }
                 Image { id: carImage; height: parent.height * .7
-                    cache: false
+                    cache: true
                     fillMode: Image.PreserveAspectFit
                     source: { "image://cImages/"+id } //photoPath !== "" ? "images/"+photoPath : ""
                     anchors { left: parent.left; top: license.bottom; topMargin: 5 }

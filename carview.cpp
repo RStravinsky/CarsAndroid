@@ -16,8 +16,7 @@ void CarView::setCarList()
                                                    static_cast<bool>(m_carModel.index(i, 7).data().toInt()),
                                                    m_carModel.index(i, 8).data().toString(),
                                                    m_carModel.index(i, 6).data().toInt(),
-                                                   i,
-                                                   m_carModel.index(i, 11).data().toByteArray()
+                                                   i
                                                    )));
 
        QCoreApplication::processEvents();

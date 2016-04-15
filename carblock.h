@@ -22,7 +22,6 @@ class CarBlock : public QObject
     Q_PROPERTY(QString photoPath READ getPhotoPath CONSTANT)
     Q_PROPERTY(int listIndex READ getListIndex CONSTANT)
     Q_PROPERTY(int mileage READ getMileage CONSTANT)
-    Q_PROPERTY(QByteArray imageByteArray READ getImageByteArray CONSTANT)
     Q_PROPERTY(QQmlListProperty<BookingInfo> bookingInfoList READ getBookingInfoList NOTIFY onBookingInfoListChanged)
 
 public:
@@ -39,7 +38,6 @@ public:
                       const QString & photoPath = "images/car.png",
                       const int mileage = 0,
                       const int listIndex = -1,
-                      const QByteArray imageByteArray = QByteArray(),
                       QObject *parent = 0);
 
     Q_INVOKABLE const int getId() {return m_id;}
@@ -50,7 +48,6 @@ public:
     Q_INVOKABLE const QString getPhotoPath() {return m_photoPath;}
     Q_INVOKABLE const int getListIndex() {return m_listIndex;}
     Q_INVOKABLE const int getMileage() {return m_mileage;}
-    Q_INVOKABLE const QByteArray getImageByteArray() {return m_imageByteArray;}
 
     Q_INVOKABLE QQmlListProperty<BookingInfo> getBookingInfoList() {return QQmlListProperty<BookingInfo>(this, nullptr, &bookingInfoListCount, &bookinginfoListAt);}
     static int bookingInfoListCount(QQmlListProperty<BookingInfo>*list);
@@ -82,7 +79,6 @@ private:
     const QString m_photoPath;
     const int m_listIndex;
     const int m_mileage;
-    const QByteArray m_imageByteArray;
     QSqlQueryModel m_bookingModel;
     QList<BookingInfo*> m_bookingInfoList;
 };
