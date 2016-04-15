@@ -53,22 +53,20 @@ public:
     static int bookingInfoListCount(QQmlListProperty<BookingInfo>*list);
     static BookingInfo* bookinginfoListAt(QQmlListProperty<BookingInfo> *list, int i);
 
-    Q_INVOKABLE bool isDateReserved(QDate date);
-    Q_INVOKABLE bool addToHistory(QVariant entryFields, QString code);
-    Q_INVOKABLE bool updateHistory(QVariant entryFields, int distance);
-    Q_INVOKABLE bool addToBooking(QVariant entryFields);
-    Q_INVOKABLE bool isCodeCorrect(int id, QString code);
-    Q_INVOKABLE void readBookingEntries(QDate date, QString time);
-    Q_INVOKABLE bool isDateCorrect(QDateTime dateTime);
-    Q_INVOKABLE bool checkDates(QDateTime begin, QDateTime end);
-    Q_INVOKABLE int setHoursColor(QDate date, QString time);
-    Q_INVOKABLE int getBookingInfoListSize() {return m_bookingInfoList.size();}
-
 signals:
     void onBookingInfoListChanged(QQmlListProperty<BookingInfo>);
 
 public slots:
-
+    bool isDateReserved(QDate date);
+    bool addToHistory(QVariant entryFields, QString code);
+    bool updateHistory(QVariant entryFields, int distance);
+    bool addToBooking(QVariant entryFields);
+    bool isCodeCorrect(int id, QString code);
+    void readBookingEntries(QDate date, QString time);
+    bool isDateCorrect(QDateTime dateTime);
+    bool checkDates(QDateTime begin, QDateTime end);
+    int setHoursColor(QDate date, QString time);
+    int getBookingInfoListSize() {return m_bookingInfoList.size();}
 
 private:
     const int m_id;
@@ -77,8 +75,8 @@ private:
     const QString m_licensePlate;
     const bool m_status;
     const QString m_photoPath;
-    const int m_listIndex;
     const int m_mileage;
+    const int m_listIndex;
     QSqlQueryModel m_bookingModel;
     QList<BookingInfo*> m_bookingInfoList;
 };

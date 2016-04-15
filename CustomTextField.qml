@@ -16,7 +16,7 @@ Item {
     property int dateTimeType
     property bool warningVisible: false
 
-    signal mouseAreaClicked();
+    signal mouseAreaClicked()
 
     function clear() { field.text = "" }
 
@@ -107,7 +107,8 @@ Item {
              anchors.fill: parent
              propagateComposedEvents: true
              onClicked: {
-                dateChooser.setDateTimeType(dateTimeType); dateChooser.setListIndex(bookingView.listIndex); stackView.push(dateChooser)
+                 dateChooser.setDateTimeType(dateTimeType); dateChooser.setListIndex(bookingView.listIndex); stackView.push(dateChooser)
+                 if(field.text === "") dateChooser.clearDateChooser()
              }
          }
    }
@@ -138,7 +139,6 @@ Item {
         }
     }
 
-    Component.onCompleted: { narrowButtonMouseArea.clicked.connect(mouseAreaClicked) }
 } // Item
 
 

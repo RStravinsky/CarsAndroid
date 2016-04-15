@@ -9,26 +9,29 @@ bool SqlDatabase::m_isLocal = false;
 
 bool SqlDatabase::connectToDatabase ( QString host, int port, QString username, QString password) {
 
+    purgeDatabase();
+
+//    qDebug() << "host=" << host << endl;
+//    qDebug() << "pass=" << password << endl;
+//    qDebug() << "user=" << username << endl;
+//    qDebug() << "port=" << port << endl;
+
     m_sqlDatabase = QSqlDatabase::addDatabase ( "QMYSQL" );
     m_sqlDatabase.setHostName ( host );
-    m_sqlDatabase.setPort( port );
+    m_sqlDatabase.setPort( port);
     m_sqlDatabase.setUserName ( username );
     m_sqlDatabase.setPassword ( password );
     m_sqlDatabase.setDatabaseName ("sigmacars");
-
-    qDebug() << "host=" << host << endl;
-    qDebug() << "pass=" << password << endl;
-    qDebug() << "user=" << username << endl;
-    qDebug() << "port=" << port << endl;
 
     if(host == "127.0.0.1") setConnectionType(true);
     else setConnectionType(false);
 
     if (isOpen()) m_connected = true;
 
-    qDebug() << "m_connected=" << m_connected << endl;
-
     emit connectedChanged();
+
+//    qDebug() << "m_connected = " << m_connected << endl;
+
     return m_connected;
 }
 
@@ -64,6 +67,8 @@ bool SqlDatabase::isConnectedToNetwork()
     }
 
     delete reply;
+
+    qDebug() << "Network = " << result << endl;
     return result;
 }
 
@@ -74,4 +79,5 @@ void SqlDatabase::purgeDatabase()
     m_sqlDatabase.close();
     m_sqlDatabase = QSqlDatabase();
     m_sqlDatabase.removeDatabase(connection);
+    m_connected = false;
 }

@@ -43,6 +43,9 @@ Item {
                 Image { height: 25; width: 25
                     anchors { left: parent.left; leftMargin: 5; verticalCenter: parent.verticalCenter }
                     source: imagePath
+                    smooth: true
+                    antialiasing: true
+                    mipmap: true
                 }
                 Text { id: menuText;
                     anchors { left: parent.left; leftMargin: 40; verticalCenter: parent.verticalCenter }

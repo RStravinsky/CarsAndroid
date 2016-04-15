@@ -4,9 +4,22 @@ Item {
     id: updateButton
     property color hoverColor: "#FF6900"
     property color itemColor: "transparent"
-    enabled: loadingScreen.visible === true ? false : true // disable when menu is open
+    enabled: (loadingScreen.text ===  "Łączenie ..." && loadingScreen.visible === true )? false : true // disable when menu is open
     signal activated()
-    property bool isActivated: false;
+    property bool isActivated: false;  
+
+    /* animation of main button*/
+    RotationAnimation {
+        id: updateButtonAnimation
+        target: updateButton;
+        from: 0
+        to: 360
+        duration: 200
+        onRunningChanged: {
+            if (updateButtonAnimation.running) {}
+            else { updateButton.activated() }
+        }
+    }
 
     Rectangle {
         id: rectangle
@@ -19,6 +32,9 @@ Item {
             height: rectangle.width * .4
             anchors.centerIn: rectangle
             source: "/images/images/update.png"
+            smooth: true
+            antialiasing: true
+            mipmap: true
         }
 
         MouseArea {
@@ -28,10 +44,10 @@ Item {
             onEntered: rectangle.state = "ENTERED"
             onExited: rectangle.state = "EXITED"
             onClicked: {
-                loadingScreen.visible = true;
                 loadingScreen.text = "Łączenie ..."
                 loadingScreen.source = "images/images/wait.png"
-                updateButton.activated()
+                loadingScreen.visible = true;
+                updateButtonAnimation.running = true;
             }
         }
 

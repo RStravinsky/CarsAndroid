@@ -52,6 +52,7 @@ Item {
                         source: bookingFieldsRepeater.pathList[index]
                         smooth: true
                         antialiasing: true
+                        mipmap: true
                     }
                 }
 

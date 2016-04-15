@@ -45,6 +45,7 @@ Item {
                         source: rowsModel.pathList[index]
                         smooth: true
                         antialiasing: true
+                        mipmap: true
                     }
                 }
 

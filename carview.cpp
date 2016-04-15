@@ -23,13 +23,6 @@ void CarView::setCarList()
     emit onCarListChanged(getCarList());
 }
 
-void CarView::setBusy(const bool &busy)
-{
-    m_busy = busy;
-    emit busyChanged();
-}
-
-
 int CarView::carListCount(QQmlListProperty<CarBlock>*list)
 {
     CarView *carView = qobject_cast<CarView*>(list->object);

@@ -21,10 +21,6 @@ public:
     Q_INVOKABLE QString getFrom() {return m_from;}
     Q_INVOKABLE QString getTo() {return m_to;}
 
-signals:
-
-public slots:
-
 private:
     const QString m_name;
     const QString m_surname;

@@ -22,10 +22,6 @@ public:
     Q_INVOKABLE QString getDate() {return m_date;}
     Q_INVOKABLE QString getTime() {return m_time;}
 
-signals:
-
-public slots:
-
 private:
     const QString m_code;
     const QString m_brand;

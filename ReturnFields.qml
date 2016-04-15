@@ -51,6 +51,7 @@ Item {
                     source: "/images/images/notes.png"
                     smooth: true
                     antialiasing: true
+                    mipmap: true
                 }
             }
 

@@ -2,12 +2,6 @@ import QtQuick 2.5
 
 Item {
     property var fields
-    function clearText() {
-        for(var i=0;i<4;i++) {
-            rowsModel.itemAt(i).customTextField.clear()
-        }
-        settingsFields.forceActiveFocus()
-    }
 
     function dataIsEmpty() {
         if(rowsModel.itemAt(0).customTextField.text === "" ||
@@ -34,7 +28,7 @@ Item {
         Repeater {
             id: rowsModel
             model: 4
-            property variant pathList: ["/images/images/ip.png","/images/images/port.png","/images/images/name.png","/images/images/code.png"]
+            property variant pathList: ["/images/images/ip.png","/images/images/port.png","/images/images/name.png","/images/images/password.png"]
             property variant nameList: [qsTr("Adres"),qsTr("Port"),qsTr("Użytkownik"),qsTr("Hasło")]
 
             Row { id: row; spacing: 10; height: (settingsFields.height * .15); width: settingsFields.width - row.spacing;
@@ -45,10 +39,11 @@ Item {
                         source: rowsModel.pathList[index]
                         smooth: true
                         antialiasing: true
+                        mipmap: true
                     }
                 }
 
-                CustomTextField { id: customTextField; placeholderText: rowsModel.nameList[index]; height: row.height; width: row.width - rect.width; }
+                CustomTextField { id: customTextField; text: sqlDatabase.settingsParameter[index]; placeholderText: rowsModel.nameList[index]; height: row.height; width: row.width - rect.width; }
 
             } // Row
 

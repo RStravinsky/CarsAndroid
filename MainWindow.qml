@@ -31,6 +31,7 @@ ApplicationWindow {
                     if(stackView.currentItem.objectName === "Wypożyczanie") { rentView.clearText() }
                     if(stackView.currentItem.objectName === "Rezerwacja") { bookingView.clearText() }
                     if(stackView.currentItem.objectName === "Wprowadź kod") { pinView.clearText() }
+                    if(stackView.currentItem.objectName === "Ustawienia") { loadingScreen.z = normalView.z + 1; }
 
                     if(stackView.depth === 1) apps.close()
                     else  {
@@ -70,7 +71,7 @@ ApplicationWindow {
             anchors { right: topFrame.right; top: topFrame.top }
             z: topFrame.z + 1 // before top frame
             visible: stackView.currentItem.objectName === "Samochody" ? true : false
-            onActivated: { apps.reloadWindow(); loadingScreen.visible = false; }
+            onActivated: { apps.reloadWindow(); }
         }
 
         // header
@@ -91,13 +92,6 @@ ApplicationWindow {
             }
         }
 
-        // reload screen
-        LoadingScreen {
-            id: loadingScreen
-            anchors { top: topFrame.bottom; left: mainForm.left; right: mainForm.right; bottom: mainForm.bottom }
-            width: mainForm.width
-            z: mainArea.z + 1
-        }
 
         // waiting for operation screen
         Rectangle {
@@ -116,7 +110,7 @@ ApplicationWindow {
             }
         }
 
-        SqlDatabase { id: sqlDatabase }
+        SqlDatabase {  property var settingsParameter; id: sqlDatabase }
 
         Rectangle {
             id: mainArea
@@ -165,12 +159,13 @@ ApplicationWindow {
                 z: normalViewMask.z + 1 // before normalView
                 mainArea: mainArea
                 onItemClicked: {
+                       loadingScreen.z = normalView.z + 1;
                        if(stackView.currentItem.objectName === "Wypożyczanie") { rentView.clearText() }
                        if(stackView.currentItem.objectName === "Rezerwacja") { bookingView.clearText() }
                        if(stackView.currentItem.objectName === "Wprowadź kod") { pinView.clearText() }
                        mainArea.menuChange()
                        if(idx === 0) { stackView.pop(null, StackView.Immediate) }
-                       else if(idx === 1) { stackView.clear(); stackView.push(carView, StackView.Immediate, settingsView, StackView.Immediate) }
+                       else if(idx === 1) { loadingScreen.z = normalView.z - 1; stackView.clear(); stackView.push(carView, StackView.Immediate, settingsView, StackView.Immediate) }
                        else if(idx === 2) {
                            fileio.readCodes();
                            if(stackView.currentItem.objectName === "Wprowadź kod") {
@@ -186,19 +181,43 @@ ApplicationWindow {
                 }
            } // Menu View
 
+           // reload screen
+           LoadingScreen {
+               id: loadingScreen
+               anchors.fill: parent
+               z: normalView.z + 1
+           }
+
            Rectangle { id: normalView; anchors.fill: parent; visible: false
                 CarView { id:carView; objectName: "Samochody"; Component.onCompleted: {
-                        if(sqlDatabase.connectToDatabase("94.230.27.222", 3306, "root", "Serwis4q@")) {
-                            carViewClass.setCarList()
-                            loadingScreen.visible = false;
+                        console.log("Read Settings...")
+                        if(fileio.readSettings()) {
+
+                            console.log("Get Settings...")
+                            sqlDatabase.settingsParameter = fileio.settingsList
+                            console.log(sqlDatabase.settingsParameter[0])
+                            console.log(sqlDatabase.settingsParameter[1])
+                            console.log(sqlDatabase.settingsParameter[2])
+                            console.log(sqlDatabase.settingsParameter[3])
+
+                            console.log("Connecting to DB...")
+                            if(sqlDatabase.connectToDatabase(sqlDatabase.settingsParameter[0], sqlDatabase.settingsParameter[1], sqlDatabase.settingsParameter[2], sqlDatabase.settingsParameter[3])) {
+                                console.log("Before setCarList")
+                                carViewClass.setCarList()
+                                console.log("After setCarList")
+                                loadingScreen.visible = false;
+                                return;
+                            }
+                            else {
+                                messageDialog.show("Błąd!", "Nie można połaczyć z serwerem.", StandardIcon.Critical);
+                                loadingScreen.text = "Serwer niedostępny"
+                                loadingScreen.source = "images/images/warning.png"
+                            }
                         }
-                        else {
-                            messageDialog.show("Błąd!", "Nie można połaczyć z serwerem.", StandardIcon.Critical);
-                            loadingScreen.text = "Serwer niedostępny"
-                            loadingScreen.source = "images/images/warning.png"
-                        }
+                        else { console.log("SETTINGS.txt not open") }
                     }
                 }
+
                 SettingsView { id:settingsView; objectName: "Ustawienia"; }
                 CodesView { id:codesView; objectName: "Kody"; }
                 DateChooser {id:dateChooser; objectName: "Data/czas";}

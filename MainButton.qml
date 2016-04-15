@@ -6,7 +6,7 @@ Item {
     property color itemColor: "transparent"
     property alias animation: mainButtonAnimation
     property int type: 0
-    enabled: (mainButton.rotation > 0 && mainButton.rotation < 180) || (loadingScreen.visible === true) ? false : true // disable button during animation
+    enabled: ((mainButton.rotation > 0 && mainButton.rotation < 180) || (loadingScreen.text ===  "Łączenie ..." && loadingScreen.visible === true )) ? false : true // disable button during animation
     signal buttonClicked()
 
     /* animation of main button*/
@@ -31,6 +31,9 @@ Item {
             height: rectangle.width * .4
             anchors.centerIn: rectangle
             source: mainButton.type === 0 ? "/images/images/more.png" : "/images/images/return.png"
+            smooth: true
+            antialiasing: true
+            mipmap: true
         }
 
         MouseArea {
