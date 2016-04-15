@@ -80,3 +80,52 @@ bool FileIO::writeCode(const QString& data,const QString& carName)
     file.close();
     return true;
 }
+
+bool FileIO::writeSettings(QVariant entryFields)
+{
+    QVariantList entryFieldsList = entryFields.toList();
+    enum ENTRY_FIELDS{
+        Host,
+        Port,
+        Name,
+        Password,
+    };
+
+    QFile file("/data/data/pl.sigmasa.rezerwacja/files/SETTINGS.txt");
+    if (!file.open(QFile::WriteOnly | QFile::Truncate))
+    {
+        emit error("Nie można otworzyć pliku SETTINGS.txt");
+        return false;
+    }
+
+    QTextStream out(&file);
+    out << entryFieldsList.at(ENTRY_FIELDS::Host).toString() << " " << entryFieldsList.at(ENTRY_FIELDS::Port).toString()  << " " << entryFieldsList.at(ENTRY_FIELDS::Name).toString() << " " << entryFieldsList.at(ENTRY_FIELDS::Password).toString()  <<  "\n";
+    file.close();
+    return true;
+}
+
+bool FileIO::readSettings()
+{
+    QFile file("/data/data/pl.sigmasa.rezerwacja/files/SETTINGS.txt");
+    m_settingsList.clear();
+
+    if ( file.open(QIODevice::ReadWrite) ) {
+        QString line;
+        QTextStream t( &file );
+        line = t.readLine();
+        if(!line.isEmpty())
+                for(int i=0; i<4; ++i)
+                    m_settingsList.push_back(line.split(" ").at(i));
+        file.close();
+    }
+
+    else {
+        emit error("Nie można otworzyć pliku SETTINGS.txt");
+        return false;
+    }
+
+    //qDebug() << m_settingsList << endl;
+
+    emit onSettingsListChanged(getSettingsList());
+    return true;
+}

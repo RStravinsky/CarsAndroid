@@ -19,29 +19,25 @@ class CarView : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QQmlListProperty<CarBlock> carList READ getCarList NOTIFY onCarListChanged)
-    Q_PROPERTY(bool busy READ busy NOTIFY busyChanged)
-
-private:
-    QList<CarBlock*> m_carList;
-    QSqlQueryModel m_carModel;
-    bool m_busy;
 
 public:
     explicit CarView(QObject *parent = 0);
 
     Q_INVOKABLE QQmlListProperty<CarBlock> getCarList() {return QQmlListProperty<CarBlock>(this, nullptr, &carListCount, &carListAt);}
-    Q_INVOKABLE void setCarList();
-    Q_INVOKABLE void setBusy(const bool &busy);
-    Q_INVOKABLE bool busy() {return m_busy;}
     static int carListCount(QQmlListProperty<CarBlock>*list);
     static CarBlock* carListAt(QQmlListProperty<CarBlock> *list, int i);
-    Q_INVOKABLE QString generateCode();
 
 signals:
     void onCarListChanged(QQmlListProperty<CarBlock>);
-    void busyChanged();
 
 public slots:
+    QString generateCode();
+    void setCarList();
+
+private:
+    QList<CarBlock*> m_carList;
+    QSqlQueryModel m_carModel;
+
 };
 
 #endif // CARVIEW_H

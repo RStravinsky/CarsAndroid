@@ -48,10 +48,10 @@ Item {
             fontSize: screenH/35
             z: settingsView.z + 1 // before parent
 
-//            Connections {
-//                target: fileio
-//                onError: { messageDialog.show("Uwaga!", msg, StandardIcon.Warning) }
-//            }
+            Connections {
+                target: fileio
+                onError: { messageDialog.show("Uwaga!", msg, StandardIcon.Warning) }
+            }
 
             onActivated: {
                 area.forceActiveFocus() // disable focus from fields
@@ -62,13 +62,13 @@ Item {
                 else {
                     loadingRect.isLoading = true
                     fields = settingsFields.getFields()
-                    if(sqlDatabase.connectToDatabase(fields[0],fields[1],fields[2],fields[3])) {
-                        apps.reloadWindow()
-                    }
-                    else { loadingRect.isLoading  = false; messageDialog.show("Uwaga!", "Polecenie nie powiodło się.", StandardIcon.Warning) }
-                }
+                    console.log("SettingView - host = ",fields[0])
+                    console.log("SettingView - port = ",fields[1])
+                    console.log("SettingView - name = ",fields[2])
+                    console.log("SettingView - password = ",fields[3])
 
-                loadingRect.isLoading  = false;
+                    if(fileio.writeSettings(settingsFields.getFields())) { apps.reloadWindow() }
+                }
 
             } // OnActivated
 

@@ -16,7 +16,14 @@ class FileIO : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QQmlListProperty<SingleCode> codeList READ getCodeList NOTIFY onCodeListChanged)
+    Q_PROPERTY(QVariantList settingsList READ getSettingsList NOTIFY onSettingsListChanged)
     QList<SingleCode*> m_codeList;
+    QVariantList m_settingsList;
+
+signals:
+    void error(const QString& msg);
+    void onCodeListChanged(QQmlListProperty<SingleCode>);
+    void onSettingsListChanged(QVariantList);
 
 public slots:
     bool writeCode(const QString& data,const QString& carName);
@@ -24,13 +31,13 @@ public slots:
     void saveToClipboard(const QString& code);
     bool removeCode(const QString& code);
 
-signals:
-    void error(const QString& msg);
-    void onCodeListChanged(QQmlListProperty<SingleCode>);
+    bool writeSettings(QVariant entryFields);
+    bool readSettings();
 
 public:
     FileIO(QObject *parent = 0);
     QQmlListProperty<SingleCode> getCodeList() { return QQmlListProperty<SingleCode>(this, m_codeList); }
+    QVariantList getSettingsList() { return m_settingsList; }
 };
 
 #endif // FILEIO_H

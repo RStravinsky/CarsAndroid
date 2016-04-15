@@ -18,19 +18,10 @@ void CarView::setCarList()
                                                    m_carModel.index(i, 6).data().toInt(),
                                                    i
                                                    )));
-
-       QCoreApplication::processEvents();
     }
 
     emit onCarListChanged(getCarList());
 }
-
-void CarView::setBusy(const bool &busy)
-{
-    m_busy = busy;
-    emit busyChanged();
-}
-
 
 int CarView::carListCount(QQmlListProperty<CarBlock>*list)
 {
