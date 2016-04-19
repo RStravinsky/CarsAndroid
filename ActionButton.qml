@@ -32,8 +32,8 @@ Rectangle {
 
     SequentialAnimation {
         id: btnClickAnimation
-        PropertyAnimation { target: actionButton; property: "opacity"; easing.type: Easing.Linear; to: 0; duration: 30 }
-        PropertyAnimation { target: actionButton; property: "opacity"; easing.type: Easing.Linear; to: 1; duration: 30 }
+        PropertyAnimation { target: actionButton; property: "opacity"; easing.type: Easing.Linear; to: 0; duration: 10 }
+        PropertyAnimation { target: actionButton; property: "opacity"; easing.type: Easing.Linear; to: 1; duration: 10 }
         onRunningChanged: {
             if (btnClickAnimation.running) {}
             else { actionButton.activated() }

@@ -3,6 +3,7 @@
 
 #include <QQuickImageProvider>
 #include <QtSql>
+#include <QImage>
 #include <QDebug>
 
 class ImageProvider : public QQuickImageProvider
@@ -14,6 +15,9 @@ public:
 
 private:
     QSqlQueryModel m_imageModel;
+    QMap<QString, QImage> m_imagesMap;
+    void loadMap();
+    static bool initProvider;
 };
 
 #endif // IMAGEPROVIDER_H

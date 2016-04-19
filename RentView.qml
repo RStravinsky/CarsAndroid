@@ -83,32 +83,30 @@ Item {
 
             Connections {
                 target: fileio
-                onError: { messageDialog.show("Uwaga!", msg, StandardIcon.Warning) }
+                onError: { loadingRect.isLoading = false; messageDialog.show("Uwaga!", msg, StandardIcon.Warning, false) }
             }
 
             onActivated: {
                 area.forceActiveFocus() // disable focus from fields
                 if((rentFields.dataIsEmpty() && rentView.isRented === false) || (returnFields.dataIsEmpty() && rentView.isRented === true)) {
-                    messageDialog.show("Uwaga!", "Pole tekstowe nie zostało wypełnione.", StandardIcon.Warning);
-                    return;
+                    messageDialog.show("Uwaga!", "Pole tekstowe nie zostało wypełnione.", StandardIcon.Warning,false);
                 }
                 else {
-                    loadingRect.isLoading = true
                     if(rentView.isRented === false) { // rent car
+                        loadingRect.isLoading = true // enable loading
                         code = carViewClass.generateCode()
                         if(carViewClass.carList[listIndex].addToHistory(rentFields.getFields(),code)) {
-                            if(fileio.writeCode(code,carViewClass.carList[listIndex].brand + " " + carViewClass.carList[listIndex].model)) {
-                                messageDialog.show("Wypożyczono!", "Twój kod dostępu: " + code, StandardIcon.Information);
-                                apps.reloadWindow();
+                            if(fileio.writeCode(code,carViewClass.carList[listIndex].brand + " " + carViewClass.carList[listIndex].model)) {  
+                                messageDialog.show("Wypożyczono!", "Twój kod dostępu: " + code, StandardIcon.Information, true); // RELOAD APP
                             }
                         }
-                        else { loadingRect.isLoading  = false; messageDialog.show("Uwaga!", "Polecenie nie powiodło się.", StandardIcon.Warning); return; }
+                        else { loadingRect.isLoading=false; messageDialog.show("Uwaga!", "Polecenie nie powiodło się.", StandardIcon.Warning,false); }
                     }
                     else // return car
                     {
                         distance = returnFields.getDistance()
                         if(distance === -1)
-                            messageDialog.show("Uwaga!", "Wpisany przebieg nie jest większy od poprzedniego.", StandardIcon.Warning);
+                            messageDialog.show("Uwaga!", "Wpisany przebieg nie jest większy od poprzedniego.", StandardIcon.Warning,false);
                         else {
                               pinView.setListIndex(listIndex)
                               stackView.push(pinView, stackView.Immediate)
@@ -117,8 +115,6 @@ Item {
                         }
                     }
                 }
-
-                loadingRect.isLoading  = false;
             } // OnActivated
 
         } // ActiveButton

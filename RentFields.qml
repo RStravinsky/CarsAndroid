@@ -49,7 +49,13 @@ Item {
                     }
                 }
 
-                CustomTextField { id: customTextField; placeholderText: rowsModel.nameList[index]; height: row.height; width: row.width - rect.width; }
+
+                CustomTextField { id: customTextField; placeholderText: rowsModel.nameList[index]; height: row.height; width: row.width - rect.width;
+                    Component.onCompleted: {
+                        if(index === 0) customTextField.validator = regExpValidator
+                        if(index === 1) customTextField.validator = regExpValidator
+                    }
+                }
 
             } // Row
 

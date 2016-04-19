@@ -40,7 +40,11 @@ Item {
                 }
             }
 
-            CustomTextField { id: mileage; placeholderText: qsTr("Przebieg"); height: mileageRow.height; width: mileageRow.width - mileageRect.width;}
+            CustomTextField { id: mileage; placeholderText: qsTr("Przebieg"); height: mileageRow.height; width: mileageRow.width - mileageRect.width;
+                maximumLength: 11
+                validator: IntValidator { bottom: 0; top: 2147483647 }
+                inputMethodHints: Qt.ImhDigitsOnly
+            }
         }
 
 

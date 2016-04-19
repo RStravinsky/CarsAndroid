@@ -33,11 +33,11 @@ signals:
 public slots:
     QString generateCode();
     void setCarList();
+    void clearCarList();
 
 private:
     QList<CarBlock*> m_carList;
     QSqlQueryModel m_carModel;
-
 };
 
 #endif // CARVIEW_H

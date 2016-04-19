@@ -19,6 +19,10 @@ ApplicationWindow {
 
     function reloadWindow() { mainLoader.reload() }
 
+    IntValidator { id: intValidaotr }
+    RegExpValidator { id: hostRegExpValidator; regExp: /^[0-9]+\.?[0-9]+\.?[0-9]+\.?[0-9]*$/ }
+    RegExpValidator { id: regExpValidator; regExp: /[a-zA-ZżźćńółęąśŻŹĆĄŚĘŁÓŃ]+/ }
+
     MainForm {
         id: mainForm
         anchors.fill: parent
@@ -26,30 +30,49 @@ ApplicationWindow {
         Keys.onReleased: {
             if (event.key === Qt.Key_Back) {
                 if(menuView.currentIndex === 1) { // menu not visible
-                    if(stackView.currentItem.objectName === "Ustawienia") { console.log("Settings"); menuView.list.currentIndex = 0 }
-                    if(stackView.currentItem.objectName === "Kody") { console.log("Codes"); menuView.list.currentIndex = 0 }
-                    if(stackView.currentItem.objectName === "Wypożyczanie") { rentView.clearText() }
-                    if(stackView.currentItem.objectName === "Rezerwacja") { bookingView.clearText() }
-                    if(stackView.currentItem.objectName === "Wprowadź kod") { pinView.clearText() }
-                    if(stackView.currentItem.objectName === "Ustawienia") { loadingScreen.z = normalView.z + 1; }
+
+                    if(stackView.currentItem.objectName === "Wypożyczanie") { console.log("CLEAR RENT"); rentView.clearText() }
+                    if(stackView.currentItem.objectName === "Rezerwacja") { console.log("CLEAR BOOK"); bookingView.clearText() }
+                    if(stackView.currentItem.objectName === "Wprowadź kod") { console.log("CLEAR PIN");pinView.clearText() }
+                    if(stackView.currentItem.objectName === "Ustawienia") { menuView.list.currentIndex = 0 }
+                    if(stackView.currentItem.objectName === "Kody") { menuView.list.currentIndex = 0 }
+                    if(stackView.currentItem.objectName === "Ustawienia") { informationScreen.z = normalView.z + 1; }
 
                     if(stackView.depth === 1) apps.close()
                     else  {
-                        if(dateChooser.stack.depth === 1) stackView.pop()
+                        if(dateChooser.stack.depth === 1) {
+                            console.log("POP");
+                            stackView.pop()
+                        }
                         else dateChooser.stack.pop()
                     }
+
+
+                    mainArea.setState()
+
                 }
-                else { mainArea.menuChange() }
+                else { console.log("MENU CHANGE ");mainArea.menuChange() }
+
+                console.log("ACCEPTED");
                 event.accepted = true
             }
         }
 
-        MessageDialog { id: messageDialog
-            onAccepted: { messageDialog.close(); }
-            function show(title,caption,icon) {
+        MessageDialog {
+            id: messageDialog
+            property bool reloadActive: false
+            onAccepted: {
+                if(reloadActive === true) {
+                    console.log("RELOADING!")
+                    apps.reloadWindow()
+                }
+                messageDialog.close();
+            }
+            function show(title,caption,icon,reload) {
                 messageDialog.title = title;
                 messageDialog.text = caption;
                 messageDialog.icon = icon;
+                messageDialog.reloadActive = reload
                 messageDialog.open();
             }
         }
@@ -62,7 +85,7 @@ ApplicationWindow {
             id: mainButton; height: topFrame.height; width: mainButton.height
             anchors { left: topFrame.left; top: topFrame.top }
             z: topFrame.z + 1 // before top frame
-            onButtonClicked: { mainArea.menuChange(); }
+            onButtonClicked: { mainArea.menuChange() }
         }
 
         // update button
@@ -71,7 +94,7 @@ ApplicationWindow {
             anchors { right: topFrame.right; top: topFrame.top }
             z: topFrame.z + 1 // before top frame
             visible: stackView.currentItem.objectName === "Samochody" ? true : false
-            onActivated: { apps.reloadWindow(); }
+            onActivated: { apps.reloadWindow() }
         }
 
         // header
@@ -92,8 +115,7 @@ ApplicationWindow {
             }
         }
 
-
-        // waiting for operation screen
+        // waiting for operation
         Rectangle {
             property bool isLoading: false
             id: loadingRect
@@ -121,13 +143,13 @@ ApplicationWindow {
                 if(menuView.currentIndex === 0) {
                     menuView.currentIndex++
                     normalViewMask.opacity = 0
-                    setState()
                 }
                 else {
                     menuView.currentIndex--
                     normalViewMask.opacity = 0.7
-                    setState()
                 }
+
+                setState()
                 mainButton.animation.start()
             }
 
@@ -136,8 +158,6 @@ ApplicationWindow {
                 {
                    case "Samochody":
                        carView.area.enabled = menuView.currentIndex === 1 ? true : false
-                       break
-                   case "Ustawienia":
                        break
                    case "Data/czas":
                        dateChooser.area.enabled = menuView.currentIndex === 1 ? true : false
@@ -159,13 +179,13 @@ ApplicationWindow {
                 z: normalViewMask.z + 1 // before normalView
                 mainArea: mainArea
                 onItemClicked: {
-                       loadingScreen.z = normalView.z + 1;
+                       informationScreen.z = normalView.z + 1;
                        if(stackView.currentItem.objectName === "Wypożyczanie") { rentView.clearText() }
                        if(stackView.currentItem.objectName === "Rezerwacja") { bookingView.clearText() }
                        if(stackView.currentItem.objectName === "Wprowadź kod") { pinView.clearText() }
                        mainArea.menuChange()
                        if(idx === 0) { stackView.pop(null, StackView.Immediate) }
-                       else if(idx === 1) { loadingScreen.z = normalView.z - 1; stackView.clear(); stackView.push(carView, StackView.Immediate, settingsView, StackView.Immediate) }
+                       else if(idx === 1) { informationScreen.z = normalView.z - 1; stackView.clear(); stackView.push(carView, StackView.Immediate, settingsView, StackView.Immediate) }
                        else if(idx === 2) {
                            fileio.readCodes();
                            if(stackView.currentItem.objectName === "Wprowadź kod") {
@@ -182,39 +202,36 @@ ApplicationWindow {
            } // Menu View
 
            // reload screen
-           LoadingScreen {
-               id: loadingScreen
+           InformationScreen {
+               id: informationScreen
                anchors.fill: parent
                z: normalView.z + 1
+               onActivated: {
+                   if(informationScreen.text === "Serwer niedostępny" || informationScreen.text === "Skonfiguruj połączenie") {
+                        informationScreen.z = normalView.z - 1; stackView.clear(); stackView.push(carView, StackView.Immediate, settingsView, StackView.Immediate)
+                   }
+               }
            }
 
            Rectangle { id: normalView; anchors.fill: parent; visible: false
                 CarView { id:carView; objectName: "Samochody"; Component.onCompleted: {
-                        console.log("Read Settings...")
+                        carViewClass.clearCarList()
                         if(fileio.readSettings()) {
-
-                            console.log("Get Settings...")
                             sqlDatabase.settingsParameter = fileio.settingsList
-                            console.log(sqlDatabase.settingsParameter[0])
-                            console.log(sqlDatabase.settingsParameter[1])
-                            console.log(sqlDatabase.settingsParameter[2])
-                            console.log(sqlDatabase.settingsParameter[3])
-
-                            console.log("Connecting to DB...")
                             if(sqlDatabase.connectToDatabase(sqlDatabase.settingsParameter[0], sqlDatabase.settingsParameter[1], sqlDatabase.settingsParameter[2], sqlDatabase.settingsParameter[3])) {
-                                console.log("Before setCarList")
                                 carViewClass.setCarList()
-                                console.log("After setCarList")
-                                loadingScreen.visible = false;
-                                return;
+                                informationScreen.visible = false;
                             }
                             else {
-                                messageDialog.show("Błąd!", "Nie można połaczyć z serwerem.", StandardIcon.Critical);
-                                loadingScreen.text = "Serwer niedostępny"
-                                loadingScreen.source = "images/images/warning.png"
+                                messageDialog.show("Błąd!", "Nie można połaczyć z serwerem.", StandardIcon.Critical, false);
+                                informationScreen.text = "Serwer niedostępny"
+                                informationScreen.source = "images/images/warning.png"
                             }
                         }
-                        else { console.log("SETTINGS.txt not open") }
+                        else { // file SETTINGS.txt not open
+                            informationScreen.text = "Skonfiguruj połączenie"
+                            informationScreen.source = "images/images/configure.png"
+                        }
                     }
                 }
 

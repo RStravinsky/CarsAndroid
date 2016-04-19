@@ -4,7 +4,7 @@ Item {
     id: updateButton
     property color hoverColor: "#FF6900"
     property color itemColor: "transparent"
-    enabled: (loadingScreen.text ===  "Łączenie ..." && loadingScreen.visible === true )? false : true // disable when menu is open
+    enabled: (informationScreen.text ===  "Łączenie ..." && informationScreen.visible === true )? false : true // disable when menu is open
     signal activated()
     property bool isActivated: false;  
 
@@ -39,14 +39,16 @@ Item {
 
         MouseArea {
             id: mouseArea;
+            visible: (informationScreen.text ===  "Łączenie ..." && informationScreen.visible === true ) ? false : true
             anchors.fill: rectangle
             hoverEnabled: true
             onEntered: rectangle.state = "ENTERED"
             onExited: rectangle.state = "EXITED"
             onClicked: {
-                loadingScreen.text = "Łączenie ..."
-                loadingScreen.source = "images/images/wait.png"
-                loadingScreen.visible = true;
+                if(menuView.currentIndex === 0) { mainArea.menuChange() }
+                informationScreen.text = "Łączenie ..."
+                informationScreen.source = "images/images/wait.png"
+                informationScreen.visible = true;
                 updateButtonAnimation.running = true;
             }
         }

@@ -50,24 +50,19 @@ Item {
 
             Connections {
                 target: fileio
-                onError: { messageDialog.show("Uwaga!", msg, StandardIcon.Warning) }
+                onError: { loadingRect.isLoading = false; messageDialog.show("Uwaga!", msg, StandardIcon.Warning, false) }
             }
 
             onActivated: {
                 area.forceActiveFocus() // disable focus from fields
                 if(settingsFields.dataIsEmpty()) {
-                    messageDialog.show("Uwaga!", "Pole tekstowe nie zostało wypełnione.", StandardIcon.Warning);
-                    return;
+                    messageDialog.show("Uwaga!", "Pole tekstowe nie zostało wypełnione.", StandardIcon.Warning, false);
                 }
                 else {
                     loadingRect.isLoading = true
                     fields = settingsFields.getFields()
-                    console.log("SettingView - host = ",fields[0])
-                    console.log("SettingView - port = ",fields[1])
-                    console.log("SettingView - name = ",fields[2])
-                    console.log("SettingView - password = ",fields[3])
-
-                    if(fileio.writeSettings(settingsFields.getFields())) { apps.reloadWindow() }
+                    if(fileio.writeSettings(settingsFields.getFields())) {
+                        apps.reloadWindow() }
                 }
 
             } // OnActivated

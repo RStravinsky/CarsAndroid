@@ -28,7 +28,8 @@
         <file>TimePicker.qml</file>
         <file>main.qml</file>
         <file>UpdateButton.qml</file>
-        <file>LoadingScreen.qml</file>
+        <file>InformationScreen.qml</file>
         <file>SettingsFields.qml</file>
+        <file>Completer.qml</file>
     </qresource>
 </RCC>

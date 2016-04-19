@@ -75,17 +75,16 @@ Item {
             onActivated: {
                 area.forceActiveFocus() // disable focus from fields
                 if(bookingFields.dataIsEmpty()) {
-                    messageDialog.show("Uwaga!", "Pole tekstowe nie zostało wypełnione.", StandardIcon.Warning);
-                    return;
+                    messageDialog.show("Uwaga!", "Pole tekstowe nie zostało wypełnione.", StandardIcon.Warning, false);
                 }
                 else {
                     loadingRect.isLoading = true
-                    if(carViewClass.carList[listIndex].addToBooking(bookingFields.getFields()))
-                    { messageDialog.show("Informacja!", "Samochód został zarezerwowany.", StandardIcon.Information); apps.reloadWindow(); }
-                    else { loadingRect.isLoading = false; messageDialog.show("Uwaga!", "Polecenie nie powiodło się.", StandardIcon.Warning) }
+                    if(carViewClass.carList[listIndex].addToBooking(bookingFields.getFields())) {
+                        messageDialog.show("Informacja!", "Samochód został zarezerwowany.", StandardIcon.Information, true); // RELOAD APP
+                    }
+                    else { loadingRect.isLoading = false; messageDialog.show("Uwaga!", "Polecenie nie powiodło się.", StandardIcon.Warning, false) }
                 }
 
-                loadingRect.isLoading = false
             } // OnActivated
 
         } // ActiveButton

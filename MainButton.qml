@@ -6,7 +6,7 @@ Item {
     property color itemColor: "transparent"
     property alias animation: mainButtonAnimation
     property int type: 0
-    enabled: ((mainButton.rotation > 0 && mainButton.rotation < 180) || (loadingScreen.text ===  "Łączenie ..." && loadingScreen.visible === true )) ? false : true // disable button during animation
+    enabled: ((mainButton.rotation > 0 && mainButton.rotation < 180) || (informationScreen.text ===  "Łączenie ..." && informationScreen.visible === true )) ? false : true // disable button during animation
     signal buttonClicked()
 
     /* animation of main button*/
@@ -38,6 +38,7 @@ Item {
 
         MouseArea {
             id: mouseArea;
+            visible: ((informationScreen.text ===  "Łączenie ..." && informationScreen.visible === true ) ||  (loadingRect.isLoading === true)) ? false : true
             anchors.fill: rectangle
             hoverEnabled: true
             onEntered: rectangle.state = "ENTERED"

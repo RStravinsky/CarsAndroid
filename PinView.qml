@@ -29,6 +29,8 @@ Item {
             horizontalAlignment: Text.AlignHCenter
             maximumLength : 6
             customReturnKey: true
+            validator: IntValidator { bottom: 0; top: 999999 }
+            inputMethodHints: Qt.ImhDigitsOnly
         }
 
         ActionButton {

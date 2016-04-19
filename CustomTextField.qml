@@ -10,11 +10,14 @@ Item {
     property int maximumLength: 32767
     property bool customReturnKey: false
     property bool activeButton: false
+    property int dateTimeType
+    property bool warningVisible: false
+
     property alias field: field
     property alias text: field.text
     property alias underlineColor: customBorder.color
-    property int dateTimeType
-    property bool warningVisible: false
+    property alias inputMethodHints: field.inputMethodHints
+    property alias validator: field.validator
 
     signal mouseAreaClicked()
 
@@ -39,21 +42,18 @@ Item {
             event.accepted = customReturnKey // Dont accept the event (active focus kept).
 
             if(customReturnKey === true) {
-                loadingRect.isLoading = true
+                loadingRect.isLoading = true // enable loaidng
                 if(carViewClass.carList[pinView.listIndex].isCodeCorrect(carViewClass.carList[pinView.listIndex].id,field.text)) {
                     if(carViewClass.carList[listIndex].updateHistory(rentView.returnFields.getFields(),rentView.distance))
                     {
-                        messageDialog.show("Oddano!", "Samochód został oddany.", StandardIcon.Information);
                         fileio.removeCode(field.text)
                         Qt.inputMethod.hide() // show virtual keyboard
-                        apps.reloadWindow();
+                        messageDialog.show("Oddano!", "Samochód został oddany.", StandardIcon.Information, true); // RELOAD APP
                     }
-                    else { loadingRect.isLoading  = false; messageDialog.show("Uwaga!", "Polecenie nie powiodło się.", StandardIcon.Warning) }
+                    else { loadingRect.isLoading = false; messageDialog.show("Uwaga!", "Polecenie nie powiodło się.", StandardIcon.Warning, false); }
                 }
-                else { loadingRect.isLoading  = false; messageDialog.show("Niepoprawny kod!", "Spróbuj ponownie.", StandardIcon.Warning) }
+                else { loadingRect.isLoading = false; messageDialog.show("Niepoprawny kod!", "Spróbuj ponownie.", StandardIcon.Warning, false); }
              }
-
-           loadingRect.isLoading = false
         }
 
         Image {
@@ -80,7 +80,6 @@ Item {
                 id: clear
                 anchors { horizontalCenter: parent.horizontalCenter; verticalCenter: parent.verticalCenter }
                 height: field.height; width: field.height
-                propagateComposedEvents: true
                 onClicked: {
                     field.text = ""
                     field.forceActiveFocus()
@@ -105,7 +104,7 @@ Item {
          MouseArea {
              id: narrowButtonMouseArea
              anchors.fill: parent
-             propagateComposedEvents: true
+             //propagateComposedEvents: true
              onClicked: {
                  dateChooser.setDateTimeType(dateTimeType); dateChooser.setListIndex(bookingView.listIndex); stackView.push(dateChooser)
                  if(field.text === "") dateChooser.clearDateChooser()

@@ -10,7 +10,7 @@ MouseArea {
     property var gestureStartTime;
     signal move(int x, int y)
     signal swipe()
-    propagateComposedEvents: true
+    //propagateComposedEvents: true
 
     onPressed: {
         //console.log("onPressed...")

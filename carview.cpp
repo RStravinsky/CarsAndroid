@@ -5,7 +5,8 @@ CarView::CarView(QObject *parent) : QObject(parent) {}
 void CarView::setCarList()
 {
     m_carModel.setQuery("SELECT * FROM car;");
-    if(m_carList.size() != 0) m_carList.clear();
+    //if(m_carList.size() != 0)
+    m_carList.clear();
 
     for(int i = 0; i < m_carModel.rowCount(); ++i) {
 
@@ -18,8 +19,11 @@ void CarView::setCarList()
                                                    m_carModel.index(i, 6).data().toInt(),
                                                    i
                                                    )));
+        //QCoreApplication::processEvents();
+        qDebug() << "Index= " << i << endl;
     }
 
+    //qDebug() << "emiting signal..."<< endl;
     emit onCarListChanged(getCarList());
 }
 
@@ -39,15 +43,19 @@ CarBlock* CarView::carListAt(QQmlListProperty<CarBlock> *list, int i)
     return 0;
 }
 
+void CarView::clearCarList()
+{
+    m_carList.clear();
+    emit onCarListChanged(getCarList());
+}
+
 QString CarView::generateCode()
 {
     const int codeSize = 6;
     std::srand(time(NULL));
 
     std::string code("",codeSize);
-    static const char alphanum[] =
-        "0123456789"
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    static const char alphanum[] = "0123456789";
 
     for (int i = 0; i < codeSize; ++i)
         code[i] = alphanum[rand() % (sizeof(alphanum) - 1)];

@@ -52,7 +52,7 @@ Item {
                     color: "white"; font.pixelSize: screenH/25; text: name
                 }
                 Rectangle { height: 2; width: parent.width * 0.70;
-                    anchors { left: parent.left; leftMargin: 5; horizontalCenter: parent.horizontalCenter; bottom: parent.bottom }
+                    anchors { left: parent.left; right: parent.right; bottom: parent.bottom }
                     color: "gray";
                 }
                 MouseArea { id: mouseArea; anchors.fill: menuItem; hoverEnabled: true;

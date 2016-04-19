@@ -23,7 +23,6 @@
 /home/rafal/Dokumenty/QtWorkspace/CarsAndroid/android-build/libs/armeabi-v7a/libqml_Qt_labs_settings_libqmlsettingsplugin.so \
 /home/rafal/Dokumenty/QtWorkspace/CarsAndroid/android-build/libs/armeabi-v7a/libqml_QtQuick_Window.2_libwindowplugin.so \
 /home/rafal/Dokumenty/QtWorkspace/CarsAndroid/android-build/libs/armeabi-v7a/libplugins_imageformats_libqwebp.so \
-/home/rafal/Dokumenty/QtWorkspace/CarsAndroid/android-build/libs/armeabi-v7a/libgdbserver.so \
 /home/rafal/Dokumenty/QtWorkspace/CarsAndroid/android-build/libs/armeabi-v7a/libplugins_generic_libqevdevtouchplugin.so \
 /home/rafal/Dokumenty/QtWorkspace/CarsAndroid/android-build/libs/armeabi-v7a/libQt5Core.so \
 /home/rafal/Dokumenty/QtWorkspace/CarsAndroid/android-build/libs/armeabi-v7a/libplugins_generic_libqtuiotouchplugin.so \
@@ -48,7 +47,6 @@
 /home/rafal/Dokumenty/QtWorkspace/CarsAndroid/android-build/libs/armeabi-v7a/libplugins_qmltooling_libqmldbg_native.so \
 /home/rafal/Dokumenty/QtWorkspace/CarsAndroid/android-build/libs/armeabi-v7a/libqml_QtQuick_Controls_libqtquickcontrolsplugin.so \
 /home/rafal/Dokumenty/QtWorkspace/CarsAndroid/android-build/libs/armeabi-v7a/libqml_QtQuick_Layouts_libqquicklayoutsplugin.so \
-/home/rafal/Dokumenty/QtWorkspace/CarsAndroid/android-build/libs/armeabi-v7a/gdbserver \
 /home/rafal/Dokumenty/QtWorkspace/CarsAndroid/android-build/libs/armeabi-v7a/libqml_Qt_labs_templates_libqtlabstemplatesplugin.so \
 /home/rafal/Dokumenty/QtWorkspace/CarsAndroid/android-build/libs/armeabi-v7a/libplugins_imageformats_libqtga.so \
 /home/rafal/Dokumenty/QtWorkspace/CarsAndroid/android-build/libs/armeabi-v7a/libmariadb.so \

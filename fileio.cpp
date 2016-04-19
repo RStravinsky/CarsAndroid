@@ -118,14 +118,13 @@ bool FileIO::readSettings()
                     m_settingsList.push_back(line.split(" ").at(i));
         file.close();
     }
-
     else {
         emit error("Nie można otworzyć pliku SETTINGS.txt");
         return false;
     }
 
-    //qDebug() << m_settingsList << endl;
-
     emit onSettingsListChanged(getSettingsList());
+
+    if(m_settingsList.isEmpty()) return false;
     return true;
 }

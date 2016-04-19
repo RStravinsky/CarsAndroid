@@ -57,7 +57,11 @@ Item {
                 }
 
                 CustomTextField { id: customTextField; placeholderText: bookingFieldsRepeater.nameList[index]; height: row.height; width: row.width - rect.width; property string choosenTime; property string startDateTimeText;
-                    Component.onCompleted: { if(index === 0 || index === 1) customTextField.activeButton = true; dateTimeType = index; }
+                    Component.onCompleted: {
+                        if(index === 0 || index === 1) customTextField.activeButton = true; dateTimeType = index;
+                        if(index === 2) { customTextField.validator = regExpValidator }
+                        if(index === 3) { customTextField.validator = regExpValidator }
+                    }
                     onTextChanged: {
                         if(index === 0 || index === 1) {
 
@@ -70,9 +74,7 @@ Item {
                             if(carViewClass.carList[listIndex].setHoursColor(Date.fromLocaleString(Qt.locale(), bookingFieldsRepeater.itemAt(index).customTextField.text, "yyyy-MM-dd hh:mm"), choosenTime) === 1 ) {
                                 warningVisible = true
                             }
-                            else {
-                                warningVisible = false
-                            }
+                            else { warningVisible = false }
                         }
                     }
                     onMouseAreaClicked: {

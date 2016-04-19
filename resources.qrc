@@ -33,5 +33,6 @@
         <file>images/password.png</file>
         <file>images/left-angle-arrow.png</file>
         <file>images/right-angle-arrow.png</file>
+        <file>images/configure.png</file>
     </qresource>
 </RCC>
