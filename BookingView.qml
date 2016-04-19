@@ -54,7 +54,7 @@ Item {
         // car image
         Image { id: carImage; width: parent.width; height: area.areaHeight* .25
             anchors { top: carName.bottom; left: parent.left; right: parent.right; topMargin: 5; rightMargin: 60; leftMargin: 60 }
-            source: "image://cImages/"+carViewClass.carList[listIndex].id //carViewClass.carList[listIndex].photoPath !== "" ? "images/" + carViewClass.carList[listIndex].photoPath : ""
+            source: "image://cImages/"+carViewClass.carList[listIndex].id
             fillMode: Image.PreserveAspectFit
         }
 
@@ -69,7 +69,7 @@ Item {
             property int distance
             anchors { bottom: parent.bottom; left: parent.left; right: parent.right; }
             buttonText: qsTr("Rezerwuj")
-            fontSize: screenH/35
+            fontSize: 16 * point
             z: bookingView.z + 1 // before parent
 
             onActivated: {

@@ -78,7 +78,7 @@ Item {
             anchors { bottom: parent.bottom; left: parent.left; right: parent.right; }
             buttonColor: rentView.isRented === false ? "#32b678" : "#db4437"
             buttonText: rentView.isRented === false ? qsTr("Wypożycz") : qsTr("Oddaj")
-            fontSize: screenH/35
+            fontSize: 16 * point //(screenH/(35*ratioFont)) //-------------------------------------
             z: rentView.z + 1 // before parent
 
             Connections {

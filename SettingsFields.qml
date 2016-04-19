@@ -43,7 +43,7 @@ Item {
                     }
                 }
 
-                CustomTextField { id: customTextField; text: sqlDatabase.settingsParameter[index]; placeholderText: rowsModel.nameList[index]; height: row.height; width: row.width - rect.width; }
+                CustomTextField { id: customTextField; text: sqlDatabase.settingsParameter[index]; placeholderText: rowsModel.nameList[index]; height: row.height; width: row.width - rect.width; displayTextWay: index === 3 ? TextInput.PasswordEchoOnEdit : TextInput.Normal }
 
             } // Row
 

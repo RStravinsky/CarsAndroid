@@ -22,7 +22,7 @@ Item {
             width: parent.width
             height: font.pointSize * 2
             anchors.top: waitImage.bottom
-            font.pointSize: screenH/40
+            font.pointSize: 12 * point
             horizontalAlignment: Text.AlignHCenter
             text: "Łączenie ..."
             color: "gray"

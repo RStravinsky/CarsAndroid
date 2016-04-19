@@ -91,8 +91,6 @@ Item {
 
                     if(carViewClass.carList[listIndex].isDateCorrect(startDateTime)) {
 
-                        //console.log(startDateTimeString + " # " + endDateTimeString)
-
                         if((endDateTimeString !== "") && (startDateTime < endDateTime)) {
                             bookingView.bookingFields.bookingFieldsRepeater.itemAt(whichDateTime).customTextField.text = startDateTimeString
                             stackView.pop(bookingView)

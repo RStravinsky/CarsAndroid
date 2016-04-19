@@ -36,13 +36,15 @@ Item {
 
                 Text { id: carName; height: parent.height * .15
                     anchors { left: parent.left; leftMargin: 5; top: parent.top;}
-                    color: "gray"; font.pixelSize: screenH/30; text: brand + " " + model
+                    color: "gray"; font.pointSize: 9 * point
+                    text: brand + " " + model
                 }
                 Text { id: license; height: parent.height * .1
                     anchors { left: parent.left; leftMargin: 5; top: carName.bottom;}
-                    color: "gray"; font.pixelSize: screenH/35; text: licensePlate
+                    color: "gray"; font.pointSize: 8 * point
+                    text: licensePlate
                 }
-                Image { id: carImage; height: parent.height * .7
+                Image { id: carImage; height: parent.height * .5 * imageRatio
                     cache: true
                     fillMode: Image.PreserveAspectFit
                     source: { "image://cImages/"+id }

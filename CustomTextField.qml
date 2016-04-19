@@ -15,6 +15,7 @@ Item {
     property alias underlineColor: customBorder.color
     property int dateTimeType
     property bool warningVisible: false
+    property int displayTextWay : TextInput.Normal
 
     signal mouseAreaClicked()
 
@@ -24,7 +25,7 @@ Item {
         id: field
         anchors.fill:parent
         horizontalAlignment: customTextField.horizontalAlignment
-        font.pixelSize: screenH/30
+        font.pointSize: 9 * point
         placeholderText: customTextField.placeholderText
         maximumLength: customTextField.maximumLength
         readOnly: customTextField.activeButton
@@ -87,6 +88,8 @@ Item {
                 }
             }
         }
+
+        echoMode: displayTextWay
 
     } // TextField
 
