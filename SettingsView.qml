@@ -45,7 +45,7 @@ Item {
             anchors { bottom: parent.bottom; left: parent.left; right: parent.right; }
             buttonColor: "#32b678"
             buttonText: qsTr("Połącz")
-            fontSize: screenH/35
+            fontSize: 16 * point
             z: settingsView.z + 1 // before parent
 
             Connections {

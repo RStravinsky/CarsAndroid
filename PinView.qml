@@ -20,7 +20,7 @@ Item {
             anchors { top: parent.top; topMargin: 20; }
             horizontalAlignment: Text.AlignHCenter
             text: "Wprowadź kod:"
-            font.pixelSize: screenH/25
+            font.pointSize: 8 * point
             color: "gray"
         }
 

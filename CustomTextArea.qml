@@ -13,13 +13,13 @@ Item {
         border.width: 3
         border.color: textEdit.focus === true ? "#69C0D9" : "lightgray"
 
-        Text { id: placeHolder; width: parent.width - (2 * font.pointSize); height: 2 * font.pointSize
+        Text { id: placeHolder; width: parent.width - (2 * font.pointSize); height: 4 * placeHolder.font.pointSize
             anchors{ top: parent.top; left:parent.left; leftMargin: 10; topMargin: 10 }
             horizontalAlignment: Text.AlignLeft
             clip: true
             color: "lightgray"
-            text: textEdit.text === "" ? placeholderText : ""
-            font.pixelSize: screenH/30
+            text: (textEdit.text === "" && (!textEdit.activeFocus)) ? placeholderText : ""
+            font.pointSize: 8 * point
         }
 
         Flickable {
@@ -37,7 +37,7 @@ Item {
 
              TextEdit { id: textEdit; width: flick.width; height: flick.height
                  wrapMode: TextEdit.Wrap
-                 font.pixelSize: screenH/30
+                 font.pointSize: 8 * point
                  color: "gray"
                  onCursorRectangleChanged: flick.ensureVisible(cursorRectangle)
              }

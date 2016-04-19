@@ -7,7 +7,7 @@ Rectangle {
     id: actionButton
     property color buttonColor: "#FF8C00"
     property string buttonText
-    property int fontSize: screenH/70
+    property int fontSize: 7 * point
     signal activated()
     property bool isActivated: false;
     color : actionButton.buttonColor

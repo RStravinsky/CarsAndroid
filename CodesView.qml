@@ -36,12 +36,14 @@ Item {
 
                 Text { id: carName; height: parent.height * .2
                     anchors { left: parent.left; leftMargin: 5; top: parent.top;}
-                    color: "gray"; font.pixelSize: screenH/30; text: brand + " " + model + " " + date + " " + time
+                    color: "gray"; font.pointSize: 9 * point //(screenH/(30*ratio));
+                    text: brand + " " + model + " " + date + " " + time
                 }
 
                 Text { id: rentCode; height: parent.height * .6
                     anchors { left: parent.left; leftMargin: 5; bottom: parent.bottom; bottomMargin: 10 }
-                    color: "#32b678"; font.pixelSize: screenH/20; text: code
+                    color: "#32b678"; font.pointSize: 8 * point //(screenH/(20*ratio));
+                    text: code
                 }
 
                 ActionButton {

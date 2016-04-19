@@ -49,7 +49,8 @@ Item {
                 }
                 Text { id: menuText;
                     anchors { left: parent.left; leftMargin: 40; verticalCenter: parent.verticalCenter }
-                    color: "white"; font.pixelSize: screenH/25; text: name
+                    color: "white"; font.pointSize: 10 * point
+                    text: name
                 }
                 Rectangle { height: 2; width: parent.width * 0.70;
                     anchors { left: parent.left; right: parent.right; bottom: parent.bottom }

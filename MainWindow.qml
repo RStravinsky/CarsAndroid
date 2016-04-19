@@ -16,6 +16,7 @@ ApplicationWindow {
 
     property int screenH: Screen.height
     property int screenW: Screen.width
+    property double point: ppi/160
 
     function reloadWindow() { mainLoader.reload() }
 
@@ -109,7 +110,7 @@ ApplicationWindow {
                 anchors.fill: parent
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
-                font.pointSize: screenH/40
+                font.pointSize: 12 * point
                 text: "Samochody"
                 color: "white"
             }
@@ -126,7 +127,7 @@ ApplicationWindow {
             visible: loadingRect.isLoading
             Text {
                 anchors.centerIn: parent
-                font.pixelSize: screenH/25;
+                font.pointSize: 14 * point
                 text: "Proszę czekać ..."
                 color: "white"
             }
@@ -261,5 +262,6 @@ ApplicationWindow {
 
    } // MainForm
 
+   Component.onCompleted: { console.log("ppi: " + ppi); console.log("dpi: " + dpi); console.log("ratio: " + ratio); console.log("imageRatio: " + imageRatio) }
 } // ApplicationWindow
 

@@ -12,6 +12,7 @@ Item {
     property bool activeButton: false
     property int dateTimeType
     property bool warningVisible: false
+    property int displayTextWay : TextInput.Normal
 
     property alias field: field
     property alias text: field.text
@@ -27,7 +28,7 @@ Item {
         id: field
         anchors.fill:parent
         horizontalAlignment: customTextField.horizontalAlignment
-        font.pixelSize: screenH/30
+        font.pointSize: 9 * point
         placeholderText: customTextField.placeholderText
         maximumLength: customTextField.maximumLength
         readOnly: customTextField.activeButton
@@ -86,6 +87,8 @@ Item {
                 }
             }
         }
+
+        echoMode: displayTextWay
 
     } // TextField
 
