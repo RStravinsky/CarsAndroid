@@ -20,6 +20,7 @@ class CarView : public QObject
     Q_OBJECT
     Q_PROPERTY(QQmlListProperty<CarBlock> carList READ getCarList NOTIFY onCarListChanged)
 
+
 public:
     explicit CarView(QObject *parent = 0);
 

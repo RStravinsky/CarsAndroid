@@ -1,4 +1,5 @@
 import QtQuick 2.5
+import QtQuick.Dialogs 1.2
 
 Item {
     id: carView
@@ -33,13 +34,14 @@ Item {
         property int offset: 20
         anchors { bottom: parent.bottom; left: parent.left; right: parent.right; top: parent.top; margins: offset }
         property int areaHeight: (screenH - topFrame.height - (2*offset))
+        property var historyInfo
 
         Component {
             id: carDelegate
-            Item { id: carItem; height: area.areaHeight*.3; width: parent.width; property string sourceImage: (status === false)? "images/images/free.png" : "images/images/rented.png";
+            Item { id: carItem; height: area.areaHeight*.3; width: parent.width;
 
                 Text { id: carName; height: parent.height * .15
-                    anchors { left: parent.left; leftMargin: 5; top: parent.top;}
+                    anchors { left: parent.left; leftMargin: 5; top: parent.top; right: infoImage.left}
                     color: "gray"; font.pointSize: 9 * point
                     text: brand + " " + model
                 }
@@ -54,6 +56,29 @@ Item {
                     source: { "image://cImages/"+id }
                     anchors { left: parent.left; top: license.bottom; topMargin: 5; right: rentBtn.left; rightMargin: 5; bottom: parent.bottom }
                 }
+                Image { id: infoImage; height: carName.height + license.height; width: height
+                    anchors { right: parent.right; top: parent.top; topMargin: 5; }
+                    z: carView.z + 1 // before parent
+                    fillMode: Image.PreserveAspectFit
+                    cache: true
+                    mipmap: true
+                    smooth: true
+                    antialiasing: true
+                    source: "/images/images/info.png"
+                    visible:  isRented === false ? false : true
+
+                    MouseArea {
+                        anchors.fill:parent
+                        onClicked: {
+                            area.historyInfo = carViewClass.carList[listIndex].historyInfoList
+                            messageDialog.show("Dane użytkownika","Imię: "+area.historyInfo[0]+"\n"+
+                                                                  "Nazwisko: "+area.historyInfo[1]+"\n"+
+                                                                  "Lokalizacja: "+area.historyInfo[2]+"\n"+
+                                                                  "Cel wizyty: "+area.historyInfo[3]+"\n",
+                                               StandardIcon.Information, false)
+                        }
+                    }
+                }
                 ActionButton {
                     id: rsrvBtn; height: carItem.height * .3; width: rsrvBtn.height * 1.7
                     buttonText: qsTr("Rezerwuj")
@@ -64,8 +89,8 @@ Item {
 
                 ActionButton {
                     id: rentBtn; height: parent.height * .3; width: rsrvBtn.height * 1.7;
-                    buttonColor: status === false ? "#32b678" : "#db4437"
-                    buttonText: status === false ? qsTr("Wypożycz") : qsTr("Oddaj")
+                    buttonColor: isRented === false ? "#32b678" : "#db4437"
+                    buttonText: isRented === false ? qsTr("Wypożycz") : qsTr("Oddaj")
                     anchors { bottom: parent.bottom; bottomMargin: 10; right: rsrvBtn.left; rightMargin: 5 }
                     z: carView.z + 1 // before parent
                     onActivated: { console.log("ADDED"); rentView.setListIndex(listIndex); stackView.push(rentView) }

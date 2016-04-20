@@ -78,6 +78,7 @@ ApplicationWindow {
             }
         }
 
+
         // top frame of application
         TopFrame { id: topFrame; width: mainForm.width; height: screenH*.1; anchors.top: mainForm.top; z: 100 }
 

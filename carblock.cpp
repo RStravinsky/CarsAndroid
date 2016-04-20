@@ -4,7 +4,7 @@ CarBlock::CarBlock(const int id,
                    const QString & brand,
                    const QString & model,
                    const QString & licensePlate,
-                   bool status,
+                   bool isRented,
                    const QString & photoPath,
                    const int mileage,
                    const int listIndex,
@@ -13,12 +13,23 @@ CarBlock::CarBlock(const int id,
                      m_brand(brand),
                      m_model(model),
                      m_licensePlate(licensePlate),
-                     m_status(status),
+                     m_isRented(isRented),
                      m_photoPath(photoPath),
                      m_mileage(mileage),
                      m_listIndex(listIndex)
 {
     m_bookingModel.setQuery(QString("SELECT * FROM booking WHERE idCar = %1").arg(id));
+
+    m_historyModel.setQuery(QString("SELECT Name,Surname,Destination,Target FROM history WHERE idCar = %1 AND End IS NULL").arg(id));
+    if(m_historyModel.rowCount() > 0) {
+        for(int i=0;i<4;++i) {
+            m_historyList.insert(i, m_historyModel.data(m_historyModel.index(0,i)).toString());
+            qDebug() <<  m_historyModel.data(m_historyModel.index(0,i)).toString() << endl;
+        }
+
+        emit onHistoryInfoListChanged(getHistoryInfoList());
+    }
+
 }
 
 int CarBlock::bookingInfoListCount(QQmlListProperty<BookingInfo> *list)
@@ -29,7 +40,7 @@ int CarBlock::bookingInfoListCount(QQmlListProperty<BookingInfo> *list)
     return 0;
 }
 
-BookingInfo *CarBlock::bookinginfoListAt(QQmlListProperty<BookingInfo> *list, int i)
+BookingInfo *CarBlock::bookingInfoListAt(QQmlListProperty<BookingInfo> *list, int i)
 {
     CarBlock *carBlock = qobject_cast<CarBlock*>(list->object);
     if (carBlock)
