@@ -141,6 +141,7 @@ Item {
                     preferredHighlightBegin: height / 2 - (height / minutesHTumbler.visibleItemCount / 2)
                     preferredHighlightEnd: height / 2  + (height / minutesHTumbler.visibleItemCount / 2)
                     clip: true
+                    highlightMoveDuration: 0
            }
 
             onCurrentItemChanged: { updateTimeString(); }
@@ -180,6 +181,7 @@ Item {
                     preferredHighlightBegin: height / 2 - (height / minutesLTumbler.visibleItemCount / 2)
                     preferredHighlightEnd: height / 2  + (height / minutesLTumbler.visibleItemCount / 2)
                     clip: true
+                    highlightMoveDuration: 0
            }
 
             onCurrentItemChanged: { updateTimeString(); }

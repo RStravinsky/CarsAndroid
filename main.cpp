@@ -22,11 +22,13 @@ int main(int argc, char *argv[])
     //static qreal refDpi = 216.;
     //static qreal refHeight = 1776.;
     //static qreal refWidth = 1080.;
+
     static qreal ppi = QGuiApplication::primaryScreen()->physicalDotsPerInch() * QGuiApplication::primaryScreen()->devicePixelRatio();
     static qreal dpi = qApp->primaryScreen()->logicalDotsPerInch();
     static qreal imageRatio = dpi/144.;
     static qreal ratio = 144./dpi;
 
+    ppi /= 160;
     ppi *= ratio;
 
     CarView cv;

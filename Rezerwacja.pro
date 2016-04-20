@@ -46,5 +46,5 @@ HEADERS += \
 
 contains(ANDROID_TARGET_ARCH,armeabi-v7a) {
         ANDROID_EXTRA_LIBS = \
-        /home/rafal/Dokumenty/Android/android-mySQL/mariadb_client-2.0.0-src/build/libmariadb/libmariadb.so
+        /home/bartek/AndroidMysql/mariadb_client-2.0.0-src/build/libmariadb/libmariadb.so
         }

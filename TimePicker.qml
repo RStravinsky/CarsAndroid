@@ -103,10 +103,10 @@ Item {
                             dateChooserStack.pop(hoursListItem)
                         }
                         else
-                            messageDialog.show("Uwaga!", "Niepoprawna godzina.", StandardIcon.Warning)
+                            messageDialog.show("Uwaga!", "Niepoprawna godzina.", StandardIcon.Warning, false)
                     }
                     else
-                        messageDialog.show("Uwaga!", "Wybrana godzina jest już zarezerwowana.", StandardIcon.Warning)
+                        messageDialog.show("Uwaga!", "Wybrana godzina jest już zarezerwowana.", StandardIcon.Warning, false)
                 }
                 else if(whichDateTime === 1) {
                     endDateTimeString = bookingCalendar.selectedDate.toLocaleString(Qt.locale("pl_PL"), "yyyy-MM-dd") + " " + timeTumbler.timeString
@@ -120,13 +120,13 @@ Item {
                                 dateChooserStack.pop(hoursListItem)
                             }
                             else
-                                messageDialog.show("Uwaga!", "Niepoprawna godzina.", StandardIcon.Warning)
+                                messageDialog.show("Uwaga!", "Niepoprawna godzina.", StandardIcon.Warning, false)
                         }
                         else
-                            messageDialog.show("Uwaga!", "Godziny, które wybrałeś są już zarezerwowane.", StandardIcon.Warning)
+                            messageDialog.show("Uwaga!", "Godziny, które wybrałeś są już zarezerwowane.", StandardIcon.Warning, false)
                     }
                     else
-                       messageDialog.show("Uwaga!", "Wybrana godzina jest już zarezerwowana.", StandardIcon.Warning)
+                       messageDialog.show("Uwaga!", "Wybrana godzina jest już zarezerwowana.", StandardIcon.Warning, false)
                 }
 
             }

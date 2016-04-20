@@ -78,7 +78,8 @@ void CarBlock::readBookingEntries(QDate date, QString time)
                                                           m_bookingModel.data(m_bookingModel.index(i,1)).toString(),
                                                           m_bookingModel.data(m_bookingModel.index(i,2)).toString(),
                                                           m_bookingModel.data(m_bookingModel.index(i,3)).toTime().toString("hh:mm"),
-                                                          m_bookingModel.data(m_bookingModel.index(i,4)).toTime().toString("hh:mm")
+                                                          m_bookingModel.data(m_bookingModel.index(i,4)).toTime().toString("hh:mm"),
+                                                          m_bookingModel.data(m_bookingModel.index(i,6)).toString()
                                                           )));
 
             }
@@ -88,7 +89,8 @@ void CarBlock::readBookingEntries(QDate date, QString time)
                                                           m_bookingModel.data(m_bookingModel.index(i,1)).toString(),
                                                           m_bookingModel.data(m_bookingModel.index(i,2)).toString(),
                                                           m_bookingModel.data(m_bookingModel.index(i,3)).toTime().toString("hh:mm"),
-                                                          QString("...")
+                                                          QString("..."),
+                                                          m_bookingModel.data(m_bookingModel.index(i,6)).toString()
                                                           )));
 
             }
@@ -98,7 +100,8 @@ void CarBlock::readBookingEntries(QDate date, QString time)
                                                           m_bookingModel.data(m_bookingModel.index(i,1)).toString(),
                                                           m_bookingModel.data(m_bookingModel.index(i,2)).toString(),
                                                           QString("..."),
-                                                          m_bookingModel.data(m_bookingModel.index(i,4)).toTime().toString("hh:mm")
+                                                          m_bookingModel.data(m_bookingModel.index(i,4)).toTime().toString("hh:mm"),
+                                                          m_bookingModel.data(m_bookingModel.index(i,6)).toString()
                                                           )));
 
             }
@@ -108,7 +111,8 @@ void CarBlock::readBookingEntries(QDate date, QString time)
                                                           m_bookingModel.data(m_bookingModel.index(i,1)).toString(),
                                                           m_bookingModel.data(m_bookingModel.index(i,2)).toString(),
                                                           QString("..."),
-                                                          QString("...")
+                                                          QString("..."),
+                                                          m_bookingModel.data(m_bookingModel.index(i,6)).toString()
                                                           )));
 
             }

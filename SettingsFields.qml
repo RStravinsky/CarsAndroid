@@ -44,7 +44,8 @@ Item {
                     }
                 }
 
-                CustomTextField { id: customTextField; text: sqlDatabase.settingsParameter[index]; placeholderText: rowsModel.nameList[index]; height: row.height; width: row.width - rect.width; displayTextWay: index === 3 ? TextInput.PasswordEchoOnEdit : TextInput.Normal;
+                CustomTextField { id: customTextField; text: sqlDatabase.settingsParameter[index]; placeholderText: rowsModel.nameList[index]; height: row.height; width: row.width - rect.width;
+                                  displayTextWay: index === 3 ? TextInput.Password : TextInput.Normal; inputMethodHints: index === 3 ? Qt.ImhHiddenText : Qt.ImhNone
                     Component.onCompleted: {
                         if(index === 0) { customTextField.validator = hostRegExpValidator; customTextField.inputMethodHints = Qt.ImhFormattedNumbersOnly; }
                         if(index === 1) { customTextField.validator = intValidaotr; customTextField.inputMethodHints = Qt.ImhDigitsOnly }

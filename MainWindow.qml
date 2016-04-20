@@ -16,7 +16,7 @@ ApplicationWindow {
 
     property int screenH: Screen.height
     property int screenW: Screen.width
-    property double point: ppi/160
+    property double point: ppi
 
     function reloadWindow() { mainLoader.reload() }
 

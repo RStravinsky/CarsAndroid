@@ -19,7 +19,7 @@ Item {
             clip: true
             color: "lightgray"
             text: (textEdit.text === "" && (!textEdit.activeFocus)) ? placeholderText : ""
-            font.pointSize: 8 * point
+            font.pointSize: 9 * point
         }
 
         Flickable {
