@@ -228,6 +228,7 @@ ApplicationWindow {
 
            Rectangle { id: normalView; anchors.fill: parent; visible: false
                 CarView { id:carView; objectName: "Samochody"; Component.onCompleted: {
+                        sqlDatabase.purgeDatabase()
                         carViewClass.clearCarList()
                         if(fileio.readSettings()) {
                             sqlDatabase.settingsParameter = fileio.settingsList

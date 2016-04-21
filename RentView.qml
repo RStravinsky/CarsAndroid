@@ -61,12 +61,12 @@ Item {
         }
 
         // text fields
-        RentFields { id: rentFields; width: parent.width; height:  area.areaHeight * .55
+        RentFields { id: rentFields; width: parent.width; height:  area.areaHeight * .3
             anchors { top: carImage.bottom; topMargin: 5 }
             visible: rentView.isRented === false ? true: false; // Visible when car is free
         }
 
-        ReturnFields { id: returnFields; width: parent.width; height: area.areaHeight * .55
+        ReturnFields { id: returnFields; width: parent.width; height: area.areaHeight * .3
             anchors { top: carImage.bottom; topMargin: 5 }
             visible: rentView.isRented === false ? false: true; // Visible when car is busy
         }

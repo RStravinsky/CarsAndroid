@@ -44,7 +44,7 @@ Item {
                                         "/images/images/surname.png","/images/images/destination.png"]
             property variant nameList: [qsTr("Data początkowa"),qsTr("Data końcowa"),qsTr("Imię"),qsTr("Nazwisko"),qsTr("Lokalizacja")]
 
-            Row { id: row; spacing: 10; height: (bookingFields.height * .15); width: bookingFields.width - row.spacing;
+            Row { id: row; spacing: 10; height: (bookingFields.height * .25); width: bookingFields.width - row.spacing;
 
                 property alias customTextField: customTextField
                 Rectangle { id: rect; height: row.height; width: row.height
@@ -59,8 +59,8 @@ Item {
                 CustomTextField { id: customTextField; placeholderText: bookingFieldsRepeater.nameList[index]; height: row.height; width: row.width - rect.width; property string choosenTime; property string startDateTimeText;
                     Component.onCompleted: {
                         if(index === 0 || index === 1) customTextField.activeButton = true; dateTimeType = index;
-                        if(index === 2) { customTextField.validator = regExpValidator }
-                        if(index === 3) { customTextField.validator = regExpValidator }
+                        if(index === 2) { customTextField.validator = regExpValidator; customTextField.text = sqlDatabase.settingsParameter[4] }
+                        if(index === 3) { customTextField.validator = regExpValidator; customTextField.text = sqlDatabase.settingsParameter[5] }
                     }
                     onTextChanged: {
                         if(index === 0 || index === 1) {

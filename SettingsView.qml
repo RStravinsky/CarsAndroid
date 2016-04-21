@@ -34,29 +34,47 @@ Item {
         property int areaHeight: (screenH - topFrame.height - (2*offset))
         enabled: (loadingRect.isLoading === true) ? false : true
 
-        Text { id: settingsHeader; width: parent.width; height:  area.areaHeight * .1
+        Rectangle {
+            id: settingsHeader; width: parent.width; height:  2.5 * font.pointSize
             anchors { top: parent.top; topMargin: 5 }
-            text: "Ustawienia serwera:"
-            horizontalAlignment: Text.AlignHCenter
-            color: "gray"
+            color: "lightgray"
+            Text {
+                anchors.fill: parent
+                text: "Ustawienia serwera:"
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                color: "gray"
+                font.pointSize: 9 * point
+            }
         }
 
-
         // text fields
-        SettingsFields { id: settingsFields; width: parent.width; height:  area.areaHeight * .55
+        SettingsFields { id: settingsFields; width: parent.width; height:  area.areaHeight * .3
             anchors { top: settingsHeader.bottom; topMargin: 5 }
         }
 
-//        Text { id: userHeader; width: parent.width; height:  area.areaHeight * .1
-//            anchors { top: settingsFields.bottom; topMargin: 5 }
-//            text: "Dane użytkownika:"
-//            horizontalAlignment: Text.AlignHCenter
-//            color: "gray"
-//        }
+        Rectangle {
+            id: userHeader; width: parent.width; height:   2.5 * font.pointSize
+            anchors { top: settingsFields.bottom; topMargin: 50 }
+            color: "lightgray"
+            Text {
+                anchors.fill: parent
+                text: "Dane użytkownika:"
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                color: "gray"
+                font.pointSize: 9 * point
+            }
+        }
+
+        // text fields
+        UserFields { id: userFields; width: parent.width; height:  area.areaHeight * .3
+            anchors { top: userHeader.bottom; topMargin: 5 }
+        }
 
         // rent/return button
         ActionButton { id: connectBtn; width: parent.width; height: area.areaHeight * .13;
-            property var fields;
+            //property var fields;
             anchors { bottom: parent.bottom; left: parent.left; right: parent.right; }
             buttonColor: "#32b678"
             buttonText: qsTr("Połącz")
@@ -69,13 +87,13 @@ Item {
 
             onActivated: {
                 area.forceActiveFocus() // disable focus from fields
-                if(settingsFields.dataIsEmpty()) {
+                if(settingsFields.dataIsEmpty() || userFields.dataIsEmpty()) {
                     messageDialog.show("Uwaga!", "Pole tekstowe nie zostało wypełnione.", StandardIcon.Warning, false);
                 }
                 else {
                     loadingRect.isLoading = true
-                    fields = settingsFields.getFields()
-                    if(fileio.writeSettings(settingsFields.getFields())) {
+                    //fields = settingsFields.getFields()
+                    if(fileio.writeSettings(settingsFields.getFields(),userFields.getFields())) {
                         apps.reloadWindow() }
                 }
 

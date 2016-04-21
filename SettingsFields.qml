@@ -32,7 +32,7 @@ Item {
             property variant pathList: ["/images/images/ip.png","/images/images/port.png","/images/images/name.png","/images/images/password.png"]
             property variant nameList: [qsTr("Adres"),qsTr("Port"),qsTr("Użytkownik"),qsTr("Hasło")]
 
-            Row { id: row; spacing: 10; height: (settingsFields.height * .15); width: settingsFields.width - row.spacing;
+            Row { id: row; spacing: 10; height: (settingsFields.height * .25); width: settingsFields.width - row.spacing;
 
                 property alias customTextField: customTextField
                 Rectangle { id: rect; height: row.height; width: row.height

@@ -82,12 +82,19 @@ bool FileIO::writeCode(const QString& data,const QString& carName)
     return true;
 }
 
-bool FileIO::writeSettings(QVariant entryFields)
+bool FileIO::writeSettings(QVariant settingsFields, QVariant userFields)
 {
-    QVariantList entryFieldsList = entryFields.toList();
+    QVariantList settingsFieldsList = settingsFields.toList();
+    QVariantList userFieldsList = userFields.toList();
+
+    qDebug() << settingsFieldsList << endl;
+    qDebug() << userFieldsList << endl;
+
     enum ENTRY_FIELDS{
         Host,
+        userName = 0,
         Port,
+        userSurname = 1,
         Name,
         Password,
     };
@@ -100,7 +107,8 @@ bool FileIO::writeSettings(QVariant entryFields)
     }
 
     QTextStream out(&file);
-    out << entryFieldsList.at(ENTRY_FIELDS::Host).toString() << " " << entryFieldsList.at(ENTRY_FIELDS::Port).toString()  << " " << entryFieldsList.at(ENTRY_FIELDS::Name).toString() << " " << entryFieldsList.at(ENTRY_FIELDS::Password).toString()  <<  "\n";
+    out << settingsFieldsList.at(ENTRY_FIELDS::Host).toString() << " " << settingsFieldsList.at(ENTRY_FIELDS::Port).toString()  << " " << settingsFieldsList.at(ENTRY_FIELDS::Name).toString() << " " << settingsFieldsList.at(ENTRY_FIELDS::Password).toString()
+        << " " << userFieldsList.at(ENTRY_FIELDS::userName).toString() << " " << userFieldsList.at(ENTRY_FIELDS::userSurname).toString()  << "\n";
     file.close();
     return true;
 }
@@ -115,7 +123,7 @@ bool FileIO::readSettings()
         QTextStream t( &file );
         line = t.readLine();
         if(!line.isEmpty())
-                for(int i=0; i<4; ++i)
+                for(int i=0; i<6; ++i)
                     m_settingsList.push_back(line.split(" ").at(i));
         file.close();
     }

@@ -31,7 +31,7 @@ public slots:
     void saveToClipboard(const QString& code);
     bool removeCode(const QString& code);
 
-    bool writeSettings(QVariant entryFields);
+    bool writeSettings(QVariant entryFields, QVariant userFields);
     bool readSettings();
 
 public:

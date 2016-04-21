@@ -30,7 +30,7 @@ Item {
         anchors.fill: parent
         spacing: 15
 
-        Row { id: mileageRow;  spacing: 10; height: (returnFields.height * .15); width: returnFields.width - mileageRow.spacing;
+        Row { id: mileageRow;  spacing: 10; height: (returnFields.height * .25); width: returnFields.width - mileageRow.spacing;
 
             Rectangle { id: mileageRect; height: mileageRow.height; width: mileageRow.height
                 Image { id: mileageIcon; anchors.fill: parent; anchors.margins: 7
@@ -48,7 +48,7 @@ Item {
         }
 
 
-        Row { id: notesRow; spacing: 10; height: (returnFields.height * .15) * 4; width: returnFields.width - notesRow.spacing
+        Row { id: notesRow; spacing: 10; height: (returnFields.height * .25) * 4; width: returnFields.width - notesRow.spacing
 
             Rectangle { id: notesRect; height: mileageRect.height; width: mileageRect.height
                 Image { id: notesIcon; anchors.fill: parent; anchors.margins: 7
@@ -59,7 +59,7 @@ Item {
                 }
             }
 
-            CustomTextArea  { id: notes; height: (returnFields.height * .15) * 4; width: notesRow.width - notesRect.width; placeholderText: qsTr("Uwagi - nie obowiązkowe"); }
+            CustomTextArea  { id: notes; height: (returnFields.height * .25) * 4; width: notesRow.width - notesRect.width; placeholderText: qsTr("Uwagi - nie obowiązkowe"); }
         }
 
     } // Column

@@ -59,7 +59,7 @@ Item {
         }
 
         // text fields
-        BookingFields { id: bookingFields; width: parent.width; height:  area.areaHeight * .55
+        BookingFields { id: bookingFields; width: parent.width; height:  area.areaHeight * .3
             anchors { top: carImage.bottom; topMargin: 5 }
         }
 

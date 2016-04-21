@@ -37,7 +37,7 @@ Item {
             property variant pathList: ["/images/images/name.png","/images/images/surname.png","/images/images/destination.png","/images/images/target.png"]
             property variant nameList: [qsTr("Imię"),qsTr("Nazwisko"),qsTr("Lokalizacja"),qsTr("Cel wizyty")]
 
-            Row { id: row; spacing: 10; height: (rentFields.height * .15); width: rentFields.width - row.spacing;
+            Row { id: row; spacing: 10; height: (rentFields.height * .25); width: rentFields.width - row.spacing;
 
                 property alias customTextField: customTextField
                 Rectangle { id: rect; height: row.height; width: row.height
@@ -49,11 +49,10 @@ Item {
                     }
                 }
 
-
                 CustomTextField { id: customTextField; placeholderText: rowsModel.nameList[index]; height: row.height; width: row.width - rect.width;
                     Component.onCompleted: {
-                        if(index === 0) customTextField.validator = regExpValidator
-                        if(index === 1) customTextField.validator = regExpValidator
+                        if(index === 0) { customTextField.validator = regExpValidator; console.log("SQWL", sqlDatabase.settingsParameter[4]); customTextField.text = sqlDatabase.settingsParameter[4] }
+                        if(index === 1) { customTextField.validator = regExpValidator; customTextField.text = sqlDatabase.settingsParameter[5] }
                     }
                 }
 
