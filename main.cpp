@@ -19,17 +19,15 @@ int main(int argc, char *argv[])
     qmlRegisterType<SingleCode>();
     qmlRegisterType<SqlDatabase>("sigma.sql", 1, 0, "SqlDatabase");
 
-    //static qreal refDpi = 216.;
-    //static qreal refHeight = 1776.;
-    //static qreal refWidth = 1080.;
+    static qreal refHeight = 92.; //[mm]
+    static qreal refWidth = 56.;//[mm]
+    static qreal height = qApp->primaryScreen()->physicalSize().height();
+    static qreal width = qApp->primaryScreen()->physicalSize().width();
 
     static qreal ppi = QGuiApplication::primaryScreen()->physicalDotsPerInch() * QGuiApplication::primaryScreen()->devicePixelRatio();
     static qreal dpi = qApp->primaryScreen()->logicalDotsPerInch();
     static qreal imageRatio = dpi/144.;
-    static qreal ratio = 144./dpi;
-
-    ppi /= 160;
-    ppi *= ratio;
+    static qreal ratio = qMin(height/refHeight, width/refWidth);
 
     CarView cv;
     CarBlock cb;
@@ -43,10 +41,14 @@ int main(int argc, char *argv[])
     root_context->setContextProperty("dpi", dpi);
     root_context->setContextProperty("ratio", ratio);
     root_context->setContextProperty("imageRatio", imageRatio);
+    root_context->setContextProperty("sHeight", height);
+    root_context->setContextProperty("sWidth", width);
 
     engine.addImageProvider(QLatin1String("cImages"), new ImageProvider);
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
+
+    //QObject::connect(&engine, SIGNAL(quit()), &app, SLOT(quit()));
 
     return app.exec();
 }

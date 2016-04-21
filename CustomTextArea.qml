@@ -37,7 +37,7 @@ Item {
 
              TextEdit { id: textEdit; width: flick.width; height: flick.height
                  wrapMode: TextEdit.Wrap
-                 font.pointSize: 8 * point
+                 font.pointSize: 9 * point
                  color: "gray"
                  onCursorRectangleChanged: flick.ensureVisible(cursorRectangle)
              }

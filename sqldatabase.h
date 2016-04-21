@@ -20,6 +20,7 @@ public:
 
 public slots:
     bool connectToDatabase ( QString host, int port, QString username, QString password);
+    void purgeDatabase();
 
 private:
     static QSqlDatabase m_sqlDatabase;
@@ -28,7 +29,7 @@ private:
 
     static bool isConnectedToNetwork();
     void setConnectionType(bool type);
-    void purgeDatabase();
+
 
 signals:
     void connectedChanged();

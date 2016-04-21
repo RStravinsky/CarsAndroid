@@ -16,7 +16,7 @@ ApplicationWindow {
 
     property int screenH: Screen.height
     property int screenW: Screen.width
-    property double point: ppi
+    property double point: (ppi/dpi)*ratio //(ppi * ratio)/160
 
     function reloadWindow() { mainLoader.reload() }
 
@@ -30,6 +30,8 @@ ApplicationWindow {
         focus: true // important - otherwise we'll get no key events
         Keys.onReleased: {
             if (event.key === Qt.Key_Back) {
+                console.log("ACCEPTED");
+                event.accepted = true
                 if(menuView.currentIndex === 1) { // menu not visible
 
                     if(stackView.currentItem.objectName === "Wypożyczanie") { console.log("CLEAR RENT"); rentView.clearText() }
@@ -39,7 +41,7 @@ ApplicationWindow {
                     if(stackView.currentItem.objectName === "Kody") { menuView.list.currentIndex = 0 }
                     if(stackView.currentItem.objectName === "Ustawienia") { informationScreen.z = normalView.z + 1; }
 
-                    if(stackView.depth === 1) apps.close()
+                    if(stackView.depth === 1) { sqlDatabase.purgeDatabase(); Qt.quit(); }
                     else  {
                         if(dateChooser.stack.depth === 1) {
                             console.log("POP");
@@ -54,8 +56,8 @@ ApplicationWindow {
                 }
                 else { console.log("MENU CHANGE ");mainArea.menuChange() }
 
-                console.log("ACCEPTED");
-                event.accepted = true
+                //console.log("ACCEPTED");
+                //event.accepted = true
             }
         }
 
@@ -78,6 +80,7 @@ ApplicationWindow {
             }
         }
 
+
         // top frame of application
         TopFrame { id: topFrame; width: mainForm.width; height: screenH*.1; anchors.top: mainForm.top; z: 100 }
 
@@ -86,7 +89,7 @@ ApplicationWindow {
             id: mainButton; height: topFrame.height; width: mainButton.height
             anchors { left: topFrame.left; top: topFrame.top }
             z: topFrame.z + 1 // before top frame
-            onButtonClicked: { mainArea.menuChange() }
+            onButtonClicked: { carView.list.positionViewAtIndex(5, ListView.Beginning); mainArea.menuChange() }
         }
 
         // update button
@@ -198,6 +201,7 @@ ApplicationWindow {
                            }
                        }
                        else { // HELP TODO}
+                            if(idx === 3) stackView.push(aboutView)
                        }
                 }
            } // Menu View
@@ -242,6 +246,7 @@ ApplicationWindow {
                 RentView { id:rentView; objectName: "Wypożyczanie"; }
                 PinView { id:pinView; objectName: "Wprowadź kod" }
                 BookingView { id:bookingView; objectName: "Rezerwacja" }
+                AboutView { id:aboutView; objectName: "O aplikacji" }
            } // Normal View
 
            // view mask
@@ -262,6 +267,6 @@ ApplicationWindow {
 
    } // MainForm
 
-   Component.onCompleted: { console.log("ppi: " + ppi); console.log("dpi: " + dpi); console.log("ratio: " + ratio); console.log("imageRatio: " + imageRatio) }
+   Component.onCompleted: { console.log("ppi: " + ppi); console.log("dpi: " + dpi); console.log("ratio: " + ratio); console.log("imageRatio: " + imageRatio); console.log("point: " + point); console.log("sHeight: " + sHeight); console.log("sWidth: " + sWidth) }
 } // ApplicationWindow
 

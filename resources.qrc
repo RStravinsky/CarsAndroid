@@ -34,5 +34,8 @@
         <file>images/left-angle-arrow.png</file>
         <file>images/right-angle-arrow.png</file>
         <file>images/configure.png</file>
+        <file>images/info.png</file>
+        <file>images/appinfo.png</file>
+        <file>images/logo.png</file>
     </qresource>
 </RCC>

@@ -34,7 +34,7 @@ Item {
             ListElement { name: "Lista samochodów";imagePath: "/images/images/reserve.png"}
             ListElement { name: "Ustawienia"; imagePath:"/images/images/settings.png"}
             ListElement { name: "Moje kody"; imagePath:"/images/images/code.png"}
-            ListElement { name: "Pomoc"; imagePath:"/images/images/help.png"}
+            ListElement { name: "O aplikacji"; imagePath:"/images/images/appinfo.png"}
         }
 
         Component {

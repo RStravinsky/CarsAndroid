@@ -31,5 +31,6 @@
         <file>InformationScreen.qml</file>
         <file>SettingsFields.qml</file>
         <file>Completer.qml</file>
+        <file>AboutView.qml</file>
     </qresource>
 </RCC>
