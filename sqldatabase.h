@@ -24,10 +24,7 @@ public slots:
 private:
     static QSqlDatabase m_sqlDatabase;
     bool m_connected;
-    static bool m_isLocal;
-
     static bool isConnectedToNetwork();
-    void setConnectionType(bool type);
     void purgeDatabase();
 
 signals:

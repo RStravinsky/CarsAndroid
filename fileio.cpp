@@ -14,6 +14,7 @@ bool FileIO::readCodes()
             line = t.readLine();
             if(!line.isEmpty())
                 m_codeList.push_back(new SingleCode(line.split(" ").at(0), line.split(" ").at(1), line.split(" ").at(2), line.split(" ").at(3), line.split(" ").at(4)));
+                qDebug() << m_codeList << endl;
          } while (!line.isNull());
         file.close();
 

@@ -92,7 +92,7 @@ Item {
                     id: narrowButtonMouseArea
                     anchors.fill: parent
                     z: mouseM.z - 1
-                    enabled: menuView.currentIndex === 1 ? true : false
+                    //enabled: menuView.currentIndex === 1 ? true : false
                     onClicked: {
                         hoursList.currentIndex = index
                         delay.running = true

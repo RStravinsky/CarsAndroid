@@ -8,7 +8,7 @@ Item {
     id: rentView
     property alias area: area
     property int listIndex
-    property var isRented : carViewClass.carList[listIndex].status
+    property var isRented : carViewClass.carList[listIndex].isRented
     property alias returnFields: returnFields
     property alias distance: rentBtn.distance
 

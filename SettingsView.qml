@@ -34,10 +34,25 @@ Item {
         property int areaHeight: (screenH - topFrame.height - (2*offset))
         enabled: (loadingRect.isLoading === true) ? false : true
 
+        Text { id: settingsHeader; width: parent.width; height:  area.areaHeight * .1
+            anchors { top: parent.top; topMargin: 5 }
+            text: "Ustawienia serwera:"
+            horizontalAlignment: Text.AlignHCenter
+            color: "gray"
+        }
+
+
         // text fields
         SettingsFields { id: settingsFields; width: parent.width; height:  area.areaHeight * .55
-            anchors { top: parent.top; topMargin: 5 }
+            anchors { top: settingsHeader.bottom; topMargin: 5 }
         }
+
+//        Text { id: userHeader; width: parent.width; height:  area.areaHeight * .1
+//            anchors { top: settingsFields.bottom; topMargin: 5 }
+//            text: "Dane użytkownika:"
+//            horizontalAlignment: Text.AlignHCenter
+//            color: "gray"
+//        }
 
         // rent/return button
         ActionButton { id: connectBtn; width: parent.width; height: area.areaHeight * .13;
@@ -46,7 +61,6 @@ Item {
             buttonColor: "#32b678"
             buttonText: qsTr("Połącz")
             fontSize: 16 * point
-            z: settingsView.z + 1 // before parent
 
             Connections {
                 target: fileio
