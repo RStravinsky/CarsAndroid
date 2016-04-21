@@ -30,7 +30,7 @@
         <file>UpdateButton.qml</file>
         <file>InformationScreen.qml</file>
         <file>SettingsFields.qml</file>
-        <file>Completer.qml</file>
         <file>AboutView.qml</file>
+        <file>SearchField.qml</file>
     </qresource>
 </RCC>

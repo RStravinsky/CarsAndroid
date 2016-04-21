@@ -37,5 +37,6 @@
         <file>images/info.png</file>
         <file>images/appinfo.png</file>
         <file>images/logo.png</file>
+        <file>images/search.png</file>
     </qresource>
 </RCC>

@@ -4,7 +4,6 @@ Item {
     id: updateButton
     property color hoverColor: "#FF6900"
     property color itemColor: "transparent"
-    enabled: (informationScreen.text ===  "Łączenie ..." && informationScreen.visible === true )? false : true // disable when menu is open
     signal activated()
     property bool isActivated: false;  
 
@@ -39,13 +38,13 @@ Item {
 
         MouseArea {
             id: mouseArea;
-            visible: (informationScreen.text ===  "Łączenie ..." && informationScreen.visible === true ) ? false : true
             anchors.fill: rectangle
             hoverEnabled: true
             onEntered: rectangle.state = "ENTERED"
             onExited: rectangle.state = "EXITED"
             onClicked: {
                 if(menuView.currentIndex === 0) { mainArea.menuChange() }
+                carViewClass.isBusy = true
                 informationScreen.text = "Łączenie ..."
                 informationScreen.source = "images/images/wait.png"
                 informationScreen.visible = true;

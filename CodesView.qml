@@ -42,7 +42,7 @@ Item {
 
                 Text { id: rentCode; height: parent.height * .6
                     anchors { left: parent.left; leftMargin: 5; bottom: parent.bottom; bottomMargin: 10 }
-                    color: "#32b678"; font.pointSize: 8 * point //(screenH/(20*ratio));
+                    color: "#32b678"; font.pointSize: 17 * point //(screenH/(20*ratio));
                     text: code
                 }
 
@@ -51,7 +51,6 @@ Item {
                     buttonText: qsTr("Skopiuj")
                     buttonColor: "#8c8c8c"
                     anchors { bottom: rentCode.bottom; right: parent.right }
-                    z: codesView.z + 1 // before parent
                     onActivated: { fileio.saveToClipboard(code) }
                 }
 

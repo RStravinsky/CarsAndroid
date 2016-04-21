@@ -51,7 +51,7 @@ public:
     static BookingInfo* bookingInfoListAt(QQmlListProperty<BookingInfo> *list, int i);
 
     QVariantList getHistoryInfoList() { return m_historyList; }
-
+    void setListIndex(int idx) { m_listIndex = idx; }
 
 signals:
     void onBookingInfoListChanged(QQmlListProperty<BookingInfo>);
@@ -77,7 +77,7 @@ private:
     const bool m_isRented;
     const QString m_photoPath;
     const int m_mileage;
-    const int m_listIndex;
+    int m_listIndex;
     QSqlQueryModel m_bookingModel;
     QSqlQueryModel m_historyModel;
     QList<BookingInfo*> m_bookingInfoList;

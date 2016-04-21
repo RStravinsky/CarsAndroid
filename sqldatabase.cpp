@@ -5,7 +5,6 @@ SqlDatabase :: SqlDatabase ( QObject * parent ) : QObject ( parent ) {
 }
 
 QSqlDatabase SqlDatabase::m_sqlDatabase = QSqlDatabase();
-bool SqlDatabase::m_isLocal = false;
 
 bool SqlDatabase::connectToDatabase ( QString host, int port, QString username, QString password) {
 
@@ -24,9 +23,6 @@ bool SqlDatabase::connectToDatabase ( QString host, int port, QString username, 
     m_sqlDatabase.setPassword ( password );
     m_sqlDatabase.setDatabaseName ("sigmacars");
 
-    if(host == "127.0.0.1") setConnectionType(true);
-    else setConnectionType(false);
-
     if (isOpen()) m_connected = true;
 
     emit connectedChanged();
@@ -36,19 +32,10 @@ bool SqlDatabase::connectToDatabase ( QString host, int port, QString username, 
     return m_connected;
 }
 
-void SqlDatabase::setConnectionType(bool type)
-{
-    m_isLocal = type;
-}
-
 bool SqlDatabase::isOpen()
 {
-    if(m_isLocal)
+    if(isConnectedToNetwork())
         return m_sqlDatabase.open();
-    else {
-        if(isConnectedToNetwork())
-            return m_sqlDatabase.open();
-    }
 
     return false;
 }

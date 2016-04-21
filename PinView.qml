@@ -41,6 +41,31 @@ Item {
             onActivated: { code.field.text = ""; code.field.paste() }
         }
 
+        // rent/return button
+        ActionButton { id: leaveBtn; width: parent.width; height: area.areaHeight * .13;
+            property var fields;
+            anchors { bottom: parent.bottom; left: parent.left; right: parent.right; }
+            buttonColor: "#db4437"
+            buttonText: qsTr("Oddaj")
+            fontSize: 16 * point
+
+            onActivated: {
+                loadingRect.isLoading = true // enable loaidng
+                if(carViewClass.carList[pinView.listIndex].isCodeCorrect(carViewClass.carList[pinView.listIndex].id,field.text)) {
+                    if(carViewClass.carList[listIndex].updateHistory(rentView.returnFields.getFields(),rentView.distance))
+                    {
+                        fileio.removeCode(field.text)
+                        Qt.inputMethod.hide() // hide virtual keyboard
+                        messageDialog.show("Oddano!", "Samochód został oddany.", StandardIcon.Information, true); // RELOAD APP
+                    }
+                    else { loadingRect.isLoading = false; messageDialog.show("Uwaga!", "Polecenie nie powiodło się.", StandardIcon.Warning, false); }
+                }
+                else { loadingRect.isLoading = false; messageDialog.show("Niepoprawny kod!", "Spróbuj ponownie.", StandardIcon.Warning, false); }
+
+            } // OnActivated
+
+        } // ActiveButton
+
     } // Rectangle
 
 } // Item

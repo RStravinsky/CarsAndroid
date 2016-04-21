@@ -50,7 +50,6 @@ ApplicationWindow {
                         else dateChooser.stack.pop()
                     }
 
-
                     mainArea.setState()
 
                 }
@@ -66,6 +65,7 @@ ApplicationWindow {
             property bool reloadActive: false
             onAccepted: {
                 if(reloadActive === true) {
+                    carViewClass.isBusy = true
                     console.log("RELOADING!")
                     apps.reloadWindow()
                 }
@@ -80,7 +80,6 @@ ApplicationWindow {
             }
         }
 
-
         // top frame of application
         TopFrame { id: topFrame; width: mainForm.width; height: screenH*.1; anchors.top: mainForm.top; z: 100 }
 
@@ -88,15 +87,15 @@ ApplicationWindow {
         MainButton {
             id: mainButton; height: topFrame.height; width: mainButton.height
             anchors { left: topFrame.left; top: topFrame.top }
-            z: topFrame.z + 1 // before top frame
-            onButtonClicked: { carView.list.positionViewAtIndex(5, ListView.Beginning); mainArea.menuChange() }
+            z: topFrame.z
+            onButtonClicked: { mainArea.menuChange() }
         }
 
         // update button
         UpdateButton {
             id: updateButton; height: topFrame.height; width: updateButton.height
             anchors { right: topFrame.right; top: topFrame.top }
-            z: topFrame.z + 1 // before top frame
+            z: topFrame.z
             visible: stackView.currentItem.objectName === "Samochody" ? true : false
             onActivated: { apps.reloadWindow() }
         }
@@ -106,7 +105,7 @@ ApplicationWindow {
             width: topFrame.width - mainButton.width - updateButton.width
             height: topFrame.height
             anchors { left:mainButton.right; right: updateButton.left; top: topFrame.top; bottom: topFrame.bottom }
-            z: topFrame.z + 1 // before top frame
+            z: topFrame.z
             color: "transparent"
             Text {
                 id: frameText
@@ -137,6 +136,7 @@ ApplicationWindow {
         }
 
         SqlDatabase {  property var settingsParameter; id: sqlDatabase }
+
 
         Rectangle {
             id: mainArea
@@ -206,17 +206,28 @@ ApplicationWindow {
                 }
            } // Menu View
 
-           // reload screen
-           InformationScreen {
-               id: informationScreen
-               anchors.fill: parent
-               z: normalView.z + 1
-               onActivated: {
-                   if(informationScreen.text === "Serwer niedostępny" || informationScreen.text === "Skonfiguruj połączenie") {
-                        informationScreen.z = normalView.z - 1; stackView.clear(); stackView.push(carView, StackView.Immediate, settingsView, StackView.Immediate)
-                   }
-               }
-           }
+            // reload screen
+            InformationScreen {
+                id: informationScreen
+                anchors.fill: parent
+                z: normalView.z + 1
+                onActivated: {
+                    if(informationScreen.text === "Serwer niedostępny" || informationScreen.text === "Skonfiguruj połączenie") {
+                         informationScreen.z = normalView.z - 1; stackView.clear(); stackView.push(carView, StackView.Immediate, settingsView, StackView.Immediate)
+                    }
+                }
+
+//                MouseArea {
+//                    anchors.fill: parent
+//                    onClicked: mouse.accepted = true;
+//                    onPressed: mouse.accepted = true;
+//                    onReleased: mouse.accepted = true;
+//                    onDoubleClicked: mouse.accepted = true;
+//                    onPositionChanged: mouse.accepted = true;
+//                    onPressAndHold: mouse.accepted = true;
+//                }
+
+            }
 
            Rectangle { id: normalView; anchors.fill: parent; visible: false
                 CarView { id:carView; objectName: "Samochody"; Component.onCompleted: {
@@ -226,6 +237,7 @@ ApplicationWindow {
                             if(sqlDatabase.connectToDatabase(sqlDatabase.settingsParameter[0], sqlDatabase.settingsParameter[1], sqlDatabase.settingsParameter[2], sqlDatabase.settingsParameter[3])) {
                                 carViewClass.setCarList()
                                 informationScreen.visible = false;
+                                console.log("visible false")
                             }
                             else {
                                 messageDialog.show("Błąd!", "Nie można połaczyć z serwerem.", StandardIcon.Critical, false);
@@ -237,6 +249,7 @@ ApplicationWindow {
                             informationScreen.text = "Skonfiguruj połączenie"
                             informationScreen.source = "images/images/configure.png"
                         }
+
                     }
                 }
 
