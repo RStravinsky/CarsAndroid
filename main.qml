@@ -12,9 +12,9 @@ Loader {
 
     function reload()
     {
-        var oldSource = source;
         source = "";
-        source = oldSource;
+        cacheManager.clear();
+        source = "MainWindow.qml";
         console.log("Reload MainWindow.qml")
     }
 }

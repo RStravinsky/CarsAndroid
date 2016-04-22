@@ -68,7 +68,7 @@ Item {
             }
 
             Rectangle { id: line
-                anchors { left: parent.left; right: parent.right; top: rec.bottom; topMargin: 5; }
+                anchors { left: parent.left; right: parent.right; top: rec.bottom; topMargin: 2; }
                 height: 2
                 width: parent.width
                 color: "lightgray"
