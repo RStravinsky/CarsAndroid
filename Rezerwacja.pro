@@ -12,7 +12,8 @@ SOURCES += main.cpp \
     sqldatabase.cpp \
     fileio.cpp \
     singlecode.cpp \
-    imageprovider.cpp
+    imageprovider.cpp \
+    componentcachemanager.cpp
 
 RESOURCES += qml.qrc \
     resources.qrc
@@ -42,7 +43,8 @@ HEADERS += \
     sqldatabase.h \
     fileio.h \
     singlecode.h \
-    imageprovider.h
+    imageprovider.h \
+    componentcachemanager.h
 
 contains(ANDROID_TARGET_ARCH,armeabi-v7a) {
         ANDROID_EXTRA_LIBS = \

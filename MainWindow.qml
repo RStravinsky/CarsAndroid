@@ -13,12 +13,16 @@ ApplicationWindow {
     title: qsTr("Rezerwacja")
     Keys.enabled: true
     Keys.priority: Keys.BeforeItem
+    property alias appT: apps
+    signal reloadRequest()
 
     property int screenH: Screen.height
     property int screenW: Screen.width
     property double point: (ppi/dpi)*ratio //(ppi * ratio)/160
 
-    function reloadWindow() { mainLoader.reload() }
+    function reloadWindow() {
+        mainLoader.reload()
+    }
 
     IntValidator { id: intValidaotr }
     RegExpValidator { id: hostRegExpValidator; regExp: /^[0-9]+\.?[0-9]+\.?[0-9]+\.?[0-9]*$/ }
@@ -231,6 +235,7 @@ ApplicationWindow {
 
            Rectangle { id: normalView; anchors.fill: parent; visible: false
                 CarView { id:carView; objectName: "Samochody"; Component.onCompleted: {
+                        sqlDatabase.purgeDatabase();
                         carViewClass.clearCarList()
                         if(fileio.readSettings()) {
                             sqlDatabase.settingsParameter = fileio.settingsList
@@ -280,6 +285,15 @@ ApplicationWindow {
 
    } // MainForm
 
-   Component.onCompleted: { console.log("ppi: " + ppi); console.log("dpi: " + dpi); console.log("ratio: " + ratio); console.log("imageRatio: " + imageRatio); console.log("point: " + point); console.log("sHeight: " + sHeight); console.log("sWidth: " + sWidth) }
+   Component.onCompleted: {
+       console.log("ppi: " + ppi);
+       console.log("dpi: " + dpi);
+       console.log("ratio: " + ratio);
+       console.log("imageRatio: " + imageRatio);
+       console.log("point: " + point);
+       console.log("sHeight: " + sHeight);
+       console.log("sWidth: " + sWidth)
+       apps.reloadRequest.connect(reloadWindow)
+   }
 } // ApplicationWindow
 

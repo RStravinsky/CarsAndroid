@@ -2,11 +2,15 @@
 #include <QQmlApplicationEngine>
 #include <QtQml>
 #include <QScreen>
+#include <QQuickView>
+#include <QtQuick/QQuickItem>
+#include <QtQuick/QQuickView>
 #include "carview.h"
 #include "carblock.h"
 #include "sqldatabase.h"
 #include "fileio.h"
 #include "imageprovider.h"
+#include "componentcachemanager.h"
 
 int main(int argc, char *argv[])
 {
@@ -20,7 +24,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<SqlDatabase>("sigma.sql", 1, 0, "SqlDatabase");
 
     static qreal refHeight = 92.; //[mm]
-    static qreal refWidth = 56.;//[mm]
+    static qreal refWidth = 56.; //[mm]
     static qreal height = qApp->primaryScreen()->physicalSize().height();
     static qreal width = qApp->primaryScreen()->physicalSize().width();
 
@@ -32,8 +36,10 @@ int main(int argc, char *argv[])
     CarView cv;
     CarBlock cb;
     FileIO fileIO;
+    ComponentCacheManager cm(&engine);
 
     auto root_context = engine.rootContext();
+    root_context->setContextProperty("cacheManager", &cm);
     root_context->setContextProperty("carViewClass", &cv);
     root_context->setContextProperty("carBlockClass", &cb);
     root_context->setContextProperty("fileio", &fileIO);
@@ -48,7 +54,6 @@ int main(int argc, char *argv[])
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
-    //QObject::connect(&engine, SIGNAL(quit()), &app, SLOT(quit()));
 
     return app.exec();
 }

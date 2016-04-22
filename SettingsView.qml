@@ -67,6 +67,7 @@ Item {
                 onError: { loadingRect.isLoading = false; messageDialog.show("Uwaga!", msg, StandardIcon.Warning, false) }
             }
 
+
             onActivated: {
                 area.forceActiveFocus() // disable focus from fields
                 if(settingsFields.dataIsEmpty()) {
@@ -76,7 +77,8 @@ Item {
                     loadingRect.isLoading = true
                     fields = settingsFields.getFields()
                     if(fileio.writeSettings(settingsFields.getFields())) {
-                        apps.reloadWindow() }
+                        apps.reloadWindow()
+                    }
                 }
 
             } // OnActivated
