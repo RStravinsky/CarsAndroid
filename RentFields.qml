@@ -9,6 +9,11 @@ Item {
         rentFields.forceActiveFocus()
     }
 
+    function setPersonalData(name, surname) {
+        rowsModel.itemAt(0).customTextField.text = name
+        rowsModel.itemAt(1).customTextField.text = surname
+    }
+
     function dataIsEmpty() {
         if(rowsModel.itemAt(0).customTextField.text === "" ||
            rowsModel.itemAt(1).customTextField.text === "" ||
@@ -51,8 +56,8 @@ Item {
 
                 CustomTextField { id: customTextField; placeholderText: rowsModel.nameList[index]; height: row.height; width: row.width - rect.width;
                     Component.onCompleted: {
-                        if(index === 0) { customTextField.validator = regExpValidator; console.log("SQWL", sqlDatabase.settingsParameter[4]); customTextField.text = sqlDatabase.settingsParameter[4] }
-                        if(index === 1) { customTextField.validator = regExpValidator; customTextField.text = sqlDatabase.settingsParameter[5] }
+                        if(index === 0) { customTextField.validator = regExpValidator }
+                        if(index === 1) { customTextField.validator = regExpValidator }
                     }
                 }
 

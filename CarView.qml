@@ -29,6 +29,12 @@ Item {
         }
     }
 
+    Keys.onReturnPressed: {
+        console.log("Retrun pressed")
+        carList.forceActiveFocus()
+        event.accepted = true
+    }
+
     Rectangle {
         id: area
         property int offset: 20
@@ -83,13 +89,24 @@ Item {
 
                            MouseArea {
                                anchors.fill:parent
-                               onClicked: {
-                                   area.historyInfo = carViewClass.carList[listIndex].historyInfoList
-                                   messageDialog.show("Dane użytkownika","Imię: "+area.historyInfo[0]+"\n"+
-                                                                         "Nazwisko: "+area.historyInfo[1]+"\n"+
-                                                                         "Lokalizacja: "+area.historyInfo[2]+"\n"+
-                                                                         "Cel wizyty: "+area.historyInfo[3]+"\n",
-                                                      StandardIcon.Information, false)
+                               onClicked: { infoClickAnimation.running = true }
+                           }
+
+                           SequentialAnimation {
+                               id: infoClickAnimation
+                               PropertyAnimation { target: infoImage; property: "opacity"; easing.type: Easing.Linear; to: 0; duration: 10 }
+                               PropertyAnimation { target: infoImage; property: "opacity"; easing.type: Easing.Linear; to: 1; duration: 10 }
+                               onRunningChanged: {
+                                   if (infoClickAnimation.running) {}
+                                   else {
+                                       area.historyInfo = carViewClass.carList[listIndex].historyInfoList
+                                       messageDialog.show("Dane użytkownika","Imię: "+area.historyInfo[0]+"\n"+
+                                                                             "Nazwisko: "+area.historyInfo[1]+"\n"+
+                                                                             "Lokalizacja: "+area.historyInfo[2]+"\n"+
+                                                                             "Cel wizyty: "+area.historyInfo[3]+"\n",
+                                                          StandardIcon.Information, false)
+
+                                   }
                                }
                            }
                        }
@@ -97,7 +114,11 @@ Item {
                            id: rsrvBtn; height: carItem.height * .3; width: rsrvBtn.height * 1.7
                            buttonText: qsTr("Rezerwuj")
                            anchors { bottom: parent.bottom; bottomMargin: 10; right: parent.right }
-                           onActivated: { bookingView.setListIndex(listIndex); stackView.push(bookingView); dateChooser.clearDateChooser() }
+                           onActivated: {
+                               bookingView.setListIndex(listIndex);
+                               bookingView.bookingFields.setPersonalData(sqlDatabase.settingsParameter[4], sqlDatabase.settingsParameter[5]);
+                               stackView.push(bookingView); dateChooser.clearDateChooser();
+                           }
                        }
 
                        ActionButton {
@@ -105,7 +126,11 @@ Item {
                            buttonColor: isRented === false ? "#32b678" : "#db4437"
                            buttonText: isRented === false ? qsTr("Wypożycz") : qsTr("Oddaj")
                            anchors { bottom: parent.bottom; bottomMargin: 10; right: rsrvBtn.left; rightMargin: 5 }
-                           onActivated: { rentView.setListIndex(listIndex); stackView.push(rentView) }
+                           onActivated: {
+                               rentView.setListIndex(listIndex);
+                               rentView.rentFields.setPersonalData(sqlDatabase.settingsParameter[4], sqlDatabase.settingsParameter[5]);
+                               stackView.push(rentView);
+                           }
                        }
 
                        Rectangle { height: 2; width: parent.width;
@@ -118,7 +143,8 @@ Item {
                } // Component
 
             } // ListView
-        }
+
+        } // Rectangle
 
     } // Rectangle
 

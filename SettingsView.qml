@@ -4,6 +4,7 @@ import QtQuick.Dialogs 1.2
 Item {
     id:settingsView
     anchors.fill: parent
+    property alias area: area
 
     SwipeArea {
         id: mouse
@@ -43,7 +44,7 @@ Item {
                 text: "Ustawienia serwera:"
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
-                color: "gray"
+                color: "white"
                 font.pointSize: 9 * point
             }
         }
@@ -62,7 +63,7 @@ Item {
                 text: "Dane użytkownika:"
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
-                color: "gray"
+                color: "white"
                 font.pointSize: 9 * point
             }
         }
@@ -72,9 +73,7 @@ Item {
             anchors { top: userHeader.bottom; topMargin: 5 }
         }
 
-        // rent/return button
         ActionButton { id: connectBtn; width: parent.width; height: area.areaHeight * .13;
-            //property var fields;
             anchors { bottom: parent.bottom; left: parent.left; right: parent.right; }
             buttonColor: "#32b678"
             buttonText: qsTr("Połącz")
@@ -86,16 +85,15 @@ Item {
             }
 
             onActivated: {
-                area.forceActiveFocus() // disable focus from fields
+                //area.forceActiveFocus() // disable focus from fields
                 if(settingsFields.dataIsEmpty() || userFields.dataIsEmpty()) {
                     messageDialog.show("Uwaga!", "Pole tekstowe nie zostało wypełnione.", StandardIcon.Warning, false);
                 }
-                else {
-                    loadingRect.isLoading = true
-                    //fields = settingsFields.getFields()
-                    if(fileio.writeSettings(settingsFields.getFields(),userFields.getFields())) {
-                        apps.reloadWindow() }
-                }
+//                else {
+//                    loadingRect.isLoading = true
+//                    if(fileio.writeSettings(settingsFields.getFields(),userFields.getFields())) {
+//                        apps.reloadWindow() }
+//                }
 
             } // OnActivated
 

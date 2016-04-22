@@ -40,12 +40,17 @@ Item {
 
                 Text { id: personName
                     anchors { left: orangeRectangle.right; leftMargin: 10; top: parent.top; topMargin: 5}
-                    color: "gray"; font.pointSize: 18;text: name + " " + surname
+                    color: "gray"; font.pointSize: 8 * point; text: name + " " + surname
+                }
+
+                Text { id: dest
+                    anchors { left: personName.left; top: personName.bottom; topMargin: 5}
+                    color: "gray"; font.pointSize: 7 * point; text: destination
                 }
 
                 Text { id: reservedHours
-                    anchors { left: personName.left; top: personName.bottom; topMargin: 5}
-                    color: "gray"; font.pointSize: 16; text: from + " - " + to
+                    anchors { left: personName.left; top: dest.bottom; topMargin: 5}
+                    color: "gray"; font.pointSize: 7 * point; text: from + " - " + to
                 }
 
                 Rectangle { id: line

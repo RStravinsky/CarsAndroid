@@ -11,6 +11,11 @@ Item {
         bookingFields.forceActiveFocus()
     }
 
+    function setPersonalData(name, surname) {
+        bookingFieldsRepeater.itemAt(2).customTextField.text = name
+        bookingFieldsRepeater.itemAt(3).customTextField.text = surname
+    }
+
     function dataIsEmpty() {
         if(bookingFieldsRepeater.itemAt(0).customTextField.text === "" ||
            bookingFieldsRepeater.itemAt(1).customTextField.text === "" ||
@@ -59,8 +64,8 @@ Item {
                 CustomTextField { id: customTextField; placeholderText: bookingFieldsRepeater.nameList[index]; height: row.height; width: row.width - rect.width; property string choosenTime; property string startDateTimeText;
                     Component.onCompleted: {
                         if(index === 0 || index === 1) customTextField.activeButton = true; dateTimeType = index;
-                        if(index === 2) { customTextField.validator = regExpValidator; customTextField.text = sqlDatabase.settingsParameter[4] }
-                        if(index === 3) { customTextField.validator = regExpValidator; customTextField.text = sqlDatabase.settingsParameter[5] }
+                        if(index === 2) { customTextField.validator = regExpValidator }
+                        if(index === 3) { customTextField.validator = regExpValidator }
                     }
                     onTextChanged: {
                         if(index === 0 || index === 1) {

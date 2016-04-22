@@ -20,7 +20,7 @@ Item {
         }
 
         TextField { id: field; height: searchRect.height; width:  searchRow.width - searchRect.width;
-            font.pointSize: 10 * point
+            font.pointSize: 9 * point
             placeholderText: "wyszukiwanie samochodu"
             style: TextFieldStyle {
                     textColor: "gray"
@@ -36,8 +36,8 @@ Item {
             Image {
                 id: clearText
                 anchors { top: parent.top; right: parent.right; rightMargin: 5; verticalCenter: parent.verticalCenter }
-                height: field.font.pointSize * 2.5
-                width: field.font.pointSize * 2.5
+                height: field.font.pointSize * 1.3
+                width: field.font.pointSize * 1.3
                 fillMode: Image.PreserveAspectFit
                 smooth: true; visible: (field.text && field.focus === true)
                 source: "/images/images/clear.png"

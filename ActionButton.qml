@@ -26,11 +26,10 @@ Rectangle {
         id: mouseArea;
         anchors.fill: actionButton
         onClicked: {
+            btnClickAnimation.running = true
             console.log("ACTION")
             Qt.inputMethod.hide()
-            btnClickAnimation.running = true
         }
-        onDoubleClicked: mouse.accepted = false;
     }
 
     SequentialAnimation {

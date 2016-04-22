@@ -10,6 +10,7 @@ Item {
     property int listIndex
     property var isRented : carViewClass.carList[listIndex].isRented
     property alias returnFields: returnFields
+    property alias rentFields: rentFields
     property alias distance: rentBtn.distance
 
     function clearText() { rentFields.clearText(); returnFields.clearText() }

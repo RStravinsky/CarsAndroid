@@ -64,7 +64,7 @@ Item {
 
             Text { id: hour
                 anchors { left: rec.right; leftMargin: 10; verticalCenter: parent.verticalCenter }
-                color: "gray"; font.pointSize: 18; text: modelData
+                color: "gray"; font.pointSize: 7 * point; text: modelData
             }
 
             Rectangle { id: line

@@ -16,7 +16,7 @@ ApplicationWindow {
 
     property int screenH: Screen.height
     property int screenW: Screen.width
-    property double point: ppi/160
+    property double point: (ppi/dpi)*ratio //(ppi * ratio)/160
 
     function reloadWindow() { mainLoader.reload() }
 
@@ -30,6 +30,8 @@ ApplicationWindow {
         focus: true // important - otherwise we'll get no key events
         Keys.onReleased: {
             if (event.key === Qt.Key_Back) {
+                console.log("ACCEPTED");
+                event.accepted = true
                 if(menuView.currentIndex === 1) { // menu not visible
 
                     if(stackView.currentItem.objectName === "Wypożyczanie") { console.log("CLEAR RENT"); rentView.clearText() }
@@ -37,9 +39,10 @@ ApplicationWindow {
                     if(stackView.currentItem.objectName === "Wprowadź kod") { console.log("CLEAR PIN");pinView.clearText() }
                     if(stackView.currentItem.objectName === "Ustawienia") { menuView.list.currentIndex = 0 }
                     if(stackView.currentItem.objectName === "Kody") { menuView.list.currentIndex = 0 }
+                    if(stackView.currentItem.objectName === "O aplikacji") { menuView.list.currentIndex = 0 }
                     if(stackView.currentItem.objectName === "Ustawienia") { informationScreen.z = normalView.z + 1; }
 
-                    if(stackView.depth === 1) apps.close()
+                    if(stackView.depth === 1) { sqlDatabase.purgeDatabase(); Qt.quit(); }
                     else  {
                         if(dateChooser.stack.depth === 1) {
                             console.log("POP");
@@ -51,10 +54,7 @@ ApplicationWindow {
                     mainArea.setState()
 
                 }
-                else { console.log("MENU CHANGE ");mainArea.menuChange() }
-
-                console.log("ACCEPTED");
-                event.accepted = true
+                else { mainArea.menuChange() }
             }
         }
 
@@ -135,7 +135,6 @@ ApplicationWindow {
 
         SqlDatabase {  property var settingsParameter; id: sqlDatabase }
 
-
         Rectangle {
             id: mainArea
             anchors { top: topFrame.bottom; left: mainForm.left; right: mainForm.right; bottom: mainForm.bottom }
@@ -150,7 +149,6 @@ ApplicationWindow {
                     menuView.currentIndex--
                     normalViewMask.opacity = 0.7
                 }
-
                 setState()
                 mainButton.animation.start()
             }
@@ -172,6 +170,12 @@ ApplicationWindow {
                        break
                    case "Kody":
                        codesView.area.enabled = menuView.currentIndex === 1 ? true : false
+                       break
+                   case "O aplikacji":
+                       aboutView.area.enabled = menuView.currentIndex === 1 ? true : false
+                       break
+                   case "Ustawienia":
+                       settingsView.area.enabled = menuView.currentIndex === 1 ? true : false
                        break
                 }
            }
@@ -198,8 +202,7 @@ ApplicationWindow {
                                stackView.push(carView, StackView.Immediate, codesView, StackView.Immediate)
                            }
                        }
-                       else { // HELP TODO}
-                       }
+                       else if(idx === 3) { stackView.clear(); stackView.push(carView, StackView.Immediate, aboutView, StackView.Immediate) }
                 }
            } // Menu View
 
@@ -213,16 +216,6 @@ ApplicationWindow {
                          informationScreen.z = normalView.z - 1; stackView.clear(); stackView.push(carView, StackView.Immediate, settingsView, StackView.Immediate)
                     }
                 }
-
-//                MouseArea {
-//                    anchors.fill: parent
-//                    onClicked: mouse.accepted = true;
-//                    onPressed: mouse.accepted = true;
-//                    onReleased: mouse.accepted = true;
-//                    onDoubleClicked: mouse.accepted = true;
-//                    onPositionChanged: mouse.accepted = true;
-//                    onPressAndHold: mouse.accepted = true;
-//                }
 
             }
 
@@ -257,6 +250,7 @@ ApplicationWindow {
                 RentView { id:rentView; objectName: "Wypożyczanie"; }
                 PinView { id:pinView; objectName: "Wprowadź kod" }
                 BookingView { id:bookingView; objectName: "Rezerwacja" }
+                AboutView { id:aboutView; objectName: "O aplikacji" }
            } // Normal View
 
            // view mask
@@ -277,6 +271,6 @@ ApplicationWindow {
 
    } // MainForm
 
-   Component.onCompleted: { console.log("ppi: " + ppi); console.log("dpi: " + dpi); console.log("ratio: " + ratio); console.log("imageRatio: " + imageRatio) }
+   Component.onCompleted: { console.log("ppi: " + ppi); console.log("dpi: " + dpi); console.log("ratio: " + ratio); console.log("imageRatio: " + imageRatio); console.log("point: " + point); console.log("sHeight: " + sHeight); console.log("sWidth: " + sWidth) }
 } // ApplicationWindow
 

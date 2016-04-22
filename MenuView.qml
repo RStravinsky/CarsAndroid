@@ -11,6 +11,8 @@ Item {
     property color menuColor: "#303030"
     property color itemHighlightColor: "gray"
     property var list: menuList
+    property int previousIndex: 0
+    property int mouseOrigin: 0
 
     onCurrentIndexChanged: {
         slide_anim.to = - mainArea.width * currentIndex
@@ -57,11 +59,24 @@ Item {
                     color: "gray";
                 }
                 MouseArea { id: mouseArea; anchors.fill: menuItem; hoverEnabled: true;
-                    onEntered: { menuList.currentIndex = index }
-                    onReleased: { itemClicked(index) }
-                }
-           }
-        }
+                    onPressed: {
+                        menuList.currentIndex = index
+                        mouseOrigin = mouseY;
+                    }
+                    onReleased: {
+                        if(menuList.currentIndex === -1) { menuList.currentIndex = menuView.previousIndex }
+                        else { itemClicked(index); previousIndex = index }
+                    }
+                    onPositionChanged: {
+                        if(Math.abs(mouseY - mouseOrigin) > menuItem.height && mouseY < 1000) {
+                            menuList.currentIndex = -1
+                        }
+                    }
+
+                } 
+
+           } // Item
+        } // Component
 
         ListView {
            id: menuList
@@ -70,7 +85,10 @@ Item {
            delegate: menuDelegate
            highlightMoveDuration: 0
            interactive: false
-           highlight: Rectangle {color: itemHighlightColor; visible: currentIndex === 1 ? 0 : 1}
+           highlight: Rectangle {
+               color: itemHighlightColor;
+               visible: currentIndex === 1 ? 0 : 1
+           }
            currentIndex: 0
         }
 
