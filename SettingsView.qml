@@ -33,7 +33,7 @@ Item {
         enabled: (loadingRect.isLoading === true) ? false : true
 
         Rectangle {
-            id: settingsHeader; width: parent.width; height:  2.5 * font.pointSize
+            id: settingsHeader; width: parent.width; height:  3.5 * font.pointSize
             anchors { top: parent.top; topMargin: 5 }
             color: "lightgray"
             Text {
@@ -52,7 +52,7 @@ Item {
         }
 
         Rectangle {
-            id: userHeader; width: parent.width; height:   2.5 * font.pointSize
+            id: userHeader; width: parent.width; height:   3.5 * font.pointSize
             anchors { top: settingsFields.bottom; topMargin: 50 }
             color: "lightgray"
             Text {

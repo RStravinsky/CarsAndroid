@@ -3,6 +3,7 @@ import QtQuick.Controls 1.4
 import QtQuick.Dialogs 1.2
 import QtGraphicalEffects 1.0
 import QtQuick.Controls.Styles 1.3
+import QtQuick.Window 2.1
 
 Item {
     id: rentView
@@ -73,6 +74,7 @@ Item {
         ActionButton { id: rentBtn; width: parent.width; height: area.areaHeight * .13;
             property string code: ""
             property int distance: 0
+            property string person: ""
             anchors { bottom: parent.bottom; left: parent.left; right: parent.right; }
             buttonColor: rentView.isRented === false ? "#32b678" : "#db4437"
             buttonText: rentView.isRented === false ? qsTr("Wypożycz") : qsTr("Oddaj")
@@ -92,10 +94,18 @@ Item {
                 else {
                     if(rentView.isRented === false) { // rent car
                         loadingRect.isLoading = true // enable loading
+
+                        person = carViewClass.carList[listIndex].isReservation()
+                        if(person !== "") {
+                            messageDialog.show("Samochód jest zarezerwowany", "Samochód zarezerwowany przez: " + person, StandardIcon.Information, false);
+                            loadingRect.isLoading=false;
+                            return;
+                        }
+
                         code = carViewClass.generateCode()
                         if(carViewClass.carList[listIndex].addToHistory(rentFields.getFields(),code)) {
-                            if(fileio.writeCode(code,carViewClass.carList[listIndex].brand + " " + carViewClass.carList[listIndex].model)) {  
-                                messageDialog.show("Wypożyczono!", "Twój kod dostępu: " + code, StandardIcon.Information, true); // RELOAD APP
+                            if(fileio.writeCode(true, code,carViewClass.carList[listIndex].brand + " " + carViewClass.carList[listIndex].model)) {
+                                messageDialog.show("Wypożyczono!", "Twój kod dostępu: " + code + ".", StandardIcon.Information, true); // RELOAD APP
                             }
                         }
                         else { loadingRect.isLoading=false; messageDialog.show("Uwaga!", "Polecenie nie powiodło się.", StandardIcon.Warning,false); }

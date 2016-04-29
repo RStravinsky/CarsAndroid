@@ -36,7 +36,7 @@ Item {
         ActionButton {
             id: getCode; height: code.height; width: code.width
             buttonText: qsTr("Wklej ze schowka")
-            buttonColor: "#8c8c8c"
+            buttonColor: "lightgray"
             anchors { top: code.bottom; topMargin: 10; horizontalCenter: parent.horizontalCenter }
             onActivated: { code.field.text = ""; code.field.paste() }
         }

@@ -26,7 +26,7 @@ signals:
     void onSettingsListChanged(QVariantList);
 
 public slots:
-    bool writeCode(const QString& data,const QString& carName);
+    bool writeCode(bool isRent, const QString& data,const QString& carName, const QString& dateString = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm"));
     bool readCodes();
     void saveToClipboard(const QString& code);
     bool removeCode(const QString& code);

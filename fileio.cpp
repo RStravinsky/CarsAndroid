@@ -12,9 +12,10 @@ bool FileIO::readCodes()
         QTextStream t( &file );
         do {
             line = t.readLine();
-            if(!line.isEmpty())
-                m_codeList.push_back(new SingleCode(line.split(" ").at(0), line.split(" ").at(1), line.split(" ").at(2), line.split(" ").at(3), line.split(" ").at(4)));
-                //qDebug() << m_codeList << endl;
+            if(!line.isEmpty()){
+                m_codeList.push_back(new SingleCode(line.split(" ").at(0).toInt(), line.split(" ").at(1), line.split(" ").at(2), line.split(" ").at(3), line.split(" ").at(4), line.split(" ").at(5)));
+                qDebug() << m_codeList.at(0) << endl;
+            }
          } while (!line.isNull());
         file.close();
 
@@ -67,7 +68,7 @@ void FileIO::saveToClipboard(const QString& code)
     clipboard->setText(code);
 }
 
-bool FileIO::writeCode(const QString& data,const QString& carName)
+bool FileIO::writeCode(bool isRent, const QString& data,const QString& carName, const QString& dateString)
 {
     QFile file("/data/data/pl.sigmasa.rezerwacja/files/RENT_CODES.txt");
     if (!file.open(QFile::WriteOnly | QFile::Append))
@@ -77,7 +78,7 @@ bool FileIO::writeCode(const QString& data,const QString& carName)
     }
 
     QTextStream out(&file);
-    out << data << " " << carName << " " << QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm") << "\n";
+    out << isRent << " " << data << " " << carName << " " << dateString << "\n";
     file.close();
     return true;
 }

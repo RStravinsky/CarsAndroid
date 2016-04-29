@@ -42,14 +42,14 @@ Item {
 
                 Text { id: rentCode; height: parent.height * .6
                     anchors { left: parent.left; leftMargin: 5; bottom: parent.bottom; bottomMargin: 10 }
-                    color: "#32b678"; font.pointSize: 17 * point //(screenH/(20*ratio));
+                    color: isRent === true ? "#db4437" : "#FF8C00"; font.pointSize: 17 * point //(screenH/(20*ratio));
                     text: code
                 }
 
                 ActionButton {
                     id: getCode; height: rentCode.height; width: getCode.height * 1.5
                     buttonText: qsTr("Skopiuj")
-                    buttonColor: "#8c8c8c"
+                    buttonColor: "lightgray"
                     anchors { bottom: rentCode.bottom; right: parent.right }
                     onActivated: { fileio.saveToClipboard(code) }
                 }

@@ -215,6 +215,7 @@ bool CarBlock::checkDates(QDateTime begin, QDateTime end)
 bool CarBlock::addToHistory(QVariant entryFields, QString code)
 {
     if(SqlDatabase::isOpen()) {
+
         QVariantList entryFieldsList = entryFields.toList();
         enum ENTRY_FIELDS{
             Name,
@@ -242,6 +243,31 @@ bool CarBlock::addToHistory(QVariant entryFields, QString code)
     }
 
     return false;
+}
+
+QString CarBlock::isReservation()
+{
+    qDebug() << "isReservation" << endl;
+
+    QString person = "";
+
+    std::unique_ptr<QSqlQueryModel> bookingTable(new QSqlQueryModel(this));
+    bookingTable->setQuery(QString("SELECT Name,Surname, Begin, End FROM booking WHERE idCar = %1").arg(m_id));
+
+    for(int i=0;i<bookingTable->rowCount();++i)
+    {
+        if((QDateTime::currentDateTime()>= bookingTable->data(bookingTable->index(i,2)).toDateTime() &&
+           QDateTime::currentDateTime()<= bookingTable->data(bookingTable->index(i,3)).toDateTime()) ||
+           (QDateTime::currentDateTime().addSecs(900) >= bookingTable->data(bookingTable->index(i,2)).toDateTime() &&
+           QDateTime::currentDateTime()<= bookingTable->data(bookingTable->index(i,3)).toDateTime()))
+        {
+            person = bookingTable->data(bookingTable->index(i,0)).toString() + " " +
+                     bookingTable->data(bookingTable->index(i,1)).toString();
+            return person;
+        }
+    }
+
+    return person;
 }
 
 bool CarBlock::updateHistory(QVariant entryFields, int distance)

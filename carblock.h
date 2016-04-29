@@ -69,6 +69,7 @@ public slots:
     int setHoursColor(QDate date, QString time);
     int getBookingInfoListSize() { return m_bookingInfoList.size(); }
     void updateBookingModel() { m_bookingModel.setQuery(QString("SELECT * FROM booking WHERE idCar = %1").arg(m_id)); }
+    QString isReservation();
 
 private:
     const int m_id;

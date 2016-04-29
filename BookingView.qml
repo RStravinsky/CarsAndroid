@@ -66,7 +66,6 @@ Item {
         // rent/return button
         ActionButton { id: bookingBtn; width: parent.width; height: area.areaHeight * .13;
             property string code
-            property int distance
             anchors { bottom: parent.bottom; left: parent.left; right: parent.right; }
             buttonText: qsTr("Rezerwuj")
             fontSize: 16 * point
@@ -79,8 +78,13 @@ Item {
                 }
                 else {
                     loadingRect.isLoading = true
+
+                    code = carViewClass.generateCode()
                     if(carViewClass.carList[listIndex].addToBooking(bookingFields.getFields())) {
-                        messageDialog.show("Informacja!", "Samochód został zarezerwowany.", StandardIcon.Information, true); // RELOAD APP
+                        if(fileio.writeCode(false, code,carViewClass.carList[listIndex].brand + " " + carViewClass.carList[listIndex].model, bookingFields.getFields()[0])) {
+                            messageDialog.show("Zarezerwowano!", "Twój kod do anulowania: " + code + ".", StandardIcon.Information, true); // RELOAD APP
+                        }
+
                     }
                     else { loadingRect.isLoading = false; messageDialog.show("Uwaga!", "Polecenie nie powiodło się.", StandardIcon.Warning, false) }
                 }

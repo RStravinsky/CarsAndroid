@@ -38,5 +38,7 @@
         <file>images/appinfo.png</file>
         <file>images/logo.png</file>
         <file>images/search.png</file>
+        <file>images/delete.png</file>
+        <file>images/deleteGray.png</file>
     </qresource>
 </RCC>

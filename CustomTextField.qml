@@ -32,7 +32,6 @@ Item {
         placeholderText: customTextField.placeholderText
         maximumLength: customTextField.maximumLength
         readOnly: customTextField.activeButton
-        //visible: carViewClass.isBusy === true ? false : true
         style: TextFieldStyle {
                 textColor: "gray"
                 placeholderTextColor: "lightgray"
@@ -71,7 +70,7 @@ Item {
 
         Image {
             id: clearText
-            anchors { top: parent.top; right: parent.right; rightMargin: 5; verticalCenter: parent.verticalCenter }
+            anchors { top: parent.top; right: parent.right; verticalCenter: parent.verticalCenter }
             height: field.font.pointSize * 3.5
             width: field.font.pointSize * 3.5
             fillMode: Image.PreserveAspectFit
@@ -87,6 +86,16 @@ Item {
                     field.forceActiveFocus()
                 }
             }
+
+            Behavior on visible {
+                NumberAnimation {
+                    target: clearText
+                    property: "opacity"
+                    from: clearText.visible === false ? 0 : 1
+                    to: clearText.visible === false ? 1 : 0
+                    duration: 500
+                    easing.type: Easing.InOutQuad
+                }}
         }
 
         echoMode: displayTextWay
@@ -109,24 +118,36 @@ Item {
              id: narrowButtonMouseArea
              anchors.fill: parent
              onClicked: {
-                 if(dateTimeType === 1 && bookingView.bookingFields.getFields()[0] === "") {
-                    messageDialog.show("Informacja!", "Uzupełnij datę początkową.", StandardIcon.Information, false);
-                 }
-                 else {
-                    if(sqlDatabase.isOpen()) // CHECK THIS !!!!!!!!!!!!!!!!!!!!!!
-                    {
-                        dateChooser.clearDateChooser();
-                        dateChooser.setDateTimeType(dateTimeType);
+                btnClickAnimation.running = true
+             }
+         }
 
-                        carViewClass.carList[bookingView.listIndex].updateBookingModel();
-                        dateChooser.setListIndex(bookingView.listIndex);
-                        stackView.push(dateChooser)
-                    }
-                    else messageDialog.show("Uwaga!", "Utrata połączenia z serwerem.", StandardIcon.Warning, false);
+         SequentialAnimation {
+             id: btnClickAnimation
+             PropertyAnimation { target: imageRectangle; property: "opacity"; easing.type: Easing.Linear; to: 0; duration: 10 }
+             PropertyAnimation { target: imageRectangle; property: "opacity"; easing.type: Easing.Linear; to: 1; duration: 10 }
+             onRunningChanged: {
+                 if (btnClickAnimation.running) {}
+                 else {
+                     if(dateTimeType === 1 && bookingView.bookingFields.getFields()[0] === "") {
+                        messageDialog.show("Informacja!", "Uzupełnij datę początkową.", StandardIcon.Information, false);
+                     }
+                     else {
+                        if(sqlDatabase.isOpen()) // CHECK THIS !!!!!!!!!!!!!!!!!!!!!!
+                        {
+                            stackView.push(dateChooser)
+                            dateChooser.clearDateChooser();
+                            dateChooser.setDateTimeType(dateTimeType);
+
+                            carViewClass.carList[bookingView.listIndex].updateBookingModel();
+                            dateChooser.setListIndex(bookingView.listIndex);
+                        }
+                     else messageDialog.show("Uwaga!", "Błąd połaczenia.", StandardIcon.Warning, false);
+                     }
                  }
              }
          }
-   }
+    }
 
     Rectangle
     {

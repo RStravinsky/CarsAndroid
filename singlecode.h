@@ -6,6 +6,7 @@
 class SingleCode : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(bool isRent READ getIsRent CONSTANT)
     Q_PROPERTY(QString code READ getCode CONSTANT)
     Q_PROPERTY(QString brand READ getBrand CONSTANT)
     Q_PROPERTY(QString model READ getModel CONSTANT)
@@ -14,8 +15,9 @@ class SingleCode : public QObject
 
 public:
     explicit SingleCode(QObject *parent = 0);
-    explicit SingleCode(QString code, QString brand, QString model, QString date, QString time, QObject *parent = 0) : m_code(code), m_brand(brand), m_model(model), m_date(date), m_time(time) {}
+    explicit SingleCode(bool isRent, QString code, QString brand, QString model, QString date, QString time, QObject *parent = 0) : m_isRent(isRent), m_code(code), m_brand(brand), m_model(model), m_date(date), m_time(time) {}
 
+    Q_INVOKABLE bool getIsRent() {return m_isRent;}
     Q_INVOKABLE QString getCode() {return m_code;}
     Q_INVOKABLE QString getBrand() {return m_brand;}
     Q_INVOKABLE QString getModel() {return m_model;}
@@ -23,6 +25,7 @@ public:
     Q_INVOKABLE QString getTime() {return m_time;}
 
 private:
+    const bool m_isRent{false};
     const QString m_code;
     const QString m_brand;
     const QString m_model;

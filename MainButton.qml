@@ -1,8 +1,9 @@
 import QtQuick 2.5
+import QtGraphicalEffects 1.0
 
 Item {
     id: mainButton
-    property color hoverColor: "#FF6900"
+    property color hoverColor: "white"
     property color itemColor: "transparent"
     property alias animation: mainButtonAnimation
     property int type: 0
@@ -23,7 +24,25 @@ Item {
     Rectangle {
         id: rectangle
         anchors.fill: mainButton
-        color: itemColor
+        color: "transparent"
+
+        RadialGradient {
+            anchors.fill: parent
+            gradient:  Gradient {
+                GradientStop {
+                  position: 0.0
+                  color: itemColor
+                }
+                GradientStop {
+                  position: 0.5
+                  color: "#00000000"
+                }
+                GradientStop {
+                  position: 1.0
+                  color: "#00000000"
+                }
+            }
+        }
 
         Image {
             id: buttonIcon

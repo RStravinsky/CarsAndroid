@@ -89,7 +89,7 @@ ApplicationWindow {
             id: mainButton; height: topFrame.height; width: mainButton.height
             anchors { left: topFrame.left; top: topFrame.top }
             z: topFrame.z
-            onButtonClicked: { mainArea.menuChange() }
+            onButtonClicked: { menuView.forceActiveFocus(); mainArea.menuChange() }
         }
 
         // update button
@@ -188,7 +188,6 @@ ApplicationWindow {
                 z: normalViewMask.z + 1 // before normalView
                 mainArea: mainArea
                 onItemClicked: {
-                       Qt.inputMethod.hide()
                        informationScreen.z = normalView.z + 1;
                        if(stackView.currentItem.objectName === "Wypożyczanie") { rentView.clearText() }
                        if(stackView.currentItem.objectName === "Rezerwacja") { bookingView.clearText() }
@@ -208,6 +207,8 @@ ApplicationWindow {
                            }
                        }
                        else if(idx === 3) { informationScreen.z = normalView.z - 1; stackView.clear(); stackView.push(carView, StackView.Immediate, aboutView, StackView.Immediate) }
+
+                       Qt.inputMethod.hide()
                 }
            } // Menu View
 

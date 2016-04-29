@@ -123,7 +123,7 @@ Item {
                    border.width: styleData.selected ? 3 : 1;
                    border.color: styleData.selected ? "#69C0D9" : "lightgray"
                    property int cellColor: listIndex === -1 ? 0 : carViewClass.carList[listIndex].isDateReserved(styleData.date)
-                   color: cellColor === 0 ? "white" : (cellColor === 1 ? "#FF8C00" : "red")
+                   color: cellColor === 0 ? "white" : (cellColor === 1 ? "#FF8C00" : "#db4437")
                    Label {
                        text: styleData.date.getDate()
                        anchors.centerIn: parent

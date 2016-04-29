@@ -35,8 +35,8 @@ Item {
             Image {
                 id: clearText
                 anchors { top: parent.top; right: parent.right; rightMargin: 5; verticalCenter: parent.verticalCenter }
-                height: field.font.pointSize * 1.3
-                width: field.font.pointSize * 1.3
+                height: field.font.pointSize * 2.5
+                width: field.font.pointSize * 2.5
                 fillMode: Image.PreserveAspectFit
                 smooth: true; visible: (field.text && field.focus === true)
                 source: "/images/images/clear.png"
@@ -45,7 +45,6 @@ Item {
                     id: clear
                     anchors { horizontalCenter: parent.horizontalCenter; verticalCenter: parent.verticalCenter }
                     height: field.height; width: field.height
-                    //visible: informationScreen.visible === true ? false : true
                     onClicked: {
                         field.text = ""
                         field.forceActiveFocus()

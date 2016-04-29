@@ -98,7 +98,7 @@ Item {
                                 if(hourState != 0) carViewClass.carList[listIndex].readBookingEntries(selectedDate, modelData)
                                 dateChooserStack.push(nextView)
                             }
-                            else messageDialog.show("Uwaga!", "Utrata połączenia z serwerem.", StandardIcon.Warning, false);
+                            else messageDialog.show("Uwaga!", "Błąd połaczenia.", StandardIcon.Warning, false);
                         }
                     }
                 }
