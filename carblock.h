@@ -58,7 +58,7 @@ signals:
     void onHistoryInfoListChanged(QVariantList);
 
 public slots:
-    bool isDateReserved(QDate date);
+    int isDateReserved(QDate date);
     bool addToHistory(QVariant entryFields, QString code);
     bool updateHistory(QVariant entryFields, int distance);
     bool addToBooking(QVariant entryFields);
@@ -68,6 +68,7 @@ public slots:
     bool checkDates(QDateTime begin, QDateTime end);
     int setHoursColor(QDate date, QString time);
     int getBookingInfoListSize() { return m_bookingInfoList.size(); }
+    void updateBookingModel() { m_bookingModel.setQuery(QString("SELECT * FROM booking WHERE idCar = %1").arg(m_id)); }
 
 private:
     const int m_id;

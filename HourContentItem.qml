@@ -29,13 +29,13 @@ Item {
 
         Component {
             id: entriesListDelegate
-            Item { id: elDItem; height: nextBtn.height * 1.5; width: parent.width;
+            Item { id: elDItem; height: entriesList.height * 0.35; width: parent.width;
 
                 Rectangle { id: orangeRectangle
                     anchors { left: parent.left; leftMargin: 10; top: parent.top; topMargin: 5; verticalCenter: personName.verticalCenter}
                     height: 20
                     width: 20
-                    color: "#FF6900"
+                    color: "#FF8C00"
                 }
 
                 Text { id: personName
@@ -60,7 +60,6 @@ Item {
                     color: "lightgray"
                 }
 
-
            } // Item
 
         } // Component
@@ -69,7 +68,7 @@ Item {
             anchors { right: parent.right; rightMargin: 10; bottom: parent.bottom; }
             visible: isReserveButtonVisible
             buttonText: qsTr("Rezerwuj")
-            onActivated: {timePicker.clearTimePicker(); timePicker.setHourIndex(hoursListItem.listofHours.currentIndex); dateChooserStack.push(nextView)}
+            onActivated: { timePicker.clearTimePicker(); timePicker.setHourIndex(hoursListItem.listofHours.currentIndex); dateChooserStack.push(nextView)}
         }
 
     } // Rectangle

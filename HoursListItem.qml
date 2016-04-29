@@ -19,13 +19,8 @@ Item {
 
     function clearHoursListItem()
     {
-        hoursList.currentIndex = -1
-    }
-
-    function setHoursListItem(date, time)
-    {
-        hoursList.currentIndex = (time.substr(0,2))*1
-        console.log("setHoursListItem")
+        hoursList.currentIndex = 0
+        hoursList.positionViewAtBeginning()
     }
 
     ListView {
@@ -46,20 +41,11 @@ Item {
         Item { id: hlDItem; height: screenH * .1; width: parent.width;
 
             Rectangle { id: rec
+                property int state: carViewClass.carList[listIndex].setHoursColor(dateChooser.calendar.selectedDate, modelData)
                 anchors { left: parent.left; top: parent.top; topMargin: 5; bottom: parent.bottom; bottomMargin: 5 }
                 height: parent.height
                 width: 20
-                color: {
-                    switch(carViewClass.carList[listIndex].setHoursColor(dateChooser.calendar.selectedDate, modelData)) // TypeError
-                    {
-                    case 0: "#32b678"
-                            break
-                    case 1: "#3988e5"
-                            break
-                    case 2: "#db4437"
-                            break
-                    }
-                }
+                color: state === 0 ? "#32b678" : (state === 1 ? "#3988e5" : "#db4437")
             }
 
             Text { id: hour
@@ -92,7 +78,6 @@ Item {
                     id: narrowButtonMouseArea
                     anchors.fill: parent
                     z: mouseM.z - 1
-                    //enabled: menuView.currentIndex === 1 ? true : false
                     onClicked: {
                         hoursList.currentIndex = index
                         delay.running = true
@@ -105,11 +90,15 @@ Item {
                     onRunningChanged: {
                         if (delay.running) {}
                         else {
-                            timePicker.clearTimePicker()
-                            timePicker.setHourIndex(hoursList.currentIndex)
-                            carViewClass.carList[listIndex].readBookingEntries(selectedDate, modelData)
-                            hourState = carViewClass.carList[listIndex].setHoursColor(dateChooser.calendar.selectedDate, modelData)
-                            dateChooserStack.push(nextView)
+                            if(sqlDatabase.isOpen()) { // CHECK THIS !!!!!!!!!!!!!!!!!!!!!!
+                                timePicker.clearTimePicker()
+                                timePicker.setHourIndex(hoursList.currentIndex)
+                                hourState = rec.state
+                                carViewClass.carList[listIndex].updateBookingModel();
+                                if(hourState != 0) carViewClass.carList[listIndex].readBookingEntries(selectedDate, modelData)
+                                dateChooserStack.push(nextView)
+                            }
+                            else messageDialog.show("Uwaga!", "Utrata połączenia z serwerem.", StandardIcon.Warning, false);
                         }
                     }
                 }

@@ -8,13 +8,13 @@ QSqlDatabase SqlDatabase::m_sqlDatabase = QSqlDatabase();
 
 bool SqlDatabase::connectToDatabase ( QString host, int port, QString username, QString password) {
 
-    qDebug() << "PURGETE" << endl;
+    //qDebug() << "PURGETE" << endl;
     purgeDatabase();
 
-    qDebug() << "host=" << host << endl;
-    qDebug() << "pass=" << password << endl;
-    qDebug() << "user=" << username << endl;
-    qDebug() << "port=" << port << endl;
+    //qDebug() << "host=" << host << endl;
+    //qDebug() << "pass=" << password << endl;
+    //qDebug() << "user=" << username << endl;
+    //qDebug() << "port=" << port << endl;
 
     m_sqlDatabase = QSqlDatabase::addDatabase ( "QMYSQL" );
     m_sqlDatabase.setHostName ( host );
@@ -27,7 +27,7 @@ bool SqlDatabase::connectToDatabase ( QString host, int port, QString username, 
 
     emit connectedChanged();
 
-    qDebug() << "m_connected = " << m_connected << endl;
+    //qDebug() << "m_connected = " << m_connected << endl;
 
     return m_connected;
 }
@@ -56,7 +56,7 @@ bool SqlDatabase::isConnectedToNetwork()
 
     delete reply;
 
-    qDebug() << "Network = " << result << endl;
+    //qDebug() << "Network = " << result << endl;
     return result;
 }
 

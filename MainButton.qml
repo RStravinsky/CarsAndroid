@@ -6,7 +6,7 @@ Item {
     property color itemColor: "transparent"
     property alias animation: mainButtonAnimation
     property int type: 0
-    enabled: ((mainButton.rotation > 0 && mainButton.rotation < 180) || carViewClass.isBusy === true ) ? false : true // disable button during animation
+    enabled: ((mainButton.rotation > 0 && mainButton.rotation < 180)) ? false : true
     signal buttonClicked()
 
     /* animation of main button*/

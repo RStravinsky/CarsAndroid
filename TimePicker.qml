@@ -18,7 +18,7 @@ Item {
     property date endDateTime
     property string endDateTimeString
     property int hourIndex: 0
-    property int whichDateTime // 1-start datetime, 2-end datetime
+    property int whichDateTime // 0-start datetime, 1-end datetime
     property int listIndex
 
     function setListIndex(val)
@@ -68,6 +68,7 @@ Item {
                 anchors {verticalCenter: parent.verticalCenter; horizontalCenter: parent.horizontalCenter}
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
+                font.pixelSize: defaultFontPixelSize * 1.2
             }
         }
 
@@ -83,13 +84,35 @@ Item {
             buttonText: qsTr("Dalej")
             onActivated: {
 
-                carViewClass.carList[listIndex].readBookingEntries(bookingCalendar.selectedDate, timeTumbler.timeString)
+                //carViewClass.carList[listIndex].readBookingEntries(bookingCalendar.selectedDate, timeTumbler.timeString)
+                console.log("WHICH DATE TIME : ", whichDateTime)
 
                 if(whichDateTime === 0) {
                     startDateTimeString = bookingCalendar.selectedDate.toLocaleString(Qt.locale("pl_PL"), "yyyy-MM-dd") + " " + timeTumbler.timeString
                     startDateTime = Date.fromLocaleString(Qt.locale(), startDateTimeString, "yyyy-MM-dd hh:mm")
 
+                    console.log("startDateTimeString: ", startDateTimeString)
+                    console.log("startDateTime: ", startDateTime)
+                    console.log("endDateTimeString: ", endDateTimeString)
+                    console.log("endDateTimeString: ", endDateTimeString)
+                    console.log("currentDate: ", new Date())
+
+                    if(startDateTime < new Date()) {
+                        messageDialog.show("Uwaga!", "Wybrana data/godzina jest mniejsza od aktualnej.", StandardIcon.Warning, false)
+                        return
+                    }
+
                     if(carViewClass.carList[listIndex].isDateCorrect(startDateTime)) {
+
+                        if(bookingView.bookingFields.getFields()[1] !== "") {
+                            if(carViewClass.carList[listIndex].checkDates(startDateTime, endDateTime)) {}
+                            else {
+                                messageDialog.show("Uwaga!", "Godziny, które wybrałeś są już zarezerwowane.", StandardIcon.Warning, false)
+                                startDateTimeString = ""
+                                startDateTime = ""
+                                return;
+                            }
+                        }
 
                         if((endDateTimeString !== "") && (startDateTime < endDateTime)) {
                             bookingView.bookingFields.bookingFieldsRepeater.itemAt(whichDateTime).customTextField.text = startDateTimeString
@@ -102,15 +125,31 @@ Item {
                             stackView.pop(bookingView)
                             dateChooserStack.pop(hoursListItem)
                         }
-                        else
+                        else {
                             messageDialog.show("Uwaga!", "Niepoprawna godzina.", StandardIcon.Warning, false)
+                            startDateTimeString = ""
+                            startDateTime = ""
+                        }
                     }
-                    else
-                        messageDialog.show("Uwaga!", "Wybrana godzina jest już zarezerwowana.", StandardIcon.Warning, false)
+                    else {
+                        messageDialog.show("Uwaga!", "Wybrana data/godzina jest już zarezerwowana.", StandardIcon.Warning, false)
+                        startDateTimeString = ""
+                        startDateTime = ""
+                    }
                 }
                 else if(whichDateTime === 1) {
                     endDateTimeString = bookingCalendar.selectedDate.toLocaleString(Qt.locale("pl_PL"), "yyyy-MM-dd") + " " + timeTumbler.timeString
                     endDateTime = Date.fromLocaleString(Qt.locale(), endDateTimeString, "yyyy-MM-dd hh:mm")
+
+                    console.log("startDateTimeString: ", startDateTimeString)
+                    console.log("startDateTime: ", startDateTime)
+                    console.log("endDateTimeString: ", endDateTimeString)
+                    console.log("endDateTimeString: ", endDateTime)
+
+                    if(endDateTime < new Date()) {
+                        messageDialog.show("Uwaga!", "Wybrana data jest mniejsza od aktualnej.", StandardIcon.Warning, false)
+                        return
+                    }
 
                     if(carViewClass.carList[listIndex].isDateCorrect(endDateTime)) {
                         if(carViewClass.carList[listIndex].checkDates(startDateTime, endDateTime)) {
@@ -119,14 +158,23 @@ Item {
                                 stackView.pop(bookingView)
                                 dateChooserStack.pop(hoursListItem)
                             }
-                            else
+                            else {
                                 messageDialog.show("Uwaga!", "Niepoprawna godzina.", StandardIcon.Warning, false)
+                                endDateTimeString = ""
+                                endDateTime = ""
+                            }
                         }
-                        else
+                        else {
                             messageDialog.show("Uwaga!", "Godziny, które wybrałeś są już zarezerwowane.", StandardIcon.Warning, false)
+                            endDateTimeString = ""
+                            endDateTime = ""
+                        }
                     }
-                    else
+                    else {
                        messageDialog.show("Uwaga!", "Wybrana godzina jest już zarezerwowana.", StandardIcon.Warning, false)
+                        endDateTimeString = ""
+                        endDateTime = ""
+                    }
                 }
 
             }

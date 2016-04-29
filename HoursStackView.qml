@@ -29,13 +29,13 @@ Item {
     {
         hoursListItem.clearHoursListItem()
         timePicker.clearTimePicker()
+        dateChooserStack.pop(hoursListItem)
     }
 
     function setHoursStackView(date, time)
     {
         hoursListItem.setHoursListItem(date, time)
         timePicker.setTimePicker(date, time)
-        console.log("setHoursStackView")
     }
 
     function clearDateTimeStrings()

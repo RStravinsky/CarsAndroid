@@ -32,6 +32,7 @@ Item {
         placeholderText: customTextField.placeholderText
         maximumLength: customTextField.maximumLength
         readOnly: customTextField.activeButton
+        //visible: carViewClass.isBusy === true ? false : true
         style: TextFieldStyle {
                 textColor: "gray"
                 placeholderTextColor: "lightgray"
@@ -39,7 +40,7 @@ Item {
         }
 
         Keys.onReturnPressed: {
-            console.log("Retrun pressed")
+            //console.log("Retrun pressed")
             event.accepted = customReturnKey // Dont accept the event (active focus kept).
 
             if(customReturnKey === true) {
@@ -71,8 +72,8 @@ Item {
         Image {
             id: clearText
             anchors { top: parent.top; right: parent.right; rightMargin: 5; verticalCenter: parent.verticalCenter }
-            height: field.font.pointSize * 1.3
-            width: field.font.pointSize * 1.3
+            height: field.font.pointSize * 3.5
+            width: field.font.pointSize * 3.5
             fillMode: Image.PreserveAspectFit
             smooth: true; visible: (field.text && field.focus === true)
             source: "/images/images/clear.png"
@@ -107,10 +108,22 @@ Item {
          MouseArea {
              id: narrowButtonMouseArea
              anchors.fill: parent
-             //propagateComposedEvents: true
              onClicked: {
-                 dateChooser.setDateTimeType(dateTimeType); dateChooser.setListIndex(bookingView.listIndex); stackView.push(dateChooser)
-                 if(field.text === "") dateChooser.clearDateChooser()
+                 if(dateTimeType === 1 && bookingView.bookingFields.getFields()[0] === "") {
+                    messageDialog.show("Informacja!", "Uzupełnij datę początkową.", StandardIcon.Information, false);
+                 }
+                 else {
+                    if(sqlDatabase.isOpen()) // CHECK THIS !!!!!!!!!!!!!!!!!!!!!!
+                    {
+                        dateChooser.clearDateChooser();
+                        dateChooser.setDateTimeType(dateTimeType);
+
+                        carViewClass.carList[bookingView.listIndex].updateBookingModel();
+                        dateChooser.setListIndex(bookingView.listIndex);
+                        stackView.push(dateChooser)
+                    }
+                    else messageDialog.show("Uwaga!", "Utrata połączenia z serwerem.", StandardIcon.Warning, false);
+                 }
              }
          }
    }

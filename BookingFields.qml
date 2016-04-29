@@ -63,7 +63,7 @@ Item {
 
                 CustomTextField { id: customTextField; placeholderText: bookingFieldsRepeater.nameList[index]; height: row.height; width: row.width - rect.width; property string choosenTime; property string startDateTimeText;
                     Component.onCompleted: {
-                        if(index === 0 || index === 1) customTextField.activeButton = true; dateTimeType = index;
+                        if(index === 0 || index === 1) { customTextField.activeButton = true; dateTimeType = index; }
                         if(index === 2) { customTextField.validator = regExpValidator }
                         if(index === 3) { customTextField.validator = regExpValidator }
                     }
@@ -85,7 +85,7 @@ Item {
                     onMouseAreaClicked: {
                         dateChooser.clearDateTimeStrings()
                         if((field.text !== "")) {
-                            console.log(field.text)
+                            //console.log(field.text)
                             dateChooser.setDateChooser(field.text.split(" ")[0], field.text.split(" ")[1])
                         }
                     }

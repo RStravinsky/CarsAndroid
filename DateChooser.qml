@@ -13,9 +13,9 @@ Item {
 
     property alias defaultFontPixelSize: hiddenText.font.pixelSize
     property alias stack: hoursStackView.stack
-    property var area: area
-    property int listIndex: 0
-    property var calendar: bookingCalendar
+    property alias area: area
+    property alias calendar: bookingCalendar
+    property int listIndex: -1
     property string choosenDateTime: hoursStackView.choosenDateTime
 
     Text {id: hiddenText}
@@ -32,9 +32,11 @@ Item {
 
     function clearDateChooser()
     {
+        console.log("Clead date chooser")
         var currentDate = new Date()
         calendar.selectedDate = currentDate
         hoursStackView.clearHoursStackView()
+        listIndex = -1 // for calendar update
     }
 
     SwipeArea {
@@ -42,17 +44,17 @@ Item {
          menu: menuView
          anchors.fill: parent
          onMove: {
-             console.log("onMove...")
+             //console.log("onMove...")
              area.enabled = false
              menuView.x = (-mainArea.width * menuView.currentIndex) + x // changing menu x
              normalViewMask.opacity = (1 -((Math.abs(menuView.x)/menuView.width)))/1.5 // changing normal view opacity
          }
          onSwipe: {
-             console.log("onSwipe...")
+             //console.log("onSwipe...")
              mainArea.menuChange()
          }
          onCanceled: {
-             console.log("onCanceled...")
+             //console.log("onCanceled...")
              menuView.currentIndexChanged()
              normalViewMask.opacity = menuView.currentIndex === 1 ? 0 : 0.7
              area.enabled = menuView.currentIndex === 1 ? true : false
@@ -76,7 +78,7 @@ Item {
 
            style: CalendarStyle {
                gridVisible: false
-               background: Rectangle { color: "white";}
+               background: Rectangle {color: "white";}
                navigationBar: Rectangle {
                           id: naviBar
                           color: "#FF8C00"
@@ -120,7 +122,8 @@ Item {
                    id: dayDelegate
                    border.width: styleData.selected ? 3 : 1;
                    border.color: styleData.selected ? "#69C0D9" : "lightgray"
-                   color:  (carViewClass.carList[listIndex].isDateReserved(styleData.date)) ? "#FF8C00" : "white";
+                   property int cellColor: listIndex === -1 ? 0 : carViewClass.carList[listIndex].isDateReserved(styleData.date)
+                   color: cellColor === 0 ? "white" : (cellColor === 1 ? "#FF8C00" : "red")
                    Label {
                        text: styleData.date.getDate()
                        anchors.centerIn: parent
@@ -134,14 +137,13 @@ Item {
                            if (styleData.valid) {
                                // Date is within the valid range.
                                color = styleData.visibleMonth ? sameMonthDateTextColor : differentMonthDateTextColor;
-                               if (carViewClass.carList[listIndex].isDateReserved(styleData.date)) {
+                               if (cellColor!=0) {
                                    color = selectedDateTextColor;
                                }
                            }
                            color;
                        }
                    }
-
                }
 
            } // CalendarStyle

@@ -1,6 +1,6 @@
 #include "carview.h"
 
-CarView::CarView(QObject *parent) : QObject(parent) {}
+CarView::CarView(QObject *parent) : QObject(parent) { qDebug() << "Constructor "; setIsBusy(true);}
 
 void CarView::setCarList()
 {

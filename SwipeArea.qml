@@ -10,10 +10,8 @@ MouseArea {
     property var gestureStartTime;
     signal move(int x, int y)
     signal swipe()
-    //propagateComposedEvents: true
 
     onPressed: {
-        //console.log("onPressed...")
         drag.axis = Drag.XAndYAxis
         origin = Qt.point(mouse.x, mouse.y)
         gestureStartTime = new Date();
@@ -21,8 +19,6 @@ MouseArea {
     }
 
     onPositionChanged: {
-        //console.log("onPositionChanged...")
-
         var now = new Date();
         var timeDiff = now - gestureStartTime;
         if(timeDiff > 500) isFlick = false // disable flick if moving
@@ -49,7 +45,6 @@ MouseArea {
     }
 
     onReleased: {
-        //console.log("onReleased..., flick = ", isFlick)
         switch (drag.axis) {
         case Drag.XAxis:
             if(isDrag === true) {

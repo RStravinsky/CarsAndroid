@@ -18,13 +18,14 @@ CarBlock::CarBlock(const int id,
                      m_mileage(mileage),
                      m_listIndex(listIndex)
 {
+
     m_bookingModel.setQuery(QString("SELECT * FROM booking WHERE idCar = %1").arg(id));
 
     m_historyModel.setQuery(QString("SELECT Name,Surname,Destination,Target FROM history WHERE idCar = %1 AND End IS NULL").arg(id));
     if(m_historyModel.rowCount() > 0) {
         for(int i=0;i<4;++i) {
             m_historyList.insert(i, m_historyModel.data(m_historyModel.index(0,i)).toString());
-            qDebug() <<  m_historyModel.data(m_historyModel.index(0,i)).toString() << endl;
+            //qDebug() <<  m_historyModel.data(m_historyModel.index(0,i)).toString() << endl;
         }
 
         emit onHistoryInfoListChanged(getHistoryInfoList());
@@ -48,22 +49,30 @@ BookingInfo *CarBlock::bookingInfoListAt(QQmlListProperty<BookingInfo> *list, in
     return 0;
 }
 
-bool CarBlock::isDateReserved(QDate date)
+int CarBlock::isDateReserved(QDate date)
 {
     QDate modelDateTimeBegin = QDate::currentDate(), modelDateTimeEnd = QDate::currentDate();
+
+    // 0 - white (free)
+    // 1 - orange (contain reservation)
+    // 2 - red (day reserved)
+
+    qDebug() << "isDateReserved" << endl;
 
     for(int i = 0; i < m_bookingModel.rowCount(); ++i) {
 
         modelDateTimeBegin = m_bookingModel.data(m_bookingModel.index(i,3)).toDate();
         modelDateTimeEnd = m_bookingModel.data(m_bookingModel.index(i,4)).toDate();
 
-        if(date >= modelDateTimeBegin && date <=modelDateTimeEnd) {
-            return true;
-        }
+        if(modelDateTimeBegin < date && modelDateTimeEnd > date)
+            return 2;
 
+        if(date >= modelDateTimeBegin && date <=modelDateTimeEnd) {
+            return 1;
+        }
     }
 
-    return false;
+    return 0;
 }
 
 void CarBlock::readBookingEntries(QDate date, QString time)
@@ -74,6 +83,7 @@ void CarBlock::readBookingEntries(QDate date, QString time)
     QDateTime clickedDateTimeEnd(clickedDateTimeBegin.addSecs(3599));
     QDateTime modelDateTimeBegin = QDateTime::currentDateTime(), modelDateTimeEnd = QDateTime::currentDateTime();
 
+    qDebug() << "readBookingEntries" << endl;
     m_bookingInfoList.clear();
 
     for(int i = 0; i < m_bookingModel.rowCount(); ++i) {
@@ -131,6 +141,7 @@ void CarBlock::readBookingEntries(QDate date, QString time)
 
     }
 
+    qSort(m_bookingInfoList.begin(),m_bookingInfoList.end(), [](BookingInfo * const v1,  BookingInfo * const v2) { return v1->getFrom() < v2->getFrom(); });
     emit onBookingInfoListChanged(getBookingInfoList());
 }
 
@@ -138,6 +149,9 @@ bool CarBlock::isDateCorrect(QDateTime dateTime)
 {
     QDateTime modelBegin;
     QDateTime modelEnd;
+
+    qDebug() << "isDateCorrect"  << endl;
+
 
     for(auto & elem : m_bookingInfoList) {
 
@@ -152,6 +166,10 @@ bool CarBlock::isDateCorrect(QDateTime dateTime)
         }
         else
             modelEnd = QDateTime::fromString(QString("2070-01-01 00:00:00"), QString("yyyy-MM-dd hh:mm:ss"));
+
+        qDebug() << "Date time: " << dateTime << endl;
+        qDebug() << "Model begin " << modelBegin << endl;
+        qDebug() << "Model end " << modelEnd << endl;
 
         if(dateTime >= modelBegin && dateTime <= modelEnd)
             return false;
@@ -342,6 +360,7 @@ int CarBlock::setHoursColor(QDate date, QString time)
 
     QDateTime modelDateTimeBegin = QDateTime::currentDateTime(), modelDateTimeEnd = QDateTime::currentDateTime();
     m_bookingInfoList.clear();
+    qDebug() << "setHoursColor" << endl;
 
     for(int i = 0; i < m_bookingModel.rowCount(); ++i) {
 

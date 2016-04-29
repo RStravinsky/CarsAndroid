@@ -34,22 +34,22 @@ ApplicationWindow {
         focus: true // important - otherwise we'll get no key events
         Keys.onReleased: {
             if (event.key === Qt.Key_Back) {
-                console.log("ACCEPTED");
+                //console.log("ACCEPTED");
                 event.accepted = true
                 if(menuView.currentIndex === 1) { // menu not visible
 
-                    if(stackView.currentItem.objectName === "Wypożyczanie") { console.log("CLEAR RENT"); rentView.clearText() }
-                    if(stackView.currentItem.objectName === "Rezerwacja") { console.log("CLEAR BOOK"); bookingView.clearText() }
-                    if(stackView.currentItem.objectName === "Wprowadź kod") { console.log("CLEAR PIN");pinView.clearText() }
+                    if(stackView.currentItem.objectName === "Wypożyczanie") { rentView.clearText() }
+                    if(stackView.currentItem.objectName === "Rezerwacja") { bookingView.clearText() }
+                    if(stackView.currentItem.objectName === "Wprowadź kod") { pinView.clearText() }
                     if(stackView.currentItem.objectName === "Ustawienia") { menuView.list.currentIndex = 0 }
                     if(stackView.currentItem.objectName === "Kody") { menuView.list.currentIndex = 0 }
                     if(stackView.currentItem.objectName === "O aplikacji") { menuView.list.currentIndex = 0 }
                     if(stackView.currentItem.objectName === "Ustawienia") { informationScreen.z = normalView.z + 1; }
+                    if(stackView.currentItem.objectName === "O aplikacji") { informationScreen.z = normalView.z + 1; }
 
                     if(stackView.depth === 1) { sqlDatabase.purgeDatabase(); Qt.quit(); }
                     else  {
                         if(dateChooser.stack.depth === 1) {
-                            console.log("POP");
                             stackView.pop()
                         }
                         else dateChooser.stack.pop()
@@ -68,7 +68,6 @@ ApplicationWindow {
             onAccepted: {
                 if(reloadActive === true) {
                     carViewClass.isBusy = true
-                    console.log("RELOADING!")
                     apps.reloadWindow()
                 }
                 messageDialog.close();
@@ -189,10 +188,12 @@ ApplicationWindow {
                 z: normalViewMask.z + 1 // before normalView
                 mainArea: mainArea
                 onItemClicked: {
+                       Qt.inputMethod.hide()
                        informationScreen.z = normalView.z + 1;
                        if(stackView.currentItem.objectName === "Wypożyczanie") { rentView.clearText() }
                        if(stackView.currentItem.objectName === "Rezerwacja") { bookingView.clearText() }
                        if(stackView.currentItem.objectName === "Wprowadź kod") { pinView.clearText() }
+
                        mainArea.menuChange()
                        if(idx === 0) { stackView.pop(null, StackView.Immediate) }
                        else if(idx === 1) { informationScreen.z = normalView.z - 1; stackView.clear(); stackView.push(carView, StackView.Immediate, settingsView, StackView.Immediate) }
@@ -206,7 +207,7 @@ ApplicationWindow {
                                stackView.push(carView, StackView.Immediate, codesView, StackView.Immediate)
                            }
                        }
-                       else if(idx === 3) { stackView.clear(); stackView.push(carView, StackView.Immediate, aboutView, StackView.Immediate) }
+                       else if(idx === 3) { informationScreen.z = normalView.z - 1; stackView.clear(); stackView.push(carView, StackView.Immediate, aboutView, StackView.Immediate) }
                 }
            } // Menu View
 
@@ -235,12 +236,14 @@ ApplicationWindow {
                                 console.log("visible false")
                             }
                             else {
-                                messageDialog.show("Błąd!", "Nie można połaczyć z serwerem.", StandardIcon.Critical, false);
+                                //messageDialog.show("Błąd!", "Nie można połaczyć z serwerem.", StandardIcon.Critical, false);
+                                carViewClass.isBusy = false
                                 informationScreen.text = "Serwer niedostępny"
                                 informationScreen.source = "images/images/warning.png"
                             }
                         }
                         else { // file SETTINGS.txt not open
+                            carViewClass.isBusy = false
                             informationScreen.text = "Skonfiguruj połączenie"
                             informationScreen.source = "images/images/configure.png"
                         }
@@ -276,13 +279,13 @@ ApplicationWindow {
    } // MainForm
 
    Component.onCompleted: {
-       console.log("ppi: " + ppi);
-       console.log("dpi: " + dpi);
-       console.log("ratio: " + ratio);
-       console.log("imageRatio: " + imageRatio);
-       console.log("point: " + point);
-       console.log("sHeight: " + sHeight);
-       console.log("sWidth: " + sWidth)
+//       console.log("ppi: " + ppi);
+//       console.log("dpi: " + dpi);
+//       console.log("ratio: " + ratio);
+//       console.log("imageRatio: " + imageRatio);
+//       console.log("point: " + point);
+//       console.log("sHeight: " + sHeight);
+//       console.log("sWidth: " + sWidth)
        apps.reloadRequest.connect(reloadWindow)
    }
 } // ApplicationWindow

@@ -29,7 +29,6 @@ Item {
             }
 
             onTextChanged: {
-               console.log(field.text)
                carView.list.positionViewAtIndex(carViewClass.findCarListIndex(field.text), ListView.Beginning)
             }
 

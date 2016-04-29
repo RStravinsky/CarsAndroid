@@ -13,8 +13,8 @@ Loader {
     function reload()
     {
         source = "";
-        cacheManager.clear();
+        //cacheManager.clear();
         source = "MainWindow.qml";
-        console.log("Reload MainWindow.qml")
+        //console.log("Reload MainWindow.qml")
     }
 }
