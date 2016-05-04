@@ -92,6 +92,7 @@ Item {
                     loadingRect.isLoading = true
                     if(fileio.writeSettings(settingsFields.getFields(),userFields.getFields())) {
                         sqlDatabase.purgeDatabase()
+                        stackView.clear()
                         apps.reloadWindow() }
                 }
 

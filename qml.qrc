@@ -26,7 +26,6 @@
         <file>CustomBusyIndicator.qml</file>
         <file>CodesView.qml</file>
         <file>TimePicker.qml</file>
-        <file>main.qml</file>
         <file>UpdateButton.qml</file>
         <file>InformationScreen.qml</file>
         <file>SettingsFields.qml</file>

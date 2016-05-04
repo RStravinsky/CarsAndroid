@@ -3,21 +3,22 @@
 
 #include <QObject>
 #include <QQmlApplicationEngine>
+#include "mainengine.h"
 
 class ComponentCacheManager : public QObject
 {
     Q_OBJECT
 public:
-    explicit ComponentCacheManager(QQmlApplicationEngine * engine, QObject *parent = 0) : m_engine(engine), QObject(parent) {}
+    explicit ComponentCacheManager(MainEngine * engine, QObject *parent = 0) : m_engine(engine), QObject(parent) {}
 
-    Q_INVOKABLE void clear() { m_engine->clearComponentCache(); }
+    Q_INVOKABLE void reload() { m_engine->reloadQml(); }
 
 signals:
 
 public slots:
 
 private:
-    QQmlApplicationEngine * m_engine;
+    MainEngine * m_engine;
 };
 
 #endif // COMPONENTCACHEMANAGER_H
