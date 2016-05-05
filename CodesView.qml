@@ -30,6 +30,15 @@ Item {
         anchors { bottom: parent.bottom; left: parent.left; right: parent.right; top: parent.top; margins: offset }
         property int areaHeight: (screenH - topFrame.height - (2*offset))
 
+        // reload screen
+        InformationScreen {
+            id: informationScreen
+            anchors.fill: parent
+            visible: carList.count > 0 ? false : true
+            text: "Brak kodów"
+            source: "/images/images/list.png"
+        }
+
         Component {
             id: carDelegate
             Item { id: carItem; height: area.areaHeight*.15; width: parent.width;

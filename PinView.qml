@@ -51,7 +51,7 @@ Item {
 
             onActivated: {
                 loadingRect.isLoading = true // enable loaidng
-                if(carViewClass.carList[pinView.listIndex].isCodeCorrect(carViewClass.carList[pinView.listIndex].id,field.text)) {
+                if(carViewClass.carList[pinView.listIndex].isRentCodeCorrect(carViewClass.carList[pinView.listIndex].id,field.text)) {
                     if(carViewClass.carList[listIndex].updateHistory(rentView.returnFields.getFields(),rentView.distance))
                     {
                         fileio.removeCode(field.text)

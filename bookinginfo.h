@@ -3,10 +3,12 @@
 
 #include <QObject>
 #include <QTime>
+#include <QDebug>
 
 class BookingInfo : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(int id READ getId CONSTANT)
     Q_PROPERTY(QString name READ getName CONSTANT)
     Q_PROPERTY(QString surname READ getSurname CONSTANT)
     Q_PROPERTY(QString from READ getFrom CONSTANT)
@@ -15,9 +17,12 @@ class BookingInfo : public QObject
 
 public:
     explicit BookingInfo(QObject *parent = 0) {}
-    explicit BookingInfo(QString name, QString surname, QString from, QString to, QString destination, QObject *parent = 0)
-                        : m_name(name), m_surname(surname), m_from(from), m_to(to), m_destination(destination) {}
+    explicit BookingInfo(int id, QString name, QString surname, QString from, QString to, QString destination, QObject *parent = 0)
+                        : m_id(id), m_name(name), m_surname(surname), m_from(from), m_to(to), m_destination(destination) {
+        qDebug() << "ID = " << m_id << endl;
+    }
 
+    Q_INVOKABLE int getId() {return m_id;}
     Q_INVOKABLE QString getName() {return m_name;}
     Q_INVOKABLE QString getSurname() {return m_surname;}
     Q_INVOKABLE QString getFrom() {return m_from;}
@@ -25,6 +30,7 @@ public:
     Q_INVOKABLE QString getDestination() {return m_destination;}
 
 private:
+    int m_id;
     const QString m_name;
     const QString m_surname;
     const QString m_from;

@@ -81,18 +81,19 @@ Item {
                 onError: { loadingRect.isLoading = false; messageDialog.show("Uwaga!", msg, StandardIcon.Warning, false) }
             }
 
-
             onActivated: {
-                //area.forceActiveFocus() // disable focus from fields
+                loadingRect.isLoading = true
+                area.forceActiveFocus() // disable focus from fields
                 if(settingsFields.dataIsEmpty() || userFields.dataIsEmpty()) {
+                    loadingRect.isLoading = false
                     messageDialog.show("Uwaga!", "Pole tekstowe nie zostało wypełnione.", StandardIcon.Warning, false);
                 }
 
                 else {
-                    loadingRect.isLoading = true
                     if(fileio.writeSettings(settingsFields.getFields(),userFields.getFields())) {
                         sqlDatabase.purgeDatabase()
                         apps.reloadWindow() }
+
                 }
 
             } // OnActivated

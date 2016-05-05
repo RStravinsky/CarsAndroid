@@ -67,7 +67,7 @@ Item {
         Text {
             id: contentText
             textFormat: Text.RichText
-            text: "Masz jakiś problem, uwagi, sugestie? <br>Wyślij wiadomość na adres: <a href=\"mailto:michal.stojek@sigmasa.pl\">EMAIL</a>"
+            text: "Masz jakiś problem, uwagi, sugestie? <br>Wyślij wiadomość na adres: <a href=\"mailto:software@sigmasa.pl\">EMAIL</a>"
             anchors { left: logo.left; top: logo.bottom; right: parent.right; rightMargin: logo.width/4; topMargin: logo.height/4; }
             font.pointSize: 7 * point
             color: "gray"

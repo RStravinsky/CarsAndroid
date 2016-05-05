@@ -34,31 +34,34 @@ ApplicationWindow {
         focus: true // important - otherwise we'll get no key events
         Keys.onReleased: {
             if (event.key === Qt.Key_Back) {
-                //console.log("ACCEPTED");
                 event.accepted = true
-                if(menuView.currentIndex === 1) { // menu not visible
 
-                    if(stackView.currentItem.objectName === "Wypożyczanie") { rentView.clearText() }
-                    if(stackView.currentItem.objectName === "Rezerwacja") { bookingView.clearText() }
-                    if(stackView.currentItem.objectName === "Wprowadź kod") { pinView.clearText() }
-                    if(stackView.currentItem.objectName === "Ustawienia") { menuView.list.currentIndex = 0 }
-                    if(stackView.currentItem.objectName === "Kody") { menuView.list.currentIndex = 0 }
-                    if(stackView.currentItem.objectName === "O aplikacji") { menuView.list.currentIndex = 0 }
-                    if(stackView.currentItem.objectName === "Ustawienia") { informationScreen.z = normalView.z + 1; }
-                    if(stackView.currentItem.objectName === "O aplikacji") { informationScreen.z = normalView.z + 1; }
+                if(loadingRect.isLoading === false) {
+                    if(menuView.currentIndex === 1) { // menu not visible
 
-                    if(stackView.depth === 1) { sqlDatabase.purgeDatabase(); Qt.quit(); }
-                    else  {
-                        if(dateChooser.stack.depth === 1) {
-                            stackView.pop()
+                        if(stackView.currentItem.objectName === "Wypożyczanie") { rentView.clearText() }
+                        if(stackView.currentItem.objectName === "Rezerwacja") { bookingView.clearText() }
+                        if(stackView.currentItem.objectName === "Wprowadź kod") { pinView.clearText() }
+                        if(stackView.currentItem.objectName === "Ustawienia") { menuView.list.currentIndex = 0 }
+                        if(stackView.currentItem.objectName === "Kody") { menuView.list.currentIndex = 0 }
+                        if(stackView.currentItem.objectName === "O aplikacji") { menuView.list.currentIndex = 0 }
+                        if(stackView.currentItem.objectName === "Ustawienia") { informationScreen.z = normalView.z + 1; }
+                        if(stackView.currentItem.objectName === "O aplikacji") { informationScreen.z = normalView.z + 1; }
+
+                        if(stackView.depth === 1) { sqlDatabase.purgeDatabase(); Qt.quit(); }
+                        else  {
+                            if(dateChooser.stack.depth === 1) {
+                                stackView.pop()
+                            }
+                            else dateChooser.stack.pop()
                         }
-                        else dateChooser.stack.pop()
-                    }
 
-                    mainArea.setState()
+                        mainArea.setState()
+
+                    }
+                    else { mainArea.menuChange() }
 
                 }
-                else { mainArea.menuChange() }
             }
         }
 
@@ -122,6 +125,7 @@ ApplicationWindow {
         // waiting for operation
         Rectangle {
             property bool isLoading: false
+            property alias text: loadingText.text
             id: loadingRect
             anchors.fill: parent
             z: topFrame.z + 1
@@ -129,6 +133,7 @@ ApplicationWindow {
             opacity: 0.7
             visible: loadingRect.isLoading
             Text {
+                id: loadingText
                 anchors.centerIn: parent
                 font.pointSize: 14 * point
                 text: "Proszę czekać ..."
@@ -198,7 +203,7 @@ ApplicationWindow {
                        else if(idx === 1) { informationScreen.z = normalView.z - 1; stackView.clear(); stackView.push(carView, StackView.Immediate, settingsView, StackView.Immediate) }
                        else if(idx === 2) {
                            fileio.readCodes();
-                           if(stackView.currentItem.objectName === "Wprowadź kod") {
+                           if(stackView.currentItem.objectName === "Wprowadź kod" || stackView.currentItem.objectName === "Data/czas") {
                                stackView.push(codesView)
                            }
                            else {

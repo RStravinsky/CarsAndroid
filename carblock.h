@@ -61,14 +61,16 @@ public slots:
     int isDateReserved(QDate date);
     bool addToHistory(QVariant entryFields, QString code);
     bool updateHistory(QVariant entryFields, int distance);
-    bool addToBooking(QVariant entryFields);
-    bool isCodeCorrect(int id, QString code);
+    bool addToBooking(QVariant entryFields, QString code);
+    bool isRentCodeCorrect(int id, QString code);
+    bool isReservationCodeCorrect(int id, QString code);
     void readBookingEntries(QDate date, QString time);
     bool isDateCorrect(QDateTime dateTime);
     bool checkDates(QDateTime begin, QDateTime end);
     int setHoursColor(QDate date, QString time);
     int getBookingInfoListSize() { return m_bookingInfoList.size(); }
-    void updateBookingModel() { m_bookingModel.setQuery(QString("SELECT * FROM booking WHERE idCar = %1").arg(m_id)); }
+    bool deleteReservation(int id);
+    bool updateBookingModel();
     QString isReservation();
 
 private:

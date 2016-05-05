@@ -96,6 +96,7 @@ void CarBlock::readBookingEntries(QDate date, QString time)
             if((modelDateTimeBegin >= clickedDateTimeBegin) && (modelDateTimeBegin < clickedDateTimeEnd) && (modelDateTimeEnd >= clickedDateTimeBegin) && (modelDateTimeEnd < clickedDateTimeEnd)) {
 
                 m_bookingInfoList.push_back(std::move(new BookingInfo(
+                                                          m_bookingModel.data(m_bookingModel.index(i,0)).toInt(),
                                                           m_bookingModel.data(m_bookingModel.index(i,1)).toString(),
                                                           m_bookingModel.data(m_bookingModel.index(i,2)).toString(),
                                                           m_bookingModel.data(m_bookingModel.index(i,3)).toTime().toString("hh:mm"),
@@ -107,6 +108,7 @@ void CarBlock::readBookingEntries(QDate date, QString time)
             else if((modelDateTimeBegin >= clickedDateTimeBegin) && (modelDateTimeBegin < clickedDateTimeEnd) && (modelDateTimeEnd >= clickedDateTimeEnd)) {
 
                 m_bookingInfoList.push_back(std::move(new BookingInfo(
+                                                          m_bookingModel.data(m_bookingModel.index(i,0)).toInt(),
                                                           m_bookingModel.data(m_bookingModel.index(i,1)).toString(),
                                                           m_bookingModel.data(m_bookingModel.index(i,2)).toString(),
                                                           m_bookingModel.data(m_bookingModel.index(i,3)).toTime().toString("hh:mm"),
@@ -118,6 +120,7 @@ void CarBlock::readBookingEntries(QDate date, QString time)
             else if((modelDateTimeBegin < clickedDateTimeBegin) && (modelDateTimeEnd >= clickedDateTimeBegin) && (modelDateTimeEnd < clickedDateTimeEnd)) {
 
                 m_bookingInfoList.push_back(std::move(new BookingInfo(
+                                                          m_bookingModel.data(m_bookingModel.index(i,0)).toInt(),
                                                           m_bookingModel.data(m_bookingModel.index(i,1)).toString(),
                                                           m_bookingModel.data(m_bookingModel.index(i,2)).toString(),
                                                           QString("..."),
@@ -129,6 +132,7 @@ void CarBlock::readBookingEntries(QDate date, QString time)
             else if((modelDateTimeBegin < clickedDateTimeBegin)  && (modelDateTimeEnd > clickedDateTimeEnd)) {
 
                 m_bookingInfoList.push_back(std::move(new BookingInfo(
+                                                          m_bookingModel.data(m_bookingModel.index(i,0)).toInt(),
                                                           m_bookingModel.data(m_bookingModel.index(i,1)).toString(),
                                                           m_bookingModel.data(m_bookingModel.index(i,2)).toString(),
                                                           QString("..."),
@@ -327,7 +331,7 @@ bool CarBlock::updateHistory(QVariant entryFields, int distance)
     return false;
 }
 
-bool CarBlock::addToBooking(QVariant entryFields)
+bool CarBlock::addToBooking(QVariant entryFields, QString code)
 {
     if(SqlDatabase::isOpen()) {
         QVariantList entryFieldsList = entryFields.toList();
@@ -340,8 +344,8 @@ bool CarBlock::addToBooking(QVariant entryFields)
         };
 
         QSqlQuery qry;
-        qry.prepare("INSERT INTO booking (Name, Surname, Begin, End, idCar, Destination) "
-                    "VALUES (:_Name, :_Surname, :_Begin, :_End, :_idCar, :_Destination);");
+        qry.prepare("INSERT INTO booking (Name, Surname, Begin, End, idCar, Destination, Code) "
+                    "VALUES (:_Name, :_Surname, :_Begin, :_End, :_idCar, :_Destination, :_Code);");
 
         qDebug() << "addToBooking" << endl;
         qry.bindValue(":_Name", entryFieldsList.at(ENTRY_FIELDS::Name));
@@ -350,6 +354,7 @@ bool CarBlock::addToBooking(QVariant entryFields)
         qry.bindValue(":_End", entryFieldsList.at(ENTRY_FIELDS::End));
         qry.bindValue(":_idCar", m_id);
         qry.bindValue(":_Destination", entryFieldsList.at(ENTRY_FIELDS::Destination));
+        qry.bindValue(":_Code", code);
 
         qDebug() << "before qry.exec()" << endl;
         if(!qry.exec()) {
@@ -365,13 +370,27 @@ bool CarBlock::addToBooking(QVariant entryFields)
    return false;
 }
 
-bool CarBlock::isCodeCorrect(int id, QString code)
+bool CarBlock::isRentCodeCorrect(int id, QString code)
 {
     if(SqlDatabase::isOpen()) {
         std::unique_ptr<QSqlQueryModel> historyTable(new QSqlQueryModel(this));
         historyTable->setQuery(QString("SELECT Code FROM history WHERE idCar = %1 AND End IS NULL").arg(id));
         if(code == historyTable->data(historyTable->index(0,0)).toString()) {
-            qDebug() << "Return isCodeCorrect" << endl;
+            qDebug() << "Return isRentCodeCorrect" << endl;
+            return true;
+        }
+    }
+    return false;
+}
+
+bool CarBlock::isReservationCodeCorrect(int id, QString code)
+{
+    qDebug() << "Booking ID = " << id << endl;
+    if(SqlDatabase::isOpen()) {
+        std::unique_ptr<QSqlQueryModel> bookingTable(new QSqlQueryModel(this));
+        bookingTable->setQuery(QString("SELECT Code FROM booking WHERE idBooking = %1").arg(id));
+        if(code == bookingTable->data(bookingTable->index(0,0)).toString()) {
+            qDebug() << "Return isReservationCodeCorrect" << endl;
             return true;
         }
     }
@@ -417,4 +436,27 @@ int CarBlock::setHoursColor(QDate date, QString time)
     }
 
     return 0;
+}
+
+bool CarBlock::deleteReservation(int id)
+{
+    if(SqlDatabase::isOpen()) {
+        QSqlQuery qry;
+        qry.prepare("DELETE FROM booking WHERE idBooking = ?");
+        qry.addBindValue(id);
+
+        if(!qry.exec()) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+   return false;
+}
+
+bool CarBlock::updateBookingModel()
+{
+     m_bookingModel.setQuery(QString("SELECT * FROM booking WHERE idCar = %1").arg(m_id));
 }

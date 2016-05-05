@@ -78,9 +78,8 @@ Item {
                 }
                 else {
                     loadingRect.isLoading = true
-
                     code = carViewClass.generateCode()
-                    if(carViewClass.carList[listIndex].addToBooking(bookingFields.getFields())) {
+                    if(carViewClass.carList[listIndex].addToBooking(bookingFields.getFields(), code)) {
                         if(fileio.writeCode(false, code,carViewClass.carList[listIndex].brand + " " + carViewClass.carList[listIndex].model, bookingFields.getFields()[0])) {
                             messageDialog.show("Zarezerwowano!", "Twój kod do anulowania: " + code + ".", StandardIcon.Information, true); // RELOAD APP
                         }

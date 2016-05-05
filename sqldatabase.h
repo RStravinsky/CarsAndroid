@@ -17,6 +17,7 @@ public:
     SqlDatabase ( QObject * parent = 0 );
     bool connected() { return m_connected; }
     Q_INVOKABLE static bool isOpen();
+    static QSqlDatabase getDatabase() { return m_sqlDatabase; }
 
 public slots:
     bool connectToDatabase ( QString host, int port, QString username, QString password);

@@ -40,5 +40,6 @@
         <file>images/search.png</file>
         <file>images/delete.png</file>
         <file>images/deleteGray.png</file>
+        <file>images/list.png</file>
     </qresource>
 </RCC>

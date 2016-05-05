@@ -133,7 +133,12 @@ Item {
                         messageDialog.show("Informacja!", "Uzupełnij datę początkową.", StandardIcon.Information, false);
                      }
                      else {
-                        if(sqlDatabase.isOpen()) // CHECK THIS !!!!!!!!!!!!!!!!!!!!!!
+                        loadingRect.text = "Wczytywanie\nkalendarza ..."
+                        loadingRect.isLoading = true // enable loading
+                        bookingView.area.enabled = false
+                        bookingView.area.forceActiveFocus()
+
+                        if(sqlDatabase.isOpen())
                         {
                             stackView.push(dateChooser)
                             dateChooser.clearDateChooser();
@@ -142,7 +147,11 @@ Item {
                             carViewClass.carList[bookingView.listIndex].updateBookingModel();
                             dateChooser.setListIndex(bookingView.listIndex);
                         }
-                     else messageDialog.show("Uwaga!", "Błąd połaczenia.", StandardIcon.Warning, false);
+                        else { messageDialog.show("Uwaga!", "Błąd połaczenia.", StandardIcon.Warning, false); }
+
+                        loadingRect.isLoading = false
+                        loadingRect.text = "Proszę czekać ..."
+                        bookingView.area.enabled = true
                      }
                  }
              }

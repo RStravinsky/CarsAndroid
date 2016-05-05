@@ -94,7 +94,6 @@ Item {
                 else {
                     if(rentView.isRented === false) { // rent car
                         loadingRect.isLoading = true // enable loading
-
                         person = carViewClass.carList[listIndex].isReservation()
                         if(person !== "") {
                             messageDialog.show("Samochód jest zarezerwowany", "Samochód zarezerwowany przez: " + person, StandardIcon.Information, false);

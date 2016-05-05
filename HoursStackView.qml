@@ -59,7 +59,7 @@ Item {
         }
 
         HoursListItem { id: hoursListItem; anchors.fill: parent; nextView: (hourState === 0) ? timePicker : hourContentItem; selectedDate: dateChooser.calendar.selectedDate; }
-        HourContentItem { id: hourContentItem; nextView: timePicker; isReserveButtonVisible: (hoursListItem.hourState === 2) ? false : true; }
+        HourContentItem { objectName: "HourContentItem"; id: hourContentItem; nextView: timePicker; isReserveButtonVisible: (hoursListItem.hourState === 2) ? false : true; }
         TimePicker { id: timePicker; nextView: hoursListItem }
 
     }
