@@ -15,7 +15,7 @@
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
-    QQmlApplicationEngine engine;
+    MainEngine engine;
 
     qmlRegisterType<CarBlock>();
     qmlRegisterType<BookingInfo>();
@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
 
     engine.addImageProvider(QLatin1String("cImages"), new ImageProvider);
 
-    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
+    engine.initialize(QStringLiteral("qrc:/MainWindow.qml"));
 
 
     return app.exec();

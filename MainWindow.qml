@@ -13,15 +13,13 @@ ApplicationWindow {
     title: qsTr("Rezerwacja")
     Keys.enabled: true
     Keys.priority: Keys.BeforeItem
-    property alias appT: apps
-    signal reloadRequest()
 
     property int screenH: Screen.height
     property int screenW: Screen.width
     property double point: (ppi/dpi)*ratio //(ppi * ratio)/160
 
     function reloadWindow() {
-        mainLoader.reload()
+        cacheManager.reload()
     }
 
     IntValidator { id: intValidaotr }
@@ -71,6 +69,7 @@ ApplicationWindow {
             onAccepted: {
                 if(reloadActive === true) {
                     carViewClass.isBusy = true
+                    stackView.clear()
                     apps.reloadWindow()
                 }
                 messageDialog.close();
@@ -263,7 +262,7 @@ ApplicationWindow {
                 RentView { id:rentView; objectName: "Wypożyczanie"; }
                 PinView { id:pinView; objectName: "Wprowadź kod" }
                 BookingView { id:bookingView; objectName: "Rezerwacja" }
-                AboutView { id:aboutView; objectName: "O aplikacji" }
+                AboutView { id:aboutView; objectName: "O aplikacji"; }
            } // Normal View
 
            // view mask
@@ -292,7 +291,6 @@ ApplicationWindow {
 //       console.log("point: " + point);
 //       console.log("sHeight: " + sHeight);
 //       console.log("sWidth: " + sWidth)
-       apps.reloadRequest.connect(reloadWindow)
    }
 } // ApplicationWindow
 
